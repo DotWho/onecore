@@ -1,0 +1,55 @@
+<div class="content" id="select">
+<h4>Select 实例：</h4>
+<span class="spanb">开启自定义select</span>
+<select name="" id="selmore" data-toggle="select" data-select="2">
+    <option value="1">选项1</option>
+    <option value="2">选项2</option>
+    <option value="3">选项3</option>
+    <option value="4">选项4</option>
+    <option value="5">选项5</option>
+</select>
+<select name="" data-toggle="select">
+    <option value="1">选项1</option>
+    <option value="2">选项2</option>
+    <option value="3">选项3</option>
+    <option value="4">选项4</option>
+    <option value="5">选项5</option>
+</select>
+<select name="" data-toggle="select" data-select="2" readonly>
+    <option value="1">选项1</option>
+    <option value="2">选项2</option>
+    <option value="3">选项3</option>
+    <option value="4">选项4</option>
+    <option value="5">选项5</option>
+</select>
+<button type="button" class="btn primary setnull">设置第一个为空</button>
+<button type="button" class="btn primary addoption">添加option</button>
+<h5>HTML</h5>
+<xmp>
+````
+<select data-toggle="select">
+    <option value="1">选项1</option>
+    <option value="2">选项2</option>
+    <option value="3">选项3</option>
+</select>
+````
+</xmp>
+<h5>通过 data 设置默认选中值</h5>
+<xmp>
+````
+// 开启自定义select 并设置选中值
+<select data-select="2">
+    <option> ... </option>
+    <option> ... </option>
+</select>
+````
+</xmp>
+<h5>通过 JavaScript 调用</h5>
+<xmp>
+````
+$el.select({'select': '2'});
+// 更新select
+$el.select('update');
+````
+</xmp>
+</div>

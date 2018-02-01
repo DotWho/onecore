@@ -1,0 +1,40 @@
+.page {
+    padding-top: pxToRem(15px);
+    padding-bottom: pxToRem(15px);
+    & a {
+        padding-top: pxToRem(8px);
+        padding-right: pxToRem(14px);
+        padding-bottom: pxToRem(8px);
+        padding-left: pxToRem(14px);
+        margin: 0 pxToRem(2px);
+    }
+    & .current {
+        color: $white;
+        background-color: $primary;
+    }
+    & .page-prev {
+        margin-left: 0;
+    }
+    & .page-next {
+        margin-right: 0;
+    }
+    & .page-prev,
+    & .page-next {
+        &:before {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+            text-indent: 2px;
+            font-family: $iconFamily;
+            font-size: pxToRem(18px);
+            line-height: pxToRem(35px);
+            content: "\e314";
+        }
+    }
+    & .page-next:before {
+        content: "\e315";
+    }
+}

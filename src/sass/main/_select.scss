@@ -1,0 +1,109 @@
+select::-ms-expand {
+    display: none;
+}
+
+// select {
+//     @include inputStyle;
+//     width: pxToRem(162px);
+//     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAJCAYAAAAywQxIAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6NTQ2MEFCMTFFQ0IyMTFFNUE3N0JCRTRDMTJENzUwMzEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6NTQ2MEFCMTBFQ0IyMTFFNUE3N0JCRTRDMTJENzUwMzEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RTY4NjhFQTNFMDREMTFFNUJCNTI5NkI3QzNDNjI2OUEiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RTY4NjhFQTRFMDREMTFFNUJCNTI5NkI3QzNDNjI2OUEiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4ttLKDAAAAkUlEQVR42mL8//8/AzUBEwOVAdjAe/fudR4+fPgqkGmKJGcKEgPJkWQiyMtnz57dHBwc/H/btm13gHx1EAaxQWIgOZAaYjGMIbJ79+7tQUFB/w8dOnQVhEFskBhIjmQD//79C6IlduzYcTAkJOQ/CIPYIDGoHGkG/vnzByYgvX79+sMgDGKjyRGFGQd9sgEIMADlu/xreKv+MwAAAABJRU5ErkJggg==) no-repeat scroll right center $white;
+//     cursor: pointer;
+//     -webkit-appearance:none;
+//     -moz-appearance:none;
+//     appearance:none;
+// }
+
+.select {
+    position: relative;
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    & select {
+        display: none;
+    }
+    & button {
+        @include inputStyle;
+        padding-right: pxToRem(30px);
+        width: 100%;
+        text-overflow: ellipsis;
+        &:before {
+            position: absolute;
+            top: 0;
+            right: pxToRem(10px);
+            bottom: 0;
+            margin: auto;
+            color: $dark;
+            font-family: $iconFamily;
+            font-size: $iconSize;
+            height: 19px;
+            content: "\e313";
+            @include transition(transform 130ms ease-out);
+        }
+        &:hover {
+            border-color: $primary;
+            background-color: transparent;
+        }
+        & .ripple {
+            background-color: rgba($primary, .6);
+        }
+    }
+    & ul {
+        position: absolute;
+        z-index: 2;
+        margin-top: pxToRem(2px);
+        overflow-x: hidden;
+        width: 100%;
+        max-height: pxToRem(362px);
+        background-color: $white;
+        @include divider;
+        visibility: hidden;
+        box-shadow: 0 0 5px rgba(0, 0, 0, .2);
+        @include borderRadius;
+        @include boxShadow;
+        &.seltop {
+            bottom: pxToRem(38px);
+        }
+    }
+    & li {
+        padding: pxToRem(9px) 0 pxToRem(9px) pxToRem(10px);
+        color: $dark;
+        width: 100%;
+        text-align: left;
+        border-radius: 0;
+        @include transition(background-color 200ms ease-in-out);
+        &.hover{
+            color: $white;
+            background-color: $primary;
+        }
+    }
+    &.dismiss ul {
+        @include mainAniOut;
+    }
+    &.active {
+        & button {
+            border-color: $primary;
+            &:before {
+                transform: scale3d(1, -1, 1);
+                filter: FlipV;
+            }
+        }
+        & ul {
+            @include mainAniIn;
+        }
+    }
+    &.error button {
+        @include error;
+    }
+}
+
+@media (max-width: 34em) {
+    .select ul {
+        position: fixed;
+        right: 5px;
+        bottom: 5px;
+        left: 5px;
+        z-index: 8;
+        margin: auto;
+        overflow: auto;
+        width: auto;
+    }
+}

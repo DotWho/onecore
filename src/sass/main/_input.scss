@@ -1,0 +1,126 @@
+input[disabled],
+input.disabled,
+textarea[disabled],
+textarea.disabled,
+input[disabled]:focus,
+input.disabled:focus,
+textarea[disabled]:focus,
+textarea.disabled:focus {
+    @include disabled;
+}
+
+input[readonly],
+input.readonly,
+textarea[readonly],
+textarea.readonly,
+input[readonly]:focus,
+input.readonly:focus,
+textarea[readonly]:focus,
+textarea.readonly:focus {
+    pointer-events: auto;
+    border: none!important;
+    @include box-shadow(none!important);
+}
+
+input:required:invalid,
+input:focus:invalid,
+textarea:required:invalid,
+textarea:focus:invalid {
+    box-shadow: none;
+    -moz-box-shadow:none;
+}
+
+html input[type="button"],
+input[type="reset"],
+input[type="submit"] {
+    border: 0;
+}
+
+input:-ms-clear {
+    display: none;
+}
+
+input[type="number"] {
+    min-width: pxToRem(80px);
+    -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="search"] {
+    -webkit-appearance: none;
+}
+
+textarea,
+input {
+    @include inputStyle;
+    font-family: $fontFamily;
+    &:focus {
+        border-color: $primary;
+        background-color: $white!important;
+        box-shadow: 0 pxToRem(5px) pxToRem(10px) rgba($primary, .1)!important;
+    }
+}
+
+input[type="text"],
+input[type="password"],
+input[type="search"],
+input[type="number"] {
+    min-height: 38px;
+}
+
+input[type="range"] {
+	margin: auto;
+	padding: 0;
+	height: 4px;
+	background-color: $primary;
+	background-image: linear-gradient($primary, $primary);
+	background-repeat: no-repeat;
+	border-width: 0;
+	@include borderRadius;
+	cursor: pointer;
+	appearance: none;
+	@include user-select;
+	&:focus {
+		border-width: 0;
+	}
+}
+
+input[type="range"]::-webkit-slider-runnable-track {
+	box-shadow: none;
+	border: none;
+	background: transparent;
+	-webkit-appearance: none;
+}
+
+input[type="range"]::-moz-range-track {
+	box-shadow: none;
+	border: none;
+	background: transparent;
+}
+
+input[type="range"]::-moz-focus-outer {
+	border: 0;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+	width: 16px;
+	height: 16px;
+	background: $white;
+	border: 2px solid $primary;
+	border-radius: 100%;
+	-webkit-appearance: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+	width: 14px;
+	height: 14px;
+	border: 0;
+	background: $white;
+	border-radius: 100%;
+	box-shadow: 0 0 1px 0 rgba(0, 0, 0, 0.1);
+}

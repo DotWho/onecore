@@ -1,0 +1,25 @@
+.grade {
+    display: inline-block;
+    vertical-align: middle;
+    & span {
+        display: inline-block;
+        width: pxToRem(24px);
+        height: pxToRem(36px);
+        line-height: pxToRem(36px);
+        color: $light;
+        text-align: center;
+        cursor: pointer;
+        &.hover {
+            color: $primary;
+        }
+        &:before {
+            font-size: pxToRem(16px);
+            font-family: $iconFamily;
+            content: '\e838';
+        }
+    }
+}
+
+.grade.heart span:before {
+    content: '\e87d';
+}

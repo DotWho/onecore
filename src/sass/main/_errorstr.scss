@@ -1,0 +1,78 @@
+.errorstr,
+.codestrong {
+    pointer-events: none;
+    position: relative;
+    padding-left: pxToRem(18px);
+    display: block;
+    font-size: pxToRem(12px);
+    height: pxToRem(22px);
+    line-height: pxToRem(22px);
+    text-align: left;
+    text-indent: pxToRem(-10px);
+    color: $danger;
+    opacity: 0;
+    filter: alpha(opacity=0);
+    @include will-change(transition);
+    @include transition((text-indent 300ms ease-out, opacity 300ms ease-out));
+}
+
+.errorstr:before,
+.error ~ .codestrong:before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    margin: auto;
+    display: block;
+    font-family: $iconFamily;
+    font-size: pxToRem(15px);
+    height: pxToRem(22px);
+    line-height: pxToRem(22px);
+    color: $danger;
+    content: "\e5c9";
+}
+
+.errorstr.active,
+.error ~ .errorstr,
+.error ~ .codestrong,
+.codestrong.showtxt {
+    text-indent: 0;
+    opacity: 1;
+    filter: alpha(opacity=100);
+}
+
+.error ~ .codestrong .cs-line {
+    display: none;
+}
+
+.codestrong {
+    &.showtxt {
+        padding-left: 0;
+        & .cs-txt {
+            color: $dark;
+        }
+    }
+    & .cs-line {
+        display: inline-block;
+        width: 0;
+        height: pxToRem(8px);
+        @include borderRadius;
+        @include transition(width 300ms ease-out);
+        &.red {
+            width: 20%;
+            @include linear-gradient(left, #673ab7, $danger, 100%);
+        }
+        &.yellow {
+            width: 40%;
+            @include linear-gradient(left, #ffc107, $warning, 100%);
+        }
+        &.dgreen {
+            width: 60%;
+            @include linear-gradient(left, #009688, $success, 100%);
+        }
+        &.green {
+            width: 80%;
+            @include linear-gradient(left, #8bc34a, $success, 100%);
+        }
+    }
+}

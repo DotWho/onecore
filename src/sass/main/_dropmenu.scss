@@ -1,0 +1,148 @@
+.dropmenu {
+    position: relative;
+    display: inline-block;
+    & .arrow {
+        padding-right: 18px;
+        &:before {
+            position: absolute;
+            top: 0;
+            right: 2px;
+            bottom: 0;
+            margin: auto;
+            display: block;
+            font-family: $iconFamily;
+            font-size: pxToRem(16px);
+            height: 13px;
+            line-height: 1;
+            content: "\e313";
+            transition: transform 300ms ease-out;
+        }
+    }
+    &.dphover > div {
+        &:before {
+            content: "";
+            position: absolute;
+            top: -3px;
+            right: 0;
+            left: 0;
+            margin: auto;
+            display: block;
+            width: 100%;
+            height: 2px;
+        }
+    }
+}
+
+.dropmenu.dphover:hover .arrow:before,
+.dropmenu.active .arrow:before {
+    transform: scale3d(1, -1, 1);
+    filter: FlipV;
+}
+
+.dropmenu > div {
+    pointer-events: none;
+    position: absolute;
+    left: 50%;
+    z-index: 2;
+    margin-top: pxToRem(2px);
+    padding: pxToRem(5px);
+    display: none\9;
+    visibility: hidden\9;
+    background-color: $white;
+    @include divider;
+    @include opacity(0);
+    @include borderRadius;
+    @include boxShadow;
+}
+
+.dropmenu.dismiss > div {
+    @include mainAniOut;
+}
+
+.dropmenu.dismiss > div.top {
+    animation: dropmenuOut 450ms forwards cubic-bezier(.23,1,.32,1);
+}
+
+@keyframes dropmenuOut {
+    from {
+        opacity: 1;
+        visibility: visible;
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+        transform: translate3d(0, -50px, 0);
+    }
+}
+
+.dropmenu > div.left {
+    left: 0;
+}
+
+.dropmenu > div.right {
+    right: 0;
+    left: inherit;
+}
+
+.dropmenu > div.top {
+    bottom: 100%;
+    margin-top: 0;
+    margin-bottom: pxToRem(2px);
+    &:before {
+        top: inherit;
+        bottom: -3px;
+    }
+}
+
+.dropmenu.dphover:hover > div,
+.dropmenu.active > div {
+    pointer-events: auto;
+    display: block\9;
+    opacity: 1\9;
+    visibility: visible;
+    animation: iShowIn 450ms forwards cubic-bezier(.23,1,.32,1)!important;
+}
+
+// .dropmenu > div:before {
+//     position: absolute;
+//     top: pxToRem(-10px);
+//     right: 0;
+//     left: 0;
+//     margin: auto;
+//     width: 0;
+//     height: 0;
+//     border-style: solid;
+//     border-width: 0 pxToRem(10px) pxToRem(10px);
+//     border-color: transparent;
+//     border-bottom-color: $grey;
+//     content: "";
+// }
+//
+// .dropmenu > div:after {
+//     position: absolute;
+//     top: pxToRem(-9px);
+//     right: 0;
+//     left: 0;
+//     margin: auto;
+//     width: 0;
+//     height: 0;
+//     border-style: solid;
+//     border-width: 0 pxToRem(10px) pxToRem(10px);
+//     border-color: transparent;
+//     border-bottom-color: $white;
+//     content: "";
+// }
+
+@media (max-width: 34em) {
+    .dropmenu > div {
+        z-index: 8;
+        position: fixed;
+        right: 5px;
+        bottom: 15px;
+        left: 5px;
+        overflow: auto;
+        margin: auto;
+        max-height: 60%;
+    }
+}

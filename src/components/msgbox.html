@@ -1,0 +1,31 @@
+<div class="content" id="msgbox">
+<h4>Msgbox 实例：</h4>
+<button type="button" class="btn primary showdigio">显示消息</button>
+<button type="button" class="btn primary showdigio" data-v="1">单个按钮</button>
+<button type="button" class="btn primary showdbol">双弹</button>
+<button type="button" class="btn primary showlogin">登陆</button>
+<button type="button" class="btn primary conbajax">失败</button>
+<button type="button" class="btn primary conbcustome">Cutome</button>
+<h5>通过 JavaScript 调用</h5>
+<xmp>
+````
+$.fn.msgbox({
+    html: 'html Text',
+    text: 'text Text',
+    w: 200,
+    h: 200,
+    title: 'title Text',
+    num: 2,
+    bind: function(btn, target, next){},
+    success: function(next){},
+    error: function(){},
+    textY: '确定',
+    textN: '取消',
+    close: 'true'
+});
+// 隐藏msgbox
+$.fn.msgbox('hide') // 隐藏所有
+$.fn.msgbox('last') // 隐藏最后一个
+````
+</xmp>
+</div>

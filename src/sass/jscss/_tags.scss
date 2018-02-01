@@ -1,0 +1,55 @@
+.tags {
+    padding-top: pxToRem(5px);
+    padding-left: pxToRem(5px);
+    & .tag {
+        margin-right: pxToRem(5px);
+        color: $white;
+        background-color: $primary;
+        & > label {
+            position: relative;
+            line-height: inherit;
+            cursor: pointer;
+            @include transform(translate3d(0, 0, 0));
+            @include transition(transform 300ms ease-in-out);
+        }
+        &:before {
+            content: '\e5cd';
+            position: absolute;
+            top: 0;
+            right: 2px;
+            bottom: 0;
+            margin: auto;
+            font-family: $iconFamily;
+            font-size: $fontSize;
+            height: 18px;
+            @include opacity(0);
+            @include transition(opacity 300ms ease-in-out);
+        }
+        &:hover {
+            background-color: $secondary;
+            &:before {
+                @include opacity(100);
+            }
+            & > label {
+                @include transform(translate3d(-4px, 0, 0));
+            }
+        }
+    }
+    & .tag-add {
+        display: inline-block;
+        vertical-align: middle;
+        & input {
+            float: left;
+            width: pxToRem(80px);
+            min-width: pxToRem(80px);
+            border-right-width: 0;
+            border-radius: 4px 0 0 4px;
+        }
+        & button {
+            float: left;
+            color: $white;
+            background-color: $primary;
+            border-radius: 0 4px 4px 0;
+        }
+    }
+}

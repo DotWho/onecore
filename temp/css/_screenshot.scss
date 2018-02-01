@@ -1,0 +1,115 @@
+.screenshot {
+    @include fixCenter;
+    z-index: 8;
+}
+
+.shot-img {
+    @include absCenter;
+    display: none;
+    overflow: hidden;
+    text-align: center;
+    border: 3px solid rgba(255,255,255,.6);
+}
+
+#canshot{
+    @include absCenter;
+    z-index: 0;
+}
+
+#shotimg {
+    overflow: hidden;
+    width: pxToRem(80px);
+    height: pxToRem(80px);
+}
+
+#overlay {
+    @include absCenter;
+    z-index: 4;
+    width: pxToRem(80px);
+    height: pxToRem(80px);
+    cursor: move;
+}
+
+#overlay span {
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    z-index: 3;
+    display: block;
+    width: 40px;
+    height: 40px;
+    cursor: se-resize;
+}
+
+#overlay span:before {
+    position: absolute;
+    top: pxToRem(13px);
+    right: pxToRem(13px);
+    display: block;
+    width: pxToRem(15px);
+    height: pxToRem(15px);
+    background-color: rgba(0,0,0,.5);
+    border: 1px solid rgba(255, 255, 255, .8);
+    content: '';
+}
+
+.overlay-t {
+    width: inherit;
+    height: inherit;
+    background-color: rgba(0,0,0,.3);
+    border: 1px dashed rgba(255, 255, 255, .8);
+}
+
+.shot-over {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 3;
+    display: none;
+    margin: auto;
+    text-align: center;
+}
+
+.shot-over a {
+    margin-bottom: pxToRem(5px);
+    width: pxToRem(80px);
+    background-color: rgba(255, 255, 255, .3);
+    border: 1px solid rgba(255, 255, 255, .6);
+}
+
+.shot-over .lock {
+    background-color: #e74c3c;
+}
+
+.shotlabel {
+    @include absCenter;
+    background-color: rgba(255, 255, 255, .6);
+    width: pxToRem(162px);
+    height: pxToRem(32px);
+}
+
+.otcak {
+    top: pxToRem(82px);
+}
+
+@media (max-width: 34em) {
+    .shot-over{
+        width: 100%;
+    }
+    .shot-img {
+        bottom: auto;
+    }
+    .shot-over .col-lg-3 {
+        padding: 5px 0;
+    }
+    .shot-over a {
+        margin: 0 5px;
+    }
+}
+
+.shot-img,
+#shotimg,
+#overlay {
+    @include border-radius(pxToRem(4px));
+}

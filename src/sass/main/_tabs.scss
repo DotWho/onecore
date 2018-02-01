@@ -1,0 +1,99 @@
+.tabs {
+    width: 100%;
+    & .tab-list {
+        border-bottom: 2px solid $primary;
+        & button {
+            display: block;
+            float: left;
+            color: $primary;
+            border-radius: 2px 2px 0 0;
+            &:hover {
+                background-color: transparent;
+            }
+            &.active {
+                color: $white;
+                background-color: $primary;
+                pointer-events: none;
+            }
+            & .ripple {
+                background-color: rgba($primary, .6);
+            }
+        }
+    }
+    & .tab-context {
+        position: relative;
+        z-index: 1;
+        & > div {
+            display: none;
+            opacity: 0;
+            padding-top: pxToRem(15px);
+        }
+        & .oc-tab-in,
+        & .oc-tab-out {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            margin: auto;
+            display: block;
+        }
+
+        & .oc-tab-in {
+            position: relative;
+            z-index: 1;
+            opacity: 1\9;
+            animation: ocTabIn 300ms forwards cubic-bezier(.23,1,.32,1);
+            &.active {
+                position: static;
+            }
+        }
+
+        & .oc-tab-out {
+            pointer-events: none;
+            opacity: 0\9;
+            animation: ocTabOut 300ms forwards cubic-bezier(.23,1,.32,1);;
+        }
+
+        & .oc-tab-load {
+            display: block;
+            height: 300px;
+            min-height: 300px;
+            opacity: 1;
+        }
+    }
+}
+
+.tabs .tab-list:before,
+.tabs .tab-list:after {
+    content: "";
+    display: table;
+}
+
+.tabs .tab-list:after{
+    clear: both;
+}
+
+@keyframes ocTabIn {
+    from {
+        opacity: 0;
+        transform: translate3d(-30px, 0, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes ocTabOut {
+    from {
+        opacity: 1;
+        visibility: visible;
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+        transform: translate3d(30px, 0, 0);
+    }
+}

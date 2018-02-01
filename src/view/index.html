@@ -1,0 +1,57 @@
+{% extends "../common/layout.html" %}
+
+{% block css %}
+    <link rel="stylesheet" href="../fonts/style.css" />
+    <link rel="stylesheet" href="../css/base.css" />
+{% endblock %}
+
+{% block content %}
+    <!-- <div id="zoomCheck" class="text-center">
+        你的浏览器目前处于缩放状态，会导致页面显示不正常，你可以键盘按“Ctrl+数字0“组合键恢复初始状态。
+        <a href="javascript:;">不再显示</a>
+    </div> -->
+
+    <aside id="aside">
+        {% include "../common/aside.html" %}
+    </aside>
+
+    <main class="container-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    {% include "../components/grid.html" %}
+                    {% include "../components/tip.html" %}
+                    {% include "../components/dropmenu.html" %}
+                    {% include "../components/datepicker.html" %}
+                    {% include "../components/select.html" %}
+                    {% include "../components/tabs.html" %}
+                    {% include "../components/msgbox.html" %}
+                    {% include "../components/toast.html" %}
+                    {% include "../components/imgbox.html" %}
+                    {% include "../components/imgup.html" %}
+                    {% include "../components/validate.html" %}
+                    {% include "../components/citys.html" %}
+                    {% include "../components/page.html" %}
+                    {% include "../components/slider.html" %}
+                    {% include "../components/accordion.html" %}
+                    {% include "../components/grade.html" %}
+                    {% include "../components/tags.html" %}
+                    {% include "../components/checkbox.html" %}
+                    {% include "../components/toggle.html" %}
+                    {% include "../components/ui.html" %}
+                    {% include "../components/test.html" %}
+                    {% include "../components/responsive.html" %}
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </main>
+{% endblock %}
+
+{% block js %}
+    <script src="../js/app/index.js" defer async></script>
+{% endblock %}

@@ -1,0 +1,40 @@
+<div class="content" id="slider">
+    <h4>Slider 实例：</h4>
+    <div class="slider" data-toggle="slider">
+        <div>
+            <a href="#" style="background-image: url('../img/1.jpg')"></a>
+            <a href="#" style="background-image: url('../img/2.jpg')"></a>
+            <a href="#" style="background-image: url('../img/3.jpg')"></a>
+        </div>
+    </div>
+<h5>HTML</h5>
+<xmp>
+````
+<div class="slider" data-toggle="slider">
+    <div>
+        <a href="#" style="background-image: url('../img/1.jpg')"></a>
+        <a href="#" style="background-image: url('../img/2.jpg')"></a>
+        <a href="#" style="background-image: url('../img/3.jpg')"></a>
+    </div>
+</div>
+````
+</xmp>
+<h5>通过 data 属性</h5>
+<xmp>
+````
+<div data-auto="true" data-arrow="true" ... > ... </div>
+````
+</xmp>
+<h5>通过 JavaScript 调用</h5>
+<xmp>
+````
+$el.slider({
+    auto: true,
+    arrow: true,
+    stop: 5000,
+    speed: 600,
+    ease: 'ease'
+});
+````
+</xmp>
+</div>

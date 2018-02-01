@@ -1,0 +1,168 @@
+<div class="content" id="validate">
+<h4>Validate</h4>
+<form action="" novalidate>
+    <div class="row">
+        <div class="col-3">
+            <div>
+                <input type="text" placeholder="text" data-length="[1,10]" class="fullwidth" required>
+                <span class="errorstr">不正确</span>
+            </div>
+            <div>
+                <input type="password" placeholder="password" class="fullwidth" data-keyup="true" required>
+                <div class="codestrong">
+                    <span class="cs-line"></span>
+                    <span class="cs-txt"></span>
+                </div>
+            </div>
+            <div>
+                <input type="password" placeholder="repassword" class="fullwidth" required>
+                <span class="errorstr">二次密码不相同</span>
+            </div>
+            <div>
+                <input type="mobile" placeholder="mobile" class="fullwidth" required>
+                <span class="errorstr">不正确</span>
+            </div>
+            <div>
+                <input type="email" placeholder="email" class="fullwidth" required>
+                <span class="errorstr">不正确</span>
+            </div>
+            <div>
+                <input type="text" data-type="number" placeholder="number" data-size="[0.1,15]" class="fullwidth" required>
+                <span class="errorstr">不正确</span>
+            </div>
+        </div>
+        <div class="col-3 md">
+            <div>
+                <input type="text" data-type="number" placeholder="integer" data-point="'0'" class="fullwidth" required>
+                <span class="errorstr">不正确</span>
+            </div>
+            <div>
+                <select name="" data-toggle="select" required>
+                    <option value="">0</option>
+                    <option value="1">1</option>
+                </select>
+                <span class="errorstr">不正确</span>
+            </div>
+            <div>
+                <textarea name="name" rows="2" cols="4" placeholder="textarea" required></textarea>
+                <span class="errorstr">不正确</span>
+            </div>
+        </div>
+        <div class="col-3 md">
+            <div>
+                <label class="checkbox">
+                    <input type="checkbox" name="xcv" value="1" required>
+                    <span class="ck-indicator"></span>
+                    <span class="ck-description">同意</span>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="xcv" value="2">
+                    <span class="ck-indicator"></span>
+                    <span class="ck-description">同意</span>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="xcv" value="3">
+                    <span class="ck-indicator"></span>
+                    <span class="ck-description">同意</span>
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" name="xcv" value="4">
+                    <span class="ck-indicator"></span>
+                    <span class="ck-description">同意</span>
+                </label>
+                <span class="errorstr">必选一个</span>
+            </div>
+            <div>
+                <label class="radio">
+                    <input type="radio" name="fb" value="" required>
+                    <span class="ck-indicator"></span>
+                    <span class="ck-description">同意</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="fb" value="">
+                    <span class="ck-indicator"></span>
+                    <span class="ck-description">同意</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="fb" value="">
+                    <span class="ck-indicator"></span>
+                    <span class="ck-description">同意</span>
+                </label>
+                <label class="radio">
+                    <input type="radio" name="fb" value="">
+                    <span class="ck-indicator"></span>
+                    <span class="ck-description">同意</span>
+                </label>
+                <span class="errorstr">必选一个</span>
+            </div>
+            <div>
+                <label class="checkbox">
+                    <input type="checkbox" required>
+                    <span class="ck-indicator"></span>
+                    <span class="ck-description">我已阅读并同意</span>
+                </label>
+                <span class="errorstr">不正确</span>
+            </div>
+        </div>
+        <div class="col-3">
+            <div>
+                <div class="imgup" data-toggle="imgup">
+                    <input type="hidden" data-type="imgup" value="" required>
+                </div>
+                <span class="errorstr">不正确</span>
+            </div>
+            <div>
+                <div class="imgup" data-toggle="imgup">
+                    <input type="hidden" data-type="imgup" value="">
+                </div>
+                <span class="errorstr">不正确</span>
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn primary" id="btn-test">测&nbsp;&nbsp;试</button>
+</form>
+<h5>通过 JavaScript 调用</h5>
+<xmp>
+````
+ajax: false             // 是否使用ajax提交,必须有success方法,返回ajax的data数据
+target: null            // 验证区域，默认form
+enter: false         // 是否回车提交
+before: function () { // 自定义验证
+    return 0;
+}
+success: function () {// 正确回调
+    form.submit()
+}
+error: function () {} // 错误回调
+$.fn.validate({'check': '#cksms,#cksms1,#cksms2'}); // 检查一组或一个
+````
+</xmp>
+<h5>验证类型</h5>
+<xmp>
+````
+data-api type | data-type
+"text"     // 文本验证
+"password" // 密码验证
+"email"    // 邮箱验证
+"number"   // 数字验证 最小0.01
+"tel"      // 电话验证 区号（-）号码
+"mobile"   // 手机验证
+"mtel"     // 电话和手机验证
+"select"   // select验证
+"imgup"    // 图片上传验证
+"checkbox" // checkbox验证
+````
+</xmp>
+<h5>长度验证</h5>
+<xmp>
+````
+data-length="[1,15]"
+number独有
+data-size="[0.01, 15]"
+data-point="3" // 允许多少位小数点，默认2位
+
+// 没有最大值使用0
+data-length="[5,0]"
+````
+</xmp>
+</div>

@@ -1,0 +1,55 @@
+.table,
+table {
+    width: 100%;
+    max-width: 100%;
+    font-size: $fontSize;
+    table-layout: fixed;
+    border-spacing: 0;
+    word-wrap:break-word;
+    white-space: normal;
+    border-collapse: collapse;
+    @include divider;
+}
+.table td,
+.table th {
+    padding: pxToRem(8px) pxToRem(15px);
+    font-weight: normal;
+    text-align: left;
+    vertical-align: middle;
+    border-left: 1px solid $grey;
+}
+.table tr {
+    border-bottom: 1px solid $grey;
+}
+.table.table-hover tbody tr {
+    transition: background-color 300ms ease-in-out;
+    &:hover {
+        background-color: #f7f8fb;
+    }
+}
+.table.table-center td,
+.table.table-center th {
+    text-align: center;
+}
+.table.table-right td,
+.table.table-right th {
+    text-align: right;
+}
+.table-responsive {
+    min-height: 0.01%;
+    overflow-x: auto;
+}
+@media screen and (max-width: 767px) {
+    .table-responsive {
+        width: 100%;
+        overflow-y: hidden;
+        -ms-overflow-style: -ms-autohiding-scrollbar;
+    }
+    .table-responsive > .table {
+        table-layout: auto;
+    }
+    .table-responsive > .table td,
+    .table-responsive > .table th {
+        white-space: nowrap;
+    }
+}

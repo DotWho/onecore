@@ -1,0 +1,19 @@
+.badge {
+    position: relative;
+    z-index: 0;
+    margin-left: pxToRem(2px);
+    padding: 0 pxToRem(6px);
+    display: inline-block;
+    font-size: pxToRem(12px);
+    line-height: 1.5!important;
+    color: $dark;
+    text-align: center;
+    text-indent: 0;
+    &:after {
+        @include absCenter;
+        z-index: -1;
+        background-color: $white;
+        content: "";
+        @include border-radius(pxToRem(10px));
+    }
+}

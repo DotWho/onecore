@@ -1,0 +1,85 @@
+<div class="content" id="datepicker">
+<h4>Datepicker 实例：</h4>
+<span class="spanb">CN:</span>
+<div data-toggle="datepicker" data-format="yyyy年MM月dd日">
+    <input type="text" name="">
+</div>
+<span class="spanbc">MIN today:</span>
+<div data-toggle="datepicker" data-min="today">
+    <input type="text" name="">
+</div>
+<span class="spanbc">Times:</span>
+<div data-toggle="datepicker" data-time="true">
+    <input type="text" name="">
+</div>
+<hr>
+<span class="spanb">Year:</span>
+<div data-toggle="datepicker" data-type="year" data-max="today">
+    <input type="text" name="">
+</div>
+<span class="spanbc">Min Month:</span>
+<div data-toggle="datepicker" value="2017-06" data-type="month" data-min="today">
+    <input type="text" name="">
+</div>
+<span class="spanbc">Max Month:</span>
+<div data-toggle="datepicker" data-type="month" data-max="today">
+    <input type="text" name="">
+</div>
+<hr>
+<span class="spanb">Min+1</span>
+<div data-toggle="datepicker" data-min="+1" data-format="yyyy年MM月dd日">
+    <input type="text" name="">
+</div>
+<span class="spanbc">Max-1</span>
+<div data-toggle="datepicker" data-max="-1">
+    <input type="text" name="">
+</div>
+<span class="spanbc">Max+15:</span>
+<div data-toggle="datepicker" data-max="+15">
+    <input type="text" name="">
+</div>
+<hr>
+<span class="spanb">最小明天:</span>
+<div data-toggle="datepicker" data-min="+1">
+    <input type="text" name="">
+</div>
+<span class="spanbc">最大昨天:</span>
+<div data-toggle="datepicker" data-max="-1">
+    <input type="text" name="">
+</div>
+<hr>
+<span class="spanb">选择1:</span>
+<div class="firsttime" data-type="month" value="2017-05">
+    <input type="text" name="">
+</div>
+<span class="spanbc">选择2:</span>
+<div class="datepicker sendtime" data-type="month"  value="2017-09">
+    <input type="text" name="">
+</div>
+<h5>HTML</h5>
+<xmp>
+````
+<div data-toggle="datepicker">
+    <input type="text" name="">
+</div>
+````
+</xmp>
+<h5>通过 data 属性</h5>
+<xmp>
+````
+<div data-toggle="datepicker" data-format="yyyy/MM/dd" ... >
+    <input type="text" name="">
+</div>
+````
+</xmp>
+<h5>通过 JavaScript 调用</h5>
+<xmp>
+````
+$el.datepicker({
+    format: 'yyyy/MM/dd' //yyyy-MM-dd, yyyy.MM.dd
+    min: new Date() //2016-01-01
+    max: new Date() //2016-01-01
+});
+````
+</xmp>
+</div>

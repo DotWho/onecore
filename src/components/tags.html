@@ -1,0 +1,42 @@
+<div class="content" id="tags">
+<h4>Tags 实例：</h4>
+<div class="tags" data-name="tags[]">
+    <button class="btn tag">
+        <label>A</label>
+        <input type="hidden" name="" value="A">
+    </button>
+    <button class="btn tag">
+        <label>Nice</label>
+        <input type="hidden" name="" value="Nice">
+    </button>
+    <button class="btn tag">
+        <label>Good</label>
+        <input type="hidden" name="" value="Good">
+    </button>
+    <button class="btn tag">
+        <label>很好</label>
+        <input type="hidden" name="" value="很好">
+    </button>
+    <span class="tag-add">
+        <input type="text" placeholder="添加">
+        <button type="button" class="btn">添加</button>
+    </span>
+</div>
+<h5>HTML</h5>
+<xmp>
+````
+<div class="tags" data-name="tags[]">
+    <span class="tag-add">
+        <input type="text">
+        <button type="button" class="btn">添加</button>
+    </span>
+</div>
+````
+</xmp>
+<h5>通过 data 赋予name</h5>
+<xmp>
+````
+<div class="tags" data-name="tags[]"></div>
+````
+</xmp>
+</div>

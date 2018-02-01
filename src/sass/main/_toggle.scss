@@ -1,0 +1,60 @@
+.toggle {
+    display: inline-block;
+    min-height: pxToRem(28px);
+    vertical-align: middle;
+    cursor: pointer;
+    & .toggle-indicator {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: pxToRem(50px);
+        height: pxToRem(28px);
+        background-color: $white;
+        display: inline-block;
+        vertical-align: middle;
+        border: 1px solid $grey;
+        border-radius: 100px;
+        transition: all 250ms cubic-bezier(.27, .01, .38, 1.06);
+        &:after {
+            content: "";
+            position: absolute;
+            top: pxToRem(3px);
+            left: pxToRem(3px);
+            width: pxToRem(20px);
+            height: pxToRem(20px);
+            background-color: $grey;
+            border-radius: 100px;
+            transition: 300ms;
+        }
+    }
+    & .toggle-description {
+        display: inline-block;
+        padding-left: 5px;
+        vertical-align: middle;
+    }
+    & input {
+        display: none;
+        &:active + .toggle-indicator:after {
+            width: pxToRem(26px);
+        }
+        &:checked + .toggle-indicator {
+            background-color: $success;
+            &:after {
+                background-color: $white;
+                left: pxToRem(46px);
+                transform: translateX(-100%);
+            }
+        }
+    }
+    &.disabled {
+        cursor: not-allowed!important;
+        pointer-events: none!important;
+        @include box-shadow(none!important);
+        & .toggle-indicator {
+            background-color: $light!important;
+        }
+        & .toggle-description {
+            color: $grey!important;
+        }
+    }
+}

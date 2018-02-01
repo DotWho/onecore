@@ -1,0 +1,454 @@
+[class*="tip-"] {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+[class*="tip-"]:before,
+[class*="tip-"]:after {
+    position: absolute;
+    transform: translate3d(0, 0, 0);
+    visibility: hidden;
+    opacity: 0;
+    z-index: 2;
+    pointer-events: none;
+    transition: 0.3s ease;
+}
+
+[class*="tip-"]:hover:before,
+[class*="tip-"]:hover:after {
+    visibility: visible;
+    opacity: 1;
+}
+
+[class*="tip-"]:before {
+    content: '';
+    position: absolute;
+    background: transparent;
+    border: 6px solid transparent;
+    z-index: 2;
+}
+
+[class*="tip-"]:after {
+    background-color: #383838;
+    color: $white;
+    padding: 8px 10px;
+    font-size: 12px;
+    line-height: 12px;
+    white-space: nowrap;
+    border-radius: 4px;
+    text-shadow: 0 -1px 0px black;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+[class*="tip-"][aria-label]:after {
+    content: attr(aria-label);
+}
+
+[aria-label='']:before,
+[aria-label='']:after {
+    display: none !important;
+}
+
+.tip-top-left:before {
+    border-top-color: #383838;
+}
+
+.tip-top-right:before {
+    border-top-color: #383838;
+}
+
+.tip-top:before {
+    border-top-color: #383838;
+}
+
+.tip-bottom-left:before {
+    border-bottom-color: #383838;
+}
+
+.tip-bottom-right:before {
+    border-bottom-color: #383838;
+}
+
+.tip-bottom:before {
+    border-bottom-color: #383838;
+}
+
+.tip-left:before {
+    border-left-color: #383838;
+}
+
+.tip-right:before {
+    border-right-color: #383838;
+}
+
+
+/**
+ * top tooltip
+ */
+
+.tip-top:before {
+    margin-bottom: -11px;
+}
+
+.tip-top:before, .tip-top:after {
+    bottom: 100%;
+    left: 50%;
+}
+
+.tip-top:before {
+    left: calc(50% - 6px);
+}
+
+.tip-top:after {
+    transform: translateX(-50%);
+}
+
+.tip-top:hover:before {
+    transform: translateY(-8px);
+}
+
+.tip-top:hover:after {
+    transform: translateX(-50%) translateY(-8px);
+}
+
+
+/**
+ * bottom tooltip
+ */
+
+.tip-bottom:before {
+    margin-top: -11px;
+}
+
+.tip-bottom:before, .tip-bottom:after {
+    top: 100%;
+    left: 50%;
+}
+
+.tip-bottom:before {
+    left: calc(50% - 6px);
+}
+
+.tip-bottom:after {
+    transform: translateX(-50%);
+}
+
+.tip-bottom:hover:before {
+    transform: translateY(8px);
+}
+
+.tip-bottom:hover:after {
+    transform: translateX(-50%) translateY(8px);
+}
+
+
+/**
+ * right tooltip
+ */
+
+.tip-right:before {
+    margin-left: -11px;
+    margin-bottom: -6px;
+}
+
+.tip-right:after {
+    margin-bottom: -14px;
+}
+
+.tip-right:before,
+.tip-right:after {
+    left: 100%;
+    bottom: 50%;
+}
+
+.tip-right:hover:before {
+    transform: translateX(8px);
+}
+
+.tip-right:hover:after {
+    transform: translateX(8px);
+}
+
+
+/**
+ * left tooltip
+ */
+
+.tip-left:before {
+    margin-right: -11px;
+    margin-bottom: -6px;
+}
+
+.tip-left:after {
+    margin-bottom: -14px;
+}
+
+.tip-left:before,
+.tip-left:after {
+    right: 100%;
+    bottom: 50%;
+}
+
+.tip-left:hover:before {
+    transform: translateX(-8px);
+}
+
+.tip-left:hover:after {
+    transform: translateX(-8px);
+}
+
+
+/**
+ * top-left tooltip
+ */
+
+.tip-top-left:before {
+    margin-bottom: -11px;
+}
+
+.tip-top-left:before,
+.tip-top-left:after {
+    bottom: 100%;
+    left: 50%;
+}
+
+.tip-top-left:before {
+    left: calc(50% - 6px);
+}
+
+.tip-top-left:after {
+    transform: translateX(-100%);
+}
+
+.tip-top-left:after {
+    margin-left: 12px;
+}
+
+.tip-top-left:hover:before {
+    transform: translateY(-8px);
+}
+
+.tip-top-left:hover:after {
+    transform: translateX(-100%) translateY(-8px);
+}
+
+
+/**
+ * top-right tooltip
+ */
+
+.tip-top-right:before {
+    margin-bottom: -11px;
+}
+
+.tip-top-right:before,
+.tip-top-right:after {
+    bottom: 100%;
+    left: 50%;
+}
+
+.tip-top-right:before {
+    left: calc(50% - 6px);
+}
+
+.tip-top-right:after {
+    transform: translateX(0);
+}
+
+.tip-top-right:after {
+    margin-left: -12px;
+}
+
+.tip-top-right:hover:before {
+    transform: translateY(-8px);
+}
+
+.tip-top-right:hover:after {
+    transform: translateY(-8px);
+}
+
+
+/**
+ * bottom-left tooltip
+ */
+
+.tip-bottom-left:before {
+    margin-top: -11px;
+}
+
+.tip-bottom-left:before,
+.tip-bottom-left:after {
+    top: 100%;
+    left: 50%;
+}
+
+.tip-bottom-left:before {
+    left: calc(50% - 6px);
+}
+
+.tip-bottom-left:after {
+    transform: translateX(-100%);
+}
+
+.tip-bottom-left:after {
+    margin-left: 12px;
+}
+
+.tip-bottom-left:hover:before {
+    transform: translateY(8px);
+}
+
+.tip-bottom-left:hover:after {
+    transform: translateX(-100%) translateY(8px);
+}
+
+
+/**
+ * bottom-right tooltip
+ */
+
+.tip-bottom-right:before {
+    margin-top: -11px;
+}
+
+.tip-bottom-right:before,
+.tip-bottom-right:after {
+    top: 100%;
+    left: 50%;
+}
+
+.tip-bottom-right:before {
+    left: calc(50% - 6px);
+}
+
+.tip-bottom-right:after {
+    transform: translateX(0);
+}
+
+.tip-bottom-right:after {
+    margin-left: -12px;
+}
+
+.tip-bottom-right:hover:before {
+    transform: translateY(8px);
+}
+
+.tip-bottom-right:hover:after {
+    transform: translateY(8px);
+}
+
+
+/**
+ * source: tipsizes.scss
+ *
+ * Defines width restricted tooltips that can span
+ * across multiple lines.
+ *
+ * Classes added:
+ * 	1) tip-small
+ * 	2) tip-medium
+ * 	3) tip-large
+ *
+ */
+
+.tip-small:after,
+.tip-medium:after,
+.tip-large:after {
+    white-space: normal;
+    line-height: 1.4em;
+    word-wrap: break-word;
+}
+
+.tip-small:after {
+    width: 80px;
+}
+
+.tip-medium:after {
+    width: 150px;
+}
+
+.tip-large:after {
+    width: 300px;
+}
+
+
+/**
+ * source: tipalways.scss
+ *
+ * Defines a persisted tooltip which shows always.
+ *
+ * Classes added:
+ * 	1) tip-always
+ *
+ */
+
+.tip-always:after,
+.tip-always:before {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tip-always.tip-top:before {
+    transform: translateY(-8px);
+}
+
+.tip-always.tip-top:after {
+    transform: translateX(-50%) translateY(-8px);
+}
+
+.tip-always.tip-top-left:before {
+    transform: translateY(-8px);
+}
+
+.tip-always.tip-top-left:after {
+    transform: translateX(-100%) translateY(-8px);
+}
+
+.tip-always.tip-top-right:before {
+    transform: translateY(-8px);
+}
+
+.tip-always.tip-top-right:after {
+    transform: translateY(-8px);
+}
+
+.tip-always.tip-bottom:before {
+    transform: translateY(8px);
+}
+
+.tip-always.tip-bottom:after {
+    transform: translateX(-50%) translateY(8px);
+}
+
+.tip-always.tip-bottom-left:before {
+    transform: translateY(8px);
+}
+
+.tip-always.tip-bottom-left:after {
+    transform: translateX(-100%) translateY(8px);
+}
+
+.tip-always.tip-bottom-right:before {
+    transform: translateY(8px);
+}
+
+.tip-always.tip-bottom-right:after {
+    transform: translateY(8px);
+}
+
+.tip-always.tip-left:before {
+    transform: translateX(-8px);
+}
+
+.tip-always.tip-left:after {
+    transform: translateX(-8px);
+}
+
+.tip-always.tip-right:before {
+    transform: translateX(8px);
+}
+
+.tip-always.tip-right:after {
+    transform: translateX(8px);
+}

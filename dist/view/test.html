@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-cmn-Hans">
+
+    <head>
+        <meta charset="utf-8" />
+        <meta name="keywords" content="your keywords" /><!-- 页面关键词 -->
+        <meta name="description" content="your description" /><!-- 页面描述 -->
+        <meta name="author" content="author,email address" /><!-- 网页作者 -->
+        <meta name="robots" content="index,follow" /><!-- 搜索引擎抓取 -->
+        <meta http-equiv="Cache-Control" content="no-siteapp" /><!-- 百度不分页 -->
+        <meta name="renderer" content="webkit" /><!-- 启用360浏览器的极速模式(webkit) -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /><!-- 优先使用 IE 最新版本和 Chrome -->
+        <meta name="viewport" content="initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" /><!-- 为移动设备添加 viewport -->
+        <meta name="apple-mobile-web-app-capable" content="yes" /><!-- 是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏 -->
+        <meta name="format-detection" content="telephone=no, email=no" /><!-- 忽略页面中的数字识别为电话，忽略email识别 -->
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" /><!-- IOS状态栏透明 -->
+        <meta name="wap-font-scale" content="no" /><!-- UC字体缩放 -->
+        <title>OneCore</title>
+        <link rel="stylesheet" href="../css/onecore.css" />
+        
+<style media="screen">
+    .precode {
+        color: #fff;
+        background-color: #dccc0e;
+        height: 40px;
+        line-height: 40px;
+        padding-left: 20px;
+        font-size: 20px;
+    }
+    #on {
+        width: 300px;
+    }
+    #on li {
+        width: 300px;
+        height: 100px;
+        background-color: red;
+        border: 1px solid #dccc0e;
+    }
+    #on div {
+        width: 300px;
+        height: 100px;
+        background-color: blue;
+        border: 1px solid #dccc0e;
+    }
+    .testx,
+    .teste {
+        width: 100%;
+        height: 300px;
+        background-color: blue;
+    }
+    .testx {
+        padding-top: 15px;
+        background-color: green;
+    }
+</style>
+
+        <!-- <link rel="dns-prefetch" href="//cdn.polyfill.io/"> -->
+        <link rel="preload" href="./js/lib/onecore.js" as="script">
+        <link rel="preload" href="./js/lib/strapdown.js" as="script">
+        <script src="//cdn.polyfill.io/v2/polyfill.min.js"></script>
+        <!--[if lt IE 10]>
+            <script src="../js/lib/ie_polyfill.js"></script>
+        <![endif]-->
+        <!--[if lt IE 9]>
+            <script src="../js/lib/noie8.js"></script>
+        <![endif]-->
+    </head>
+
+    <body>
+        <header class="header">
+    <div class="row">
+        <nav class="col-12">
+            <a href="javascript:;" class="btn hanm-menu">
+                <span class="line1"></span>
+                <span class="line2"></span>
+                <span class="line3"></span>
+            </a>
+            <button type="button" class="btn t-blueGrey gototop">首页</button>
+            <button type="button" class="btn t-blueGrey gotobtm">底部</button>
+            <div class="pull-right">
+                <div class="search clearfix">
+                    <input type="search" autofocus x-webkit-speech x-webkit-grammar="builtin:search" class="btnbar">
+                    <button type="button" class="btn btnsch">搜索</button>
+                </div>
+                <button type="button" class="btn t-blueGrey">
+                    <span class="icon-textsms"></span>
+                </button>
+                <button type="button" class="btn t-blueGrey">
+                    <span class="icon-notifications"></span>
+                </button>
+                <button type="button" class="btn t-blueGrey">
+                    <span class="icon-settings"></span>
+                </button>
+                <button type="button" class="btn t-blueGrey">
+                    <span class="icon-exit_to_app"></span>
+                </button>
+            </div>
+        </nav>
+    </div>
+</header>
+
+        
+    <ul id="on">
+        <li class="li1">1</li>
+        <li class="li2">
+            2
+            <span class="li55"></span>
+        </li>
+        <li class="li3">3</li>
+        <li class="li4">4</li>
+        <div></div>
+    </ul>
+    <button type="button" class="btn green ghj" data-x="1" data-y="2" data-z="3">Button</button>
+
+        <footer></footer>
+
+        <script src="../js/lib/onecore.js"></script>
+        <script src="../js/lib/strapdown.js" async></script>
+        
+    <script src="../js/app/test.js"></script>
+
+    </body>
+
+</html>

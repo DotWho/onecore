@@ -1,0 +1,307 @@
+.datepicker {
+    position: relative;
+    display: inline-block;
+    border-collapse: collapse;
+    vertical-align: middle;
+    & > input {
+        display: none;
+    }
+    & > button {
+        color: $dark;
+        background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAxRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTM4IDc5LjE1OTgyNCwgMjAxNi8wOS8xNC0wMTowOTowMSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OENGN0MxNkU4MjI4MTFFN0EzOUJBMTM0OTY3MkFDNjciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OENGN0MxNkQ4MjI4MTFFN0EzOUJBMTM0OTY3MkFDNjciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgV2luZG93cyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJDQkNDNTRCNzAyRTExQjM3NjNGQzg0RjgxMDZEMEEwMCIgc3RSZWY6ZG9jdW1lbnRJRD0iQ0JDQzU0QjcwMkUxMUIzNzYzRkM4NEY4MTA2RDBBMDAiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz56VAYQAAAAWlBMVEXe4u7f4+/e4u3f4+7f4e7f4e3e4fDd4e3f4uvd4ezj5fHc4u7c4+3f4vHi5PDj5u/g4u/g4u7d4erg5PDd4O/j5u3i5vHg4+zg4+rc4Oze4O3d5O7k5/D///8mNxbmAAAAHnRSTlP//////////////////////////////////////wDsGBxeAAAAhUlEQVR42lyOBwrDUAxD5fUzm9G9fP9rVoUG8isQRs/CGJl57TMnen4zgFbnlEyJL5jtCFgnT3dOn6AYTBUWAggOC6IMKGalMD0EjtXxMl/HUUNNCdDc8ZPH7cx8yp1EudiDziBd1RCYVaCBaAV4ogIqf4CFFmX7g69ri0urW47Fo/8IMACu9Q6pR/2+qQAAAABJRU5ErkJggg==);
+        background-repeat: no-repeat;
+        background-position: 90% center;
+        @include inputStyle;
+        &:hover {
+            border-color: $primary;
+            background-color: transparent;
+        }
+        & .ripple {
+            background-color: rgba($primary, .6);
+        }
+    }
+    &.active > button {
+        border-color: $primary;
+    }
+}
+
+.oc-calendar {
+    position: absolute;
+    z-index: 2;
+    margin-top: pxToRem(2px);
+    padding: pxToRem(8px);
+    width: pxToRem(270px);
+    max-width: pxToRem(270px);
+    background-color: $white;
+    @include divider;
+    @include borderRadius;
+    @include boxShadow;
+    & .oc-calendar-toolbar {
+        padding-bottom: pxToRem(8px);
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        & .toolbar-prev,
+        & .toolbar-next {
+            float: left;
+            padding: 0;
+            width: pxToRem(36px);
+            height: pxToRem(36px);
+            border-radius: 100%;
+            &:before {
+                font-family: $iconFamily;
+                font-size: pxToRem(18px);
+                width: pxToRem(36px);
+                height: pxToRem(36px);
+                display: block;
+                text-indent: 2px;
+                line-height: pxToRem(36px);
+                content: "\e314";
+            }
+            .disme {
+                pointer-events: none;
+            }
+        }
+        & .toolbar-next:before {
+            content: "\e315";
+        }
+        & > div {
+            position: relative;
+            overflow: hidden;
+            float: left;
+            width: pxToRem(180px);
+            height: pxToRem(36px);
+            & button {
+                width: 100%;
+            }
+        }
+    }
+    & .oc-calendar-week {
+        padding-bottom: pxToRem(8px);
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        & span {
+            float: left;
+            display: block;
+            text-align: center;
+            width: pxToRem(36px);
+        }
+    }
+    & .oc-calendar-monthday {
+        position: relative;
+        overflow: hidden;
+        padding-bottom: pxToRem(8px);
+        & .oc-calendar-monthday-row {
+            &:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            & button {
+                padding-left: 0;
+                padding-right: 0;
+                float: left;
+                width: pxToRem(36px);
+                border-radius: 100%;
+            }
+            & .oc-calendar-none {
+                pointer-events: none;
+                float: left;
+                display: inline-block;
+                width: pxToRem(36px);
+                height: pxToRem(36px);
+            }
+            & .today {
+                color: $secondary;
+            }
+            & .active {
+                color: $white;
+                background-color: $primary;
+            }
+            & .none {
+                pointer-events: none;
+                color: $grey;
+            }
+        }
+    }
+    & .oc-calendarIn-next {
+        position: relative;
+        z-index: 1;
+        animation: ocDpInNext 300ms forwards cubic-bezier(.23,1,.32,1);
+    }
+    & .oc-calendarOut-next {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        pointer-events: none;
+        visibility: hidden\9;
+        animation: ocDpOutNext 300ms forwards cubic-bezier(.23,1,.32,1);
+    }
+    & .oc-calendarIn-prev {
+        position: relative;
+        z-index: 1;
+        animation: ocDpInPerv 300ms forwards cubic-bezier(.23,1,.32,1);
+    }
+    & .oc-calendarOut-prev {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        pointer-events: none;
+        visibility: hidden\9;
+        animation: ocDpOutPerv 300ms forwards cubic-bezier(.23,1,.32,1);
+    }
+    & .oc-calendar-actions {
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        & button {
+            float: left;
+            width: pxToRem(84px);
+        }
+    }
+    & .oc-calendar-month,
+    & .oc-calendar-year {
+        &:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+        & button {
+            float: left;
+            width: pxToRem(63px);
+            height: pxToRem(63px);
+            &.active {
+                color: $white!important;
+                background-color: $primary;
+            }
+            &.tonow {
+                color: $secondary;
+            }
+            &.none {
+                pointer-events: none;
+                color: $grey!important;
+                background-color: transparent!important;
+            }
+        }
+    }
+    & .sfmdiv {
+        position: relative;
+        height: pxToRem(180px);
+    }
+    & .sfmdiv div {
+        padding: pxToRem(72px) 0;
+        height: pxToRem(180px);
+        overflow: hidden;
+    }
+    & .sfmdiv span {
+        display: block;
+        width: 100%;
+        height: pxToRem(36px);
+        line-height: pxToRem(36px);
+        text-align: center;
+        color: $grey;
+    }
+    & .sfmdiv span.active {
+        color: $primary;
+    }
+    & .hour,
+    & .mins,
+    & .seds {
+        float: left;
+        width: pxToRem(84px);
+    }
+    & .seltime {
+        padding: 0 pxToRem(15px) 0 pxToRem(20px);
+        margin-top: pxToRem(10px);
+        background-color: $primary;
+        @include borderRadius;
+        & input {
+            float: left;
+            width: pxToRem(42px);
+            min-width: pxToRem(42px);
+            text-align: center;
+            color: $white;
+            background-color: $primary;
+            border: 0;
+            &:focus {
+                background-color: $primary!important;
+            }
+        }
+        & span {
+            display: block;
+            float: left;
+            color: $white;
+            line-height: pxToRem(36px);
+        }
+        & .timeck {
+            float: right;
+            color: $white;
+        }
+    }
+}
+
+@keyframes ocDpInNext {
+    from {
+        transform: translate3d(100%, 0, 0);
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes ocDpOutNext {
+    from {
+        visibility: visible;
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+@keyframes ocDpInPerv {
+    from {
+        transform: translate3d(-100%, 0, 0);
+    }
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+@keyframes ocDpOutPerv {
+    from {
+        visibility: visible;
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        visibility: hidden;
+        transform: translate3d(100%, 0, 0);
+    }
+}
+
+@media (max-width: 34em) {
+    .oc-calendar {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+        z-index: 8;
+        margin: auto;
+        max-height: pxToRem(350px);
+    }
+}

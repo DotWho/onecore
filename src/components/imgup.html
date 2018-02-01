@@ -1,0 +1,41 @@
+<div class="content" id="imgup">
+<h4>Imgup 实例：</h4>
+<h5>单个，限制大小</h5>
+<div class="imgup" data-toggle="imgup">
+    <input type="hidden" value=''>
+</div>
+<hr>
+<div class="imgup" data-size="2MB" data-max="3" data-toggle="imgup">
+    <input type="hidden" name="" value="">
+</div>
+<hr>
+<div class="imgup" data-max="99" data-toggle="imgup">
+    <input type="hidden" value=''>
+</div>
+<!-- [{"id":1,"url":"urlurk"},{"id":2,"url":"urlurk"},{"id":3,"url":"urlurk"}] -->
+<h5>HTML</h5>
+<xmp>
+````
+<div data-toggle="imgup">
+    <input type="hidden" data-type="imgup" value="">
+</div>
+````
+</xmp>
+<h5>通过 data 限制大小(需带单位KB,MB,GB)</h5>
+<xmp>
+````
+<div data-toggle="imgup" data-size="2MB">
+    <input type="hidden" data-type="imgup" value="">
+</div>
+````
+</xmp>
+<h5>通过 JavaScript 调用</h5>
+<xmp>
+````
+$('.imgupx').imgup({
+    max: 5,
+    size: '4MB'
+});
+````
+</xmp>
+</div>

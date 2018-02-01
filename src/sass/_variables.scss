@@ -1,0 +1,215 @@
+@charset "utf-8";
+
+$baseFontSize: 100px;
+$fontSize: 12px / $baseFontSize * 1rem;
+$iconSize: 14px / $baseFontSize * 1rem;
+
+$fontFamily: Arial, 'Microsoft Yahei', 'Helvetica Neue', sans-serif, Helvetica!default;
+$iconFamily: 'onecore'!default;
+
+$white: #fff!default;
+$primary: #0067F4!default;
+$secondary: #5A6169!default;
+$success: #17C671!default;
+$info: #00B8D8!default;
+$warning: #FFB400!default;
+$danger: #f44336!default;
+$light: #E9ECEF!default;
+$dark: #212529!default;
+$grey: #becad6!default;
+
+//@include colorFactory($color);
+@mixin colorFactory ($name, $color) {
+    .#{$name} {
+        background-color: $color;
+    }
+    .btn.#{$name} {
+        color: $white;
+        background-color: $color;
+        &.spot {
+            box-shadow: 0 pxToRem(5px) pxToRem(10px) rgba($color, .4);
+        }
+    }
+    .btn.#{$name}.outline {
+        color: $color;
+        background-color: transparent;
+        border-color: $color;
+    }
+    .t-#{$name} {
+        color: $color;
+    }
+}
+
+//@include inputStyle;
+@mixin inputStyle {
+    display: inline-block;
+    padding-top: pxToRem(9px);
+    padding-right: pxToRem(14px);
+    padding-bottom: pxToRem(9px);
+    padding-left: pxToRem(14px);
+    min-width: pxToRem(165px);
+    font-size: $fontSize;
+    line-height: 1.5;
+    text-indent: 0;
+    text-align: left;
+    color: $dark;
+    background-color: $white;
+    @include divider;
+    vertical-align: middle;
+    @include borderRadius;
+    @include transition((border-color 300ms ease-in-out, box-shadow 300ms ease-in-out));
+    &.error {
+        @include error;
+    }
+}
+
+//@include divider;
+@mixin divider {
+    border: 1px solid $grey;
+}
+
+//@include error;
+@mixin error {
+    border-color: $danger!important;
+    box-shadow: 0 pxToRem(5px) pxToRem(10px) rgba($danger, .1)!important;
+}
+
+//@include disabled;
+@mixin disabled {
+    color: $grey!important;
+    background-color: $light!important;
+    border-color: $light!important;
+    cursor: not-allowed!important;
+    pointer-events: none!important;
+    @include box-shadow(none!important);
+}
+
+//@include mainAniIn;
+@mixin mainAniIn {
+    visibility: visible;
+    animation: iShowIn 450ms forwards cubic-bezier(.23,1,.32,1);
+}
+
+//@include mainAniOut;
+@mixin mainAniOut {
+    animation: iShowOut 450ms forwards cubic-bezier(.23,1,.32,1);
+}
+
+//@include boxShadow;
+@mixin boxShadow {
+    @include box-shadow((0 pxToRem(6px) pxToRem(30px) rgba(0, 0, 0, .23)));
+}
+
+//@include borderRadius;
+@mixin borderRadius {
+    border-radius: 4px;
+}
+
+//pxToRem(15px);
+@function pxToRem($px) {
+    @return $px / $baseFontSize * 1rem;
+    //@return $px;
+}
+
+//@include opacity(80);
+@mixin opacity($opacity:50) {
+    opacity: $opacity / 100;
+    //filter: alpha(opacity=$opacity);
+}
+
+//@include center-block;
+@mixin center-block {
+    margin-right: auto;
+    margin-left: auto;
+}
+
+//@include absCenter;
+@mixin absCenter {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+//@include fixCenter;
+@mixin fixCenter {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto;
+}
+
+//@include user-select;
+@mixin user-select {
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+//如动画过程有闪烁（通常发生在动画开始的时候），可以尝试下面的Hack
+//@include backface-visibility;
+@mixin backface-visibility {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-perspective: 1000;
+    perspective: 1000;
+}
+
+//@include will-change($change);
+@mixin will-change ($change) {
+    -webkit-will-change: $change;
+    will-change: $change;
+}
+
+//@include border-radius($radius);
+@mixin border-radius ($radius) {
+    border-radius: $radius;
+}
+
+//@include box-shadow($box-shadow);
+@mixin box-shadow($box-shadow) {
+    box-shadow: $box-shadow;
+}
+
+//@include text-shadow($text-shadow);
+@mixin text-shadow($text-shadow) {
+    text-shadow: $text-shadow;
+}
+
+//@include transform($transform);
+@mixin transform($transform) {
+    transform: $transform;
+}
+
+//@include transform-origin($transform-origin);
+@mixin transform-origin($x, $y) {
+    transform-origin: $x $y;
+}
+
+//@include transition($transition);
+@mixin transition($transition) {
+    transition: $transition;
+}
+
+//@include transition-duration($transition-duration);
+@mixin transition-duration($transition-duration) {
+    transition-duration: $transition-duration;
+}
+
+//@include animation($animation);
+@mixin animation($animation) {
+    animation: $animation;
+}
+
+//@include linear-gradient($dec, $from, $to, $width);
+@mixin linear-gradient($dec, $from, $to, $width) {
+    /* Fallback for sad browsers */
+    background-color: $to;
+    /* WebKit (Safari 5.1+, Chrome 10+) */
+    background-image: -webkit-linear-gradient($dec, $from, $to $width);
+    /* W3C */
+    background-image: -moz-linear-gradient($dec, $from, $to $width);
+}

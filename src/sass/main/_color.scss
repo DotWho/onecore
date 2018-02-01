@@ -1,0 +1,10 @@
+@include colorFactory('white', $white);
+@include colorFactory('primary', $primary);
+@include colorFactory('secondary', $secondary);
+@include colorFactory('success', $success);
+@include colorFactory('info', $info);
+@include colorFactory('warning', $warning);
+@include colorFactory('danger', $danger);
+@include colorFactory('light', $light);
+@include colorFactory('dark', $dark);
+@include colorFactory('grey', $grey);

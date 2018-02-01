@@ -1,0 +1,38 @@
+.accordion {
+    & button {
+        padding-top: 0;
+        display: block;
+        width: 100%;
+        height: pxToRem(50px);
+        line-height: pxToRem(50px);
+        text-align: left;
+        border-left: 3px solid transparent;
+        border-radius: 0;
+    }
+    & .adn-more + div {
+        display: none;
+        background-color: rgba(0, 0, 0, .2);
+        & button {
+            text-indent: pxToRem(26px);
+        }
+    }
+    & .selected {
+        background-color: rgba($white, .3);
+        border-left-color: $white;
+    }
+    & .adn-more:before {
+        position: absolute;
+        top: 0;
+        right: 10px;
+        display: block;
+        font-family: $iconFamily;
+        font-size: $iconSize;
+        line-height: pxToRem(48px);
+        content: "\e313";
+        @include transition(transform 130ms ease-out);
+    }
+    & .active.adn-more:before {
+        transform: scale3d(1, -1, 1);
+        filter: FlipV;
+    }
+}

@@ -1,0 +1,122 @@
+.toast {
+    position: relative;
+    padding: pxToRem(10px);
+    margin-bottom: pxToRem(10px);
+    display: block;
+    width: pxToRem(300px);
+    color: $white;
+    background-color: $white;
+    text-align: left;
+    opacity: 0;
+    display: block\9;
+    opacity: 1\9;
+    @include divider;
+    @include boxShadow;
+    @include borderRadius;
+    animation: toastIn 450ms forwards cubic-bezier(.23,1,.32,1);
+}
+
+@keyframes toastIn {
+    from {
+        opacity: 0;
+        transform: translate3d(100%, 0, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.toast.toastout {
+    display: none\9;
+    @include mainAniOut;
+}
+
+.toast .notic {
+    float: left;
+    width: pxToRem(30px);
+    min-height: pxToRem(30px);
+    vertical-align: middle;
+}
+
+.toast .ctx {
+    vertical-align: middle;
+    float: left;
+    padding-left: pxToRem(5px);
+    width: pxToRem(215px);
+    line-height: pxToRem(30px);
+    color: $dark;
+}
+
+.toast .close {
+    position: relative;
+    float: right;
+    vertical-align: middle;
+    width: pxToRem(30px);
+}
+
+.toast .notic:before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    font-family: $iconFamily;
+    font-size: pxToRem(30px);
+    font-style: normal;
+    line-height: pxToRem(30px);
+    width: pxToRem(30px);
+    height: pxToRem(30px);
+}
+
+.toast .notic.nsuccess:before {
+    content: "\e86c";
+    color: $success;
+}
+
+.toast .notic.nwarning:before {
+    content: "\e000";
+    color: $warning;
+}
+
+.toast .notic.ninfo:before {
+    content: "\e88e";
+    color: $primary;
+}
+
+.toast .notic.nerror:before {
+    content: "\e5c9";
+    color: $danger;
+}
+
+.toast-top,
+.toast-top-right,
+.toast-btm,
+.toast-btm-right {
+    position: fixed;
+    z-index: 9;
+    width: pxToRem(300px);
+}
+
+.toast-top {
+    top: 20px;
+    right: 0;
+    left: 0;
+    margin: auto;
+}
+
+.toast-top-right {
+    top: 20px;
+    right: 20px;
+}
+
+.toast-btm {
+    right: 0;
+    left: 0;
+    bottom: 20px;
+    margin: auto;
+}
+
+.toast-btm-right {
+    right: 20px;
+    bottom: 20px;
+}

@@ -1,0 +1,44 @@
+.close,
+.loading-close {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    font-style: normal;
+    width: pxToRem(30px);
+    height: pxToRem(30px);
+    color: $dark;
+    text-align: center;
+    cursor: pointer;
+    @include transition(transform 300ms ease-out);
+    &:before {
+        display: block;
+        font-family: $iconFamily;
+        font-size: pxToRem(16px);
+        width: pxToRem(30px);
+        height: pxToRem(30px);
+        line-height: pxToRem(30px);
+        content: "\e5cd";
+    }
+    &:hover {
+        @include transform(rotate3d(0, 0, 1, 180deg));
+    }
+}
+
+.loading-close {
+    top: pxToRem(30px);
+    right: pxToRem(30px);
+    display: none;
+    color: $white;
+    &:before {
+        font-size: pxToRem(24px);
+    }
+}
+
+.loading .close {
+    display: none;
+}
+
+.loading > .loading-close {
+    display: block;
+}

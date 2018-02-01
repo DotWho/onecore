@@ -1,0 +1,100 @@
+:root {
+    font-size: $baseFontSize;
+}
+
+html {
+    font-family: $fontFamily;
+    line-height: 1.5;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    text-rendering: optimizeLegibility;
+}
+
+*,
+*:after,
+*:before {
+    -webkit-box-sizing: inherit;
+    box-sizing: inherit;
+}
+
+@-ms-viewport {
+    width: device-width;
+}
+
+body {
+    margin: 0;
+    color: $dark;
+    font-size: $fontSize;
+    background-color: $white;
+    &:after {
+        @include fixCenter;
+        background-color: rgba(0, 0, 0, .5);
+        content: "";
+        visibility: hidden;
+        @include opacity(0);
+        @include transition((opacity 300ms ease-out, visibility 0ms linear 300ms));
+    }
+}
+
+body.overlay-layer {
+    overflow: hidden;
+}
+
+body.overlay-layer-top:after,
+body.overlay-layer:after {
+    z-index: 7;
+    visibility: visible;
+    @include opacity(100);
+    @include transition((opacity 100ms ease-in, visibility 0ms linear));
+}
+
+body.overlay-layer-top:after {
+    z-index: 8;
+    background-color: rgba(0, 0, 0, .8);
+}
+
+// .overlay-layer > header,
+// .overlay-layer > .container,
+// .overlay-layer > section,
+// .overlay-layer > footer {
+//    -webkit-filter:blur(4px);
+//    //filter:blur(0);
+// }
+
+.showbox {
+    z-index: 8;
+    @include mainAniIn;
+}
+
+@keyframes iShowIn {
+    from {
+        opacity: 0;
+        transform: translate3d(0, -50px, 0);
+    }
+    to {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.hidbox {
+    pointer-events: none;
+    display: none\9!important;
+    visibility: hidden\9;
+    @include mainAniOut;
+}
+
+@keyframes iShowOut {
+    from {
+        opacity: 1;
+        visibility: visible;
+        transform: translate3d(0, 0, 0);
+    }
+    to {
+        opacity: 0;
+        visibility: hidden;
+        transform: translate3d(0, 50px, 0);
+    }
+}

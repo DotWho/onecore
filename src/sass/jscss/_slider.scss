@@ -1,0 +1,90 @@
+.slider {
+    position: relative;
+    overflow: hidden;
+    & > div {
+        position: relative;
+        width: 10000%;
+        height: 100%;
+        & a {
+            position: relative;
+            display: block;
+            width: 1%;
+            height: 100%;
+            float: left;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 50% 50%;
+        }
+    }
+    & ol {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 2;
+        text-align: center;
+        overflow: hidden;
+        & li {
+            display: inline-block;
+            margin: pxToRem(5px);
+            width: pxToRem(10px);
+            height: pxToRem(10px);
+            border: 2px solid rgba(255, 255, 255, .5);
+            cursor: pointer;
+            @include border-radius(100%);
+            &:hover {
+                border-color: $white;
+            }
+            &.hover {
+                pointer-events: none;
+                background-color: $white;
+            }
+        }
+    }
+}
+
+.slider .s-prev,
+.slider .s-next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: pxToRem(80px);
+    cursor: pointer;
+    &:after {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        margin: auto;
+        width: pxToRem(80px);
+        height: pxToRem(48px);
+        color: rgba(255, 255, 255, .3);
+        font-family: $iconFamily;
+        font-size: pxToRem(32px);
+        text-align: center;
+    }
+}
+
+.slider .s-prev {
+    left: 0;
+    &:after {
+        content: '\e314';
+    }
+}
+
+.slider .s-next {
+    right: 0;
+    &:after {
+        content: '\e315';
+    }
+}
+
+.slider .s-prev:hover:after,
+.slider .s-next:hover:after {
+    color: $white;
+}
+
+.slider .slider ol li,
+.slider .s-prev:after,
+.slider .s-next:after {
+    @include transition((color 300ms ease-in-out, background-color 300ms ease-in-out));
+}
