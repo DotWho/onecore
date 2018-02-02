@@ -63,6 +63,7 @@ const Select = (($, $$) => {
                 oriName = $this._.find('option')[0].innerHTML || '&nbsp;';
 
             $select.value = selected
+            $select._.fire('change')
             $button.innerHTML = oriName
             $select._.children('ul').innerHTML = ''
 
@@ -135,6 +136,7 @@ const Select = (($, $$) => {
 
                     $button.textContent = this.textContent
                     $this.value = this._.data('select')
+                    $this._.fire('change')
                     $select._.find('li')._.removeClass(ClassName.HOVER)
                     this._.addClass(ClassName.HOVER)
                     $select._.removeClass(ClassName.ACTIVE)

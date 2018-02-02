@@ -660,7 +660,7 @@ $('.imgupx').imgup({
     <div class="row">
         <div class="col-3">
             <div>
-                <input type="text" placeholder="text" data-length="[1,10]" class="fullwidth" required>
+                <input type="text" name="vtext" placeholder="text" data-length="[1,10]" class="fullwidth" required>
                 <span class="errorstr">不正确</span>
             </div>
             <div>
@@ -675,32 +675,32 @@ $('.imgupx').imgup({
                 <span class="errorstr">二次密码不相同</span>
             </div>
             <div>
-                <input type="mobile" placeholder="mobile" class="fullwidth" required>
+                <input type="mobile" name="vmobile" placeholder="mobile" class="fullwidth" required>
                 <span class="errorstr">不正确</span>
             </div>
             <div>
-                <input type="email" placeholder="email" class="fullwidth" required>
+                <input type="email" name="vemail" placeholder="email" class="fullwidth" required>
                 <span class="errorstr">不正确</span>
             </div>
             <div>
-                <input type="text" data-type="number" placeholder="number" data-size="[0.1,15]" class="fullwidth" required>
+                <input type="text" data-type="number" name="vnumber" placeholder="number" data-size="[0.1,15]" class="fullwidth" required>
                 <span class="errorstr">不正确</span>
             </div>
         </div>
         <div class="col-3 md">
             <div>
-                <input type="text" data-type="number" placeholder="integer" data-point="'0'" class="fullwidth" required>
+                <input type="text" data-type="number" name="vinteger" placeholder="integer" data-point="'0'" class="fullwidth" required>
                 <span class="errorstr">不正确</span>
             </div>
             <div>
-                <select name="" data-toggle="select" required>
+                <select name="vselect" data-toggle="select" required>
                     <option value="">0</option>
                     <option value="1">1</option>
                 </select>
                 <span class="errorstr">不正确</span>
             </div>
             <div>
-                <textarea name="name" rows="2" cols="4" placeholder="textarea" required></textarea>
+                <textarea name="vtextarea" rows="2" cols="4" placeholder="textarea" required></textarea>
                 <span class="errorstr">不正确</span>
             </div>
         </div>
@@ -730,22 +730,22 @@ $('.imgupx').imgup({
             </div>
             <div>
                 <label class="radio">
-                    <input type="radio" name="fb" value="" required>
+                    <input type="radio" name="fb" value="1" required>
                     <span class="ck-indicator"></span>
                     <span class="ck-description">同意</span>
                 </label>
                 <label class="radio">
-                    <input type="radio" name="fb" value="">
+                    <input type="radio" name="fb" value="2">
                     <span class="ck-indicator"></span>
                     <span class="ck-description">同意</span>
                 </label>
                 <label class="radio">
-                    <input type="radio" name="fb" value="">
+                    <input type="radio" name="fb" value="3">
                     <span class="ck-indicator"></span>
                     <span class="ck-description">同意</span>
                 </label>
                 <label class="radio">
-                    <input type="radio" name="fb" value="">
+                    <input type="radio" name="fb" value="4">
                     <span class="ck-indicator"></span>
                     <span class="ck-description">同意</span>
                 </label>
@@ -753,7 +753,7 @@ $('.imgupx').imgup({
             </div>
             <div>
                 <label class="checkbox">
-                    <input type="checkbox" required>
+                    <input type="checkbox" name="vht" required>
                     <span class="ck-indicator"></span>
                     <span class="ck-description">我已阅读并同意</span>
                 </label>
@@ -763,13 +763,13 @@ $('.imgupx').imgup({
         <div class="col-3">
             <div>
                 <div class="imgup" data-toggle="imgup">
-                    <input type="hidden" data-type="imgup" value="" required>
+                    <input type="hidden" name="vimgup" data-type="imgup" value="" required>
                 </div>
                 <span class="errorstr">不正确</span>
             </div>
             <div>
                 <div class="imgup" data-toggle="imgup">
-                    <input type="hidden" data-type="imgup" value="">
+                    <input type="hidden" name="vimgup1" data-type="imgup" value="">
                 </div>
                 <span class="errorstr">不正确</span>
             </div>
@@ -1354,16 +1354,14 @@ $el.accordion();
                     <div class="content" id="testaera">
     <h4>Test Aera</h4>
     <div class="row">
-        <div class="col-12">
+        <!-- <div class="col-12">
             <div data-toggle="domark" data-style="2" data-userId="123">
                 <img src="img/card.jpg" data-src="img/card.jpg" width="80" height="80" alt="">
                 <img src="img/card2.jpg" data-src="img/card2.jpg" width="80" height="80" alt="">
                 <button type="button" class="btn blue">打码</button>
                 <input type="hidden" name="" value="">
             </div>
-        </div>
-        <i class="vvvbbn"></i>
-        <button type="button" class="btn primary btn-dott" style="width:300px;height:300px;">213</button>
+        </div> -->
         <!-- <div class="markbox">
             <div class="mark-content">
                 <canvas id="canvas"></canvas>
@@ -1401,6 +1399,8 @@ $el.accordion();
                 </div>
             </div>
         </div> -->
+        <span id="liveshow">live1</span>
+        <input type="text" name="ccc" value="live1" class="ltolive">
     </div>
 </div>
 

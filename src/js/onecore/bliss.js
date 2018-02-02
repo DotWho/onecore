@@ -1,6 +1,6 @@
-window.onerror = function (msg, url, lineNo, columnNo, error) {
-    console.log(`${msg}[${lineNo}:${columnNo}]`);
-};
+// window.onerror = function (msg, url, lineNo, columnNo, error) {
+//     console.log(`${msg}[${lineNo}:${columnNo}]`);
+// };
 (function() {
     'use strict'
 
@@ -256,6 +256,7 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
                 Object.defineProperty(obj, property, {
                     get: function() {
                         var value = this['_' + property]
+                        console.log(value);
                         var ret = descriptor.get && descriptor.get.call(this, value)
                         return ret !== undefined ? ret : value
                     },
@@ -456,7 +457,7 @@ window.onerror = function (msg, url, lineNo, columnNo, error) {
     			};
     			options.callback = callback;
     		}
-``
+
     		var listeners = $.listeners.get(this) || {};
 
     		types.trim().split(/\s+/).forEach(function (type) {

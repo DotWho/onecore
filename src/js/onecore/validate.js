@@ -93,7 +93,7 @@ const Validate = (($) => {
             el._.addClass('error')
         }
 
-        _check(el) {
+        _check(el, type) {
             const _this = this
             let ops = _this._config
 
@@ -120,7 +120,6 @@ const Validate = (($) => {
 
             /**
              * data- 数据
-             * @param String type 自定义type
              * @param String val input值
              * @param String allowspace 是否允许空格
              * @param String required 允许为空
@@ -133,23 +132,10 @@ const Validate = (($) => {
                     minSize: 1,
                     maxSize: 0,
                     minLength: 1,
-                    maxLength: 0
+                    maxLength: 0,
+                    val: el.value,
+                    required: el._.attr('required')
                 }
-
-            datas.type = el._.data('type') || el._.attr('type')
-            datas.val = el.value
-
-            if (!datas.type) {
-                var nodename = el.nodeName.toLocaleLowerCase()
-                if (nodename === 'select') {
-                    datas.type = 'select'
-                } else if (nodename === 'textarea') {
-                    datas.type = 'text'
-                }
-            }
-
-            datas.type = datas.type.toLocaleLowerCase()
-            datas.required = el._.attr('required')
 
             if (el._.data('allowspace') && 1 != datas.val.split(' ').length) { //allowspace有值不允许中间有空格
                 _this._error(el)
@@ -166,9 +152,10 @@ const Validate = (($) => {
                 datas.maxSize = el._.data('size')[1]
             }
 
-            if (datas.required || (!datas.required && datas.val) || datas.type === 'checkbox' || datas.type === 'radio') {
-                switch (datas.type) {
+            if (datas.required || (!datas.required && datas.val)) {
+                switch (type) {
                     case 'text':
+                    case 'textarea':
                         return new Promise(function(resolve, reject) {
                             if (lengthCheck()) {
                                 _this._success(el)
@@ -179,99 +166,101 @@ const Validate = (($) => {
                             }
                         })
                         break
-                    // case 'password':
-                    //     if (el._.data('length')) {
-                    //         datas.minLength = el._.data('length')[0] || 6
-                    //         datas.maxLength = el._.data('length')[1] || 18
-                    //     }
-                    //
-                    //     if (el._.next()._.hasClass('codestrong')) {
-                    //         var modes = 0
-                    //         //正则表达式验证符合要求的
-                    //         if (/\d/.test(datas.val)) modes++ //数字
-                    //         if (/[a-z]/.test(datas.val)) modes++ //小写
-                    //         if (/[A-Z]/.test(datas.val)) modes++ //大写
-                    //         if (/\W/.test(datas.val)) modes++ //特殊字符
-                    //
-                    //         switch (modes) {
-                    //             case 1:
-                    //                 changeWidth(0)
-                    //                 break
-                    //             case 2:
-                    //                 changeWidth(1)
-                    //                 break
-                    //             case 3:
-                    //                 changeWidth(2)
-                    //                 break
-                    //             case 4:
-                    //                 if (datas.val.length > 11) {
-                    //                     changeWidth(3)
-                    //                 } else {
-                    //                     changeWidth(2)
-                    //                 }
-                    //                 break
-                    //         }
-                    //
-                    //         if (lengthCheck() && modes > 0) {
-                    //             if (modes > 0) { //1
-                    //                 _this._success(el)
-                    //             } else {
-                    //                 _this._error(el)
-                    //                 count++
-                    //             }
-                    //         } else {
-                    //             //el.next().attr('class', 'codestrong active').children('.cs-txt').text('输入' + datas.minLength + '-' + datas.maxLength + '位密码，需包含字母及数字').end().children('.cs-line').attr('class', 'cs-line')
-                    //             el._.next()._.attr({'class': 'codestrong active'})
-                    //             ._.children('.cs-txt').textContent = '请输入6-18位字符的密码'
-                    //             el._.next()._.children('.cs-line')._.attr({'class': 'cs-line'})
-                    //             _this._error(el)
-                    //             count++
-                    //         }
-                    //     } else {
-                    //         if (lengthCheck()) {
-                    //             _this._success(el)
-                    //         } else {
-                    //             _this._error(el)
-                    //             count++
-                    //         }
-                    //     }
-                    //
-                    //     const target = ops.target
-                    //
-                    //     if (target._.find('input[type="password"]').length >= 2) {
-                    //         var pwd1,
-                    //             pwd2
-                    //         if (target._.find('input[type="password"]').length === 2) {
-                    //             pwd1 = target._.find('input[type="password"]')[0]
-                    //             pwd2 = target._.find('input[type="password"]')[1]
-                    //         } else {
-                    //             pwd1 = target._.find('input[type="password"]')[target._.find('input[type="password"]').length - 2]
-                    //             pwd2 = target._.find('input[type="password"]')[target._.find('input[type="password"]').length - 1]
-                    //         }
-                    //
-                    //         if (pwd1._.attr('required') && pwd2._.attr('required')) {
-                    //             if (pwd1 == el) {
-                    //                 if (0 !== pwd2.value.length) {
-                    //                     if (pwd1.value !== pwd2.value) {
-                    //                         _this._error(pwd2)
-                    //                         count++
-                    //                     } else {
-                    //                         _this._success(pwd2)
-                    //                     }
-                    //                 }
-                    //             }
-                    //
-                    //             if (pwd2 == el) {
-                    //                 if (pwd1.value === pwd2.value && 0 !== pwd1.value.length) {
-                    //                     _this._success(el)
-                    //                 } else {
-                    //                     _this._error(el)
-                    //                     count++
-                    //                 }
-                    //             }
-                    //         }
-                    //     }
-                    //     break
+                    case 'password':
+                        return new Promise(function(resolve, reject) {
+                            if (el._.data('length')) {
+                                datas.minLength = el._.data('length')[0] || 6
+                                datas.maxLength = el._.data('length')[1] || 18
+                            }
+
+                            if (el._.next()._.hasClass('codestrong')) {
+                                var modes = 0
+                                //正则表达式验证符合要求的
+                                if (/\d/.test(datas.val)) modes++ //数字
+                                if (/[a-z]/.test(datas.val)) modes++ //小写
+                                if (/[A-Z]/.test(datas.val)) modes++ //大写
+                                if (/\W/.test(datas.val)) modes++ //特殊字符
+
+                                switch (modes) {
+                                    case 1:
+                                        changeWidth(0)
+                                        break
+                                    case 2:
+                                        changeWidth(1)
+                                        break
+                                    case 3:
+                                        changeWidth(2)
+                                        break
+                                    case 4:
+                                        if (datas.val.length > 11) {
+                                            changeWidth(3)
+                                        } else {
+                                            changeWidth(2)
+                                        }
+                                        break
+                                }
+
+                                if (lengthCheck() && modes > 0) {
+                                    if (modes > 0) { //1
+                                        _this._success(el)
+                                    } else {
+                                        _this._error(el)
+                                        count++
+                                    }
+                                } else {
+                                    //el.next().attr('class', 'codestrong active').children('.cs-txt').text('输入' + datas.minLength + '-' + datas.maxLength + '位密码，需包含字母及数字').end().children('.cs-line').attr('class', 'cs-line')
+                                    el._.next()._.attr({'class': 'codestrong active'})
+                                    ._.children('.cs-txt').textContent = '请输入6-18位字符的密码'
+                                    el._.next()._.children('.cs-line')._.attr({'class': 'cs-line'})
+                                    _this._error(el)
+                                    count++
+                                }
+                            } else {
+                                if (lengthCheck()) {
+                                    _this._success(el)
+                                } else {
+                                    _this._error(el)
+                                    count++
+                                }
+                            }
+
+                            const target = ops.target
+
+                            if (target._.find('input[type="password"]').length >= 2) {
+                                var pwd1,
+                                    pwd2
+                                if (target._.find('input[type="password"]').length === 2) {
+                                    pwd1 = target._.find('input[type="password"]')[0]
+                                    pwd2 = target._.find('input[type="password"]')[1]
+                                } else {
+                                    pwd1 = target._.find('input[type="password"]')[target._.find('input[type="password"]').length - 2]
+                                    pwd2 = target._.find('input[type="password"]')[target._.find('input[type="password"]').length - 1]
+                                }
+
+                                if (pwd1._.attr('required') && pwd2._.attr('required')) {
+                                    if (pwd1 == el) {
+                                        if (0 !== pwd2.value.length) {
+                                            if (pwd1.value !== pwd2.value) {
+                                                _this._error(pwd2)
+                                                count++
+                                            } else {
+                                                _this._success(pwd2)
+                                            }
+                                        }
+                                    }
+
+                                    if (pwd2 == el) {
+                                        if (pwd1.value === pwd2.value && 0 !== pwd1.value.length) {
+                                            _this._success(el)
+                                        } else {
+                                            _this._error(el)
+                                            count++
+                                        }
+                                    }
+                                }
+                            }
+                        })
+                        break
                     case 'email':
                         return new Promise(function(resolve, reject) {
                             if (datas.val.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)
@@ -445,11 +434,7 @@ const Validate = (($) => {
                     var nodename = item.nodeName.toLocaleLowerCase()
                     switch (nodename) {
                         case 'input':
-                            ckList.push(item)
-                            break;
                         case 'textarea':
-                            ckList.push(item)
-                            break;
                         case 'select':
                             ckList.push(item)
                             break;
@@ -468,6 +453,8 @@ const Validate = (($) => {
             function checkType(type) {
                 switch (type) {
                     case 'text':
+                    case 'textarea':
+                    case 'password':
                     case 'email':
                     case 'number':
                     case 'tel':
@@ -489,12 +476,15 @@ const Validate = (($) => {
 
             opmap.forEach(function(item, i){
                 let type = item._.data('type') || item._.attr('type')
+                if(!type){
+                    type = item.nodeName.toLowerCase()
+                }
                 if (!item._.data('off') && checkType(type)) {
                     item.onchange = function () {
-                        _this._check(item).catch(function(){})
+                        _this._check(item, type).catch(function(){})
                     }
                     item['validate'] = function () {
-                        return _this._check(item)
+                        return _this._check(item, type)
                     }
                 }
             })
@@ -529,21 +519,54 @@ const Validate = (($) => {
                 $this._.addClass('process')
                 PromiseForEach().then((data) => {
                     $this._.removeClass('process')
-                    console.log("成功");
+                    // console.log("成功");
                     // console.log(data);
                     if(data.length === 0){
                         if (!ops.success) {
                             $this._.attr({'disabled': true})._.parent('form').submit()
                         } else {
-                            ops.success()
+                            const sucses = _this._getLsit()
+                            let obj = {}
+                            sucses.forEach(function(item, i){
+                                let type = item._.data('type') || item._.attr('type')
+                                let name = item._.attr('name')
+                                switch (type) {
+                                    case 'text':
+                                    case 'textarea':
+                                    case 'password':
+                                    case 'email':
+                                    case 'number':
+                                    case 'tel':
+                                    case 'mobile':
+                                    case 'mtel':
+                                    case 'select':
+                                    case 'imgup':
+                                        obj[name] = item.value
+                                    case 'radio':
+                                        if(item.checked){
+                                            obj[name] = item.value
+                                        }
+                                        break
+                                    case 'checkbox':
+                                        if(item.checked){
+                                            if(obj[name]){
+                                                obj[name].push(item.value)
+                                            } else {
+                                                obj[name] = [item.value]
+                                            }
+                                        }
+                                        break
+                                }
+                            })
+                            ops.success(obj)
                         }
                     } else {
                         ops.error(data)
                     }
                 }).catch((err) => {
                     $this._.removeClass('process')
-                    console.log(err);
-                    console.log("失败");
+                    // console.log(err);
+                    // console.log("失败");
                 });
             }
         }
