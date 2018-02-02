@@ -4032,6 +4032,9 @@ var Validate = function ($) {
                                 if (el._.data('length')) {
                                     datas.minLength = el._.data('length')[0] || 6;
                                     datas.maxLength = el._.data('length')[1] || 18;
+                                } else {
+                                    datas.minLength = 8;
+                                    datas.maxLength = 18;
                                 }
 
                                 if (el._.next()._.hasClass('codestrong')) {
@@ -4065,23 +4068,28 @@ var Validate = function ($) {
                                         if (modes > 0) {
                                             //1
                                             _this._success(el);
+                                            resolve();
                                         } else {
                                             _this._error(el);
                                             count++;
+                                            reject();
                                         }
                                     } else {
-                                        //el.next().attr('class', 'codestrong active').children('.cs-txt').text('输入' + datas.minLength + '-' + datas.maxLength + '位密码，需包含字母及数字').end().children('.cs-line').attr('class', 'cs-line')
-                                        el._.next()._.attr({ 'class': 'codestrong active' })._.children('.cs-txt').textContent = '请输入6-18位字符的密码';
+                                        el._.next()._.attr({ 'class': 'codestrong active' })._.children('.cs-txt').textContent = '\u8BF7\u8F93\u5165' + datas.minLength + '-' + datas.maxLength + '\u4F4D\u5B57\u7B26\u7684\u5BC6\u7801';
+
                                         el._.next()._.children('.cs-line')._.attr({ 'class': 'cs-line' });
                                         _this._error(el);
                                         count++;
+                                        reject();
                                     }
                                 } else {
                                     if (lengthCheck()) {
                                         _this._success(el);
+                                        resolve();
                                     } else {
                                         _this._error(el);
                                         count++;
+                                        reject();
                                     }
                                 }
 
@@ -4103,8 +4111,10 @@ var Validate = function ($) {
                                                 if (pwd1.value !== pwd2.value) {
                                                     _this._error(pwd2);
                                                     count++;
+                                                    reject();
                                                 } else {
                                                     _this._success(pwd2);
+                                                    resolve();
                                                 }
                                             }
                                         }
@@ -4112,9 +4122,11 @@ var Validate = function ($) {
                                         if (pwd2 == el) {
                                             if (pwd1.value === pwd2.value && 0 !== pwd1.value.length) {
                                                 _this._success(el);
+                                                resolve();
                                             } else {
                                                 _this._error(el);
                                                 count++;
+                                                reject();
                                             }
                                         }
                                     }

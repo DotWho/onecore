@@ -128,7 +128,7 @@ const Validate = (($) => {
              * @param String minLength 最短长度
              * @param String maxLength 最大长度
              */
-            var datas = {
+            let datas = {
                     minSize: 1,
                     maxSize: 0,
                     minLength: 1,
@@ -171,6 +171,9 @@ const Validate = (($) => {
                             if (el._.data('length')) {
                                 datas.minLength = el._.data('length')[0] || 6
                                 datas.maxLength = el._.data('length')[1] || 18
+                            } else {
+                                datas.minLength = 8
+                                datas.maxLength = 18
                             }
 
                             if (el._.next()._.hasClass('codestrong')) {
@@ -203,24 +206,29 @@ const Validate = (($) => {
                                 if (lengthCheck() && modes > 0) {
                                     if (modes > 0) { //1
                                         _this._success(el)
+                                        resolve()
                                     } else {
                                         _this._error(el)
                                         count++
+                                        reject()
                                     }
                                 } else {
-                                    //el.next().attr('class', 'codestrong active').children('.cs-txt').text('输入' + datas.minLength + '-' + datas.maxLength + '位密码，需包含字母及数字').end().children('.cs-line').attr('class', 'cs-line')
                                     el._.next()._.attr({'class': 'codestrong active'})
-                                    ._.children('.cs-txt').textContent = '请输入6-18位字符的密码'
+                                    ._.children('.cs-txt').textContent = `请输入${datas.minLength}-${datas.maxLength}位字符的密码`
+
                                     el._.next()._.children('.cs-line')._.attr({'class': 'cs-line'})
                                     _this._error(el)
                                     count++
+                                    reject()
                                 }
                             } else {
                                 if (lengthCheck()) {
                                     _this._success(el)
+                                    resolve()
                                 } else {
                                     _this._error(el)
                                     count++
+                                    reject()
                                 }
                             }
 
@@ -243,8 +251,10 @@ const Validate = (($) => {
                                             if (pwd1.value !== pwd2.value) {
                                                 _this._error(pwd2)
                                                 count++
+                                                reject()
                                             } else {
                                                 _this._success(pwd2)
+                                                resolve()
                                             }
                                         }
                                     }
@@ -252,9 +262,11 @@ const Validate = (($) => {
                                     if (pwd2 == el) {
                                         if (pwd1.value === pwd2.value && 0 !== pwd1.value.length) {
                                             _this._success(el)
+                                            resolve()
                                         } else {
                                             _this._error(el)
                                             count++
+                                            reject()
                                         }
                                     }
                                 }
