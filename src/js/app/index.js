@@ -170,7 +170,8 @@
 
     // validate
     $('#btn-test')._.validate({
-        success: function() {
+        success: function(data) {
+            console.log(data);
             console.log('success');
         },
         error: function() {
@@ -245,4 +246,24 @@
     $.ready().then(function() {
         toStrap();
     });
+
+    const cusvali = $('#cusvali')
+    cusvali['validate'] = function() {
+        return new Promise(function(resolve, reject) {
+            if(cusvali.value == 123){
+                cusvali._.removeClass('error')
+                resolve()
+            } else {
+                cusvali._.addClass('error')
+                reject()
+            }
+        })
+    }
+    cusvali.onchange = function(){
+        if(cusvali.value == 123){
+            cusvali._.removeClass('error')
+        } else {
+            cusvali._.addClass('error')
+        }
+    }
 })(Bliss, Bliss.$);

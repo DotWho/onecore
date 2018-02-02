@@ -546,32 +546,34 @@ const Validate = (($) => {
                             sucses.forEach(function(item, i){
                                 let type = item._.data('type') || item._.attr('type')
                                 let name = item._.attr('name')
-                                switch (type) {
-                                    case 'text':
-                                    case 'textarea':
-                                    case 'password':
-                                    case 'email':
-                                    case 'number':
-                                    case 'tel':
-                                    case 'mobile':
-                                    case 'mtel':
-                                    case 'select':
-                                    case 'imgup':
-                                        obj[name] = item.value
-                                    case 'radio':
-                                        if(item.checked){
+                                if(type && name){
+                                    switch (type) {
+                                        case 'text':
+                                        case 'textarea':
+                                        case 'password':
+                                        case 'email':
+                                        case 'number':
+                                        case 'tel':
+                                        case 'mobile':
+                                        case 'mtel':
+                                        case 'select':
+                                        case 'imgup':
                                             obj[name] = item.value
-                                        }
-                                        break
-                                    case 'checkbox':
-                                        if(item.checked){
-                                            if(obj[name]){
-                                                obj[name].push(item.value)
-                                            } else {
-                                                obj[name] = [item.value]
+                                        case 'radio':
+                                            if(item.checked){
+                                                obj[name] = item.value
                                             }
-                                        }
-                                        break
+                                            break
+                                        case 'checkbox':
+                                            if(item.checked){
+                                                if(obj[name]){
+                                                    obj[name].push(item.value)
+                                                } else {
+                                                    obj[name] = [item.value]
+                                                }
+                                            }
+                                            break
+                                    }
                                 }
                             })
                             ops.success(obj)
