@@ -4341,7 +4341,9 @@ var Validate = function ($) {
                         type = item.nodeName.toLowerCase();
                     }
                     if (!item._.data('off') && checkType(type)) {
-                        item.onchange = function () {
+                        if (item._.data('keyup')) {}
+                        var events = item._.data('keyup') ? 'onkeyup' : 'onchange';
+                        item[events] = function () {
                             _this._check(item, type).catch(function () {});
                         };
                         item['validate'] = function () {
