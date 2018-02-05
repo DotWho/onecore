@@ -143,6 +143,8 @@
             for (var i = 0; i < arguments.length; i++) {
                 if (arguments[i] !== undefined) {
                     return arguments[i]
+                } else {
+                    return undefined
                 }
             }
         },
@@ -724,7 +726,7 @@
             }
 
             if(name) {
-                return _new[name] && Object.keys(_new).length > 0 ? _new[name] : null
+                return _new[name] && Object.keys(_new).length > 0 ? _new[name] : undefined
             } else {
                 return _new
             }
@@ -790,7 +792,7 @@
         },
 
         remove: function () {
-            if(this.parentNode) {
+            if(this && this.parentNode) {
                 this.parentNode.removeChild(this);
             }
         }

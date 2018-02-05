@@ -70,7 +70,7 @@ const Page = (($, $$) => {
                 ops.$next._.before($page)
             }
 
-            if($this._.children('.page').length > 0){
+            if($this._.children('.page')){
                 $this._.children('.page').forEach(function(item, i){
                     item._.remove()
                 })

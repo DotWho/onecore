@@ -146,6 +146,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             for (var i = 0; i < arguments.length; i++) {
                 if (arguments[i] !== undefined) {
                     return arguments[i];
+                } else {
+                    return undefined;
                 }
             }
         },
@@ -722,7 +724,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
 
             if (name) {
-                return _new[name] && Object.keys(_new).length > 0 ? _new[name] : null;
+                return _new[name] && Object.keys(_new).length > 0 ? _new[name] : undefined;
             } else {
                 return _new;
             }
@@ -788,7 +790,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         },
 
         remove: function remove() {
-            if (this.parentNode) {
+            if (this && this.parentNode) {
                 this.parentNode.removeChild(this);
             }
         }
@@ -980,10 +982,6 @@ var Util = function ($, $$) {
         eventype = isMobile ? 'touchstart' : 'mousedown',
         duration = 750;
 
-    function removeRip() {
-        this._.remove();
-    }
-
     $.ready().then(function () {
         document._.on(eventype, '.btn', function (e) {
             if (this.classList.contains('btn') && !this.classList.contains('disabled')) {
@@ -1011,7 +1009,9 @@ var Util = function ($, $$) {
                 rippleEffect.setAttribute('style', forStyle(position));
 
                 setTimeout(function () {
-                    removeRip.call(rippleEffect);
+                    if (rippleEffect && rippleEffect.parentNode) {
+                        rippleEffect.parentNode.removeChild(rippleEffect);
+                    }
                 }, duration);
             }
         });
@@ -1477,7 +1477,7 @@ var Toast = function ($, $$) {
 
     var DefaultType = {
         text: 'string',
-        type: '(null|string)',
+        type: 'undefined|string',
         dect: 'string',
         auto: 'bool'
 
@@ -1924,7 +1924,8 @@ var Select = function ($, $$) {
 
                 this._factory($this, $select, $button, selected);
 
-                $select._.addClass($this._.attr('class'))._.after($this)._.append($this);
+                $select._.addClass($this._.attr('class'));
+                $select._.after($this)._.append($this);
 
                 if ($this._.attr(ClassName.DISABLED) || $this._.attr('readonly')) {
                     $button._.attr(ClassName.DISABLED, true);
@@ -3182,7 +3183,7 @@ var Page = function ($, $$) {
                     ops.$next._.before($page);
                 }
 
-                if ($this._.children('.page').length > 0) {
+                if ($this._.children('.page')) {
                     $this._.children('.page').forEach(function (item, i) {
                         item._.remove();
                     });
@@ -4092,45 +4093,6 @@ var Validate = function ($) {
                                         reject();
                                     }
                                 }
-
-                                var target = ops.target;
-
-                                if (target._.find('input[type="password"]').length >= 2) {
-                                    var pwd1, pwd2;
-                                    if (target._.find('input[type="password"]').length === 2) {
-                                        pwd1 = target._.find('input[type="password"]')[0];
-                                        pwd2 = target._.find('input[type="password"]')[1];
-                                    } else {
-                                        pwd1 = target._.find('input[type="password"]')[target._.find('input[type="password"]').length - 2];
-                                        pwd2 = target._.find('input[type="password"]')[target._.find('input[type="password"]').length - 1];
-                                    }
-
-                                    if (pwd1._.attr('required') && pwd2._.attr('required')) {
-                                        if (pwd1 == el) {
-                                            if (0 !== pwd2.value.length) {
-                                                if (pwd1.value !== pwd2.value) {
-                                                    _this._error(pwd2);
-                                                    count++;
-                                                    reject();
-                                                } else {
-                                                    _this._success(pwd2);
-                                                    resolve();
-                                                }
-                                            }
-                                        }
-
-                                        if (pwd2 == el) {
-                                            if (pwd1.value === pwd2.value && 0 !== pwd1.value.length) {
-                                                _this._success(el);
-                                                resolve();
-                                            } else {
-                                                _this._error(el);
-                                                count++;
-                                                reject();
-                                            }
-                                        }
-                                    }
-                                }
                             });
                             break;
                         case 'email':
@@ -4719,8 +4681,10 @@ var Imgup = function ($, $$) {
                     }
                 }
 
-                if (ops.max == $this._.children('label').length) {
-                    display = 'style="display:none;"';
+                if ($this._.children('label')) {
+                    if (ops.max == $this._.children('label').length) {
+                        display = 'style="display:none;"';
+                    }
                 }
 
                 $this._.append('<label class="btn" ' + display + '>\n                <input type="file" data-off="true" accept="image/gif,image/jpeg,image/png" multiple>\n                <span>\u5220\u9664</span>\n            </label>');

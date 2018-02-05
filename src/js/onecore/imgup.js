@@ -213,8 +213,10 @@ const Imgup = (($, $$) => {
                 }
             }
 
-            if (ops.max == $this._.children('label').length) {
-                display = 'style="display:none;"'
+            if($this._.children('label')){
+                if (ops.max == $this._.children('label').length) {
+                    display = 'style="display:none;"'
+                }
             }
 
             $this._.append(`<label class="btn" ${display}>

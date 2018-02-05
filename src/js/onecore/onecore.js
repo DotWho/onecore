@@ -14,10 +14,6 @@
         eventype = isMobile ? 'touchstart' : 'mousedown',
         duration = 750
 
-    function removeRip() {
-        this._.remove()
-    }
-
     $.ready().then(function(){
         document._.on(eventype, '.btn', function(e) {
             if(this.classList.contains('btn') && !this.classList.contains('disabled')) {
@@ -45,7 +41,9 @@
                 rippleEffect.setAttribute('style', forStyle(position))
 
                 setTimeout(function() {
-                    removeRip.call(rippleEffect)
+                    if(rippleEffect && rippleEffect.parentNode){
+                        rippleEffect.parentNode.removeChild(rippleEffect);
+                    }
                 }, duration)
             }
         })

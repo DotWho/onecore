@@ -231,46 +231,6 @@ const Validate = (($) => {
                                     reject()
                                 }
                             }
-
-                            const target = ops.target
-
-                            if (target._.find('input[type="password"]').length >= 2) {
-                                var pwd1,
-                                    pwd2
-                                if (target._.find('input[type="password"]').length === 2) {
-                                    pwd1 = target._.find('input[type="password"]')[0]
-                                    pwd2 = target._.find('input[type="password"]')[1]
-                                } else {
-                                    pwd1 = target._.find('input[type="password"]')[target._.find('input[type="password"]').length - 2]
-                                    pwd2 = target._.find('input[type="password"]')[target._.find('input[type="password"]').length - 1]
-                                }
-
-                                if (pwd1._.attr('required') && pwd2._.attr('required')) {
-                                    if (pwd1 == el) {
-                                        if (0 !== pwd2.value.length) {
-                                            if (pwd1.value !== pwd2.value) {
-                                                _this._error(pwd2)
-                                                count++
-                                                reject()
-                                            } else {
-                                                _this._success(pwd2)
-                                                resolve()
-                                            }
-                                        }
-                                    }
-
-                                    if (pwd2 == el) {
-                                        if (pwd1.value === pwd2.value && 0 !== pwd1.value.length) {
-                                            _this._success(el)
-                                            resolve()
-                                        } else {
-                                            _this._error(el)
-                                            count++
-                                            reject()
-                                        }
-                                    }
-                                }
-                            }
                         })
                         break
                     case 'email':

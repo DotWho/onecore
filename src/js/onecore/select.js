@@ -105,7 +105,8 @@ const Select = (($, $$) => {
 
             this._factory($this, $select, $button, selected)
 
-            $select._.addClass($this._.attr('class'))._.after($this)._.append($this)
+            $select._.addClass($this._.attr('class'))
+            $select._.after($this)._.append($this)
 
             if($this._.attr(ClassName.DISABLED) || $this._.attr('readonly')){
                 $button._.attr(ClassName.DISABLED, true)
