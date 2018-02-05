@@ -366,11 +366,15 @@ const Imgup = (($, $$) => {
                 var $this = this,
                     files = e.target.files
 
-                for (var i = 0; i < files.length; i++) {
-                    doProccess(files[i], $this._.parent())
+                try {
+                    for (var i = 0; i < files.length; i++) {
+                        doProccess(files[i], $this._.parent())
+                    }
+                } catch (e) {
+                    doProccess(files[0], $this._.parent())
+                } finally {
+                    $this.value = ''
                 }
-
-                $this.value = ''
 
                 // try {
                 // 	var files = e.target.files

@@ -5,10 +5,32 @@
     'use strict'
 
 	function loadXMLString(txt) {
-        var s = document.createElement('div')
+        const s = document.createElement('div')
         s.style.display = 'none'
         s.innerHTML = txt
         return s.childNodes.length > 1 ? Array.prototype.slice.call(s.childNodes) : s.childNodes[0]
+    }
+
+    function getEls(el, expr, type) {
+        const matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector
+
+        while (el) {
+            if (matchesSelector.call(el, expr)) {
+                break
+            }
+            switch (type) {
+                case 'prev':
+                    el = el.previousElementSibling
+                    break
+                case 'next':
+                    el = el.nextElementSibling
+                    break
+                case 'parent':
+                    el = el.parentNode
+                    break
+            }
+        }
+        return el
     }
 
     function overload(callback, start, end) {
@@ -426,7 +448,7 @@
 
     $.hooks = new $.Hooks()
 
-    var _ = $.property
+    const _ = $.property
 
     $.Element = function(subject) {
         this.subject = subject
@@ -588,11 +610,11 @@
                 }
                 return this
             }else{
-                let style = getComputedStyle(this)[val]
-                if(style.indexOf('px') > 0){
-                    style = style.split('px')[0]
+                let sty = getComputedStyle(this)[val]
+                if(sty.indexOf('px') > 0){
+                    sty = parseFloat(sty)
                 }
-                return style
+                return sty
             }
         },
 
@@ -734,7 +756,7 @@
 
         find: function (expr) {
             if(typeof expr == 'string'){
-                var qs = this.querySelectorAll(expr)
+                const qs = this.querySelectorAll(expr)
                 if(qs.length === 0){
                     return undefined
                 } else {
@@ -743,26 +765,25 @@
             }
         },
 
-        prev: function () {
-            return this.previousElementSibling
+        prev: function (expr) {
+            if(typeof expr == 'string'){
+                return getEls(this, expr, 'prev')
+            } else {
+                return this.previousElementSibling
+            }
         },
 
-        next: function () {
-            return this.nextElementSibling
+        next: function (expr) {
+            if(typeof expr == 'string'){
+                return getEls(this, expr, 'next')
+            } else {
+                return this.nextElementSibling
+            }
         },
 
         parent: function (expr) {
-            if(expr){
-                var el = this
-                var matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector
-
-                while (el) {
-                    if (matchesSelector.call(el, expr)) {
-                        break
-                    }
-                    el = el.parentElement
-                }
-                return el
+            if(typeof expr == 'string'){
+                return getEls(this, expr, 'parent')
             } else {
                 return this.parentNode
             }

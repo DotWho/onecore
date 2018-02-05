@@ -27,9 +27,7 @@ const Slider = (($, $$) => {
     }
 
     const ClassName = {
-        ACTIVE: 'active',
-        MISS: 'dismiss',
-        OVERLAY: 'overlay-layer'
+        HOVER: 'hover'
     }
 
     const Selector = {
@@ -83,11 +81,11 @@ const Slider = (($, $$) => {
             }
 
             let oli = ops.$ol._.children('li')
-            oli._.removeClass('hover')
+            oli._.removeClass(ClassName.HOVER)
             if(olIndex-1 < 0) {
                 olIndex++
             }
-            oli[olIndex-1]._.addClass('hover')
+            oli[olIndex-1]._.addClass(ClassName.HOVER)
         }
 
         _event() {

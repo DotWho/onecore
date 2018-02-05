@@ -228,6 +228,22 @@
 
     $.ready().then(function () {
         toStrap();
+
+        // live with live
+        // const $range = $('#range')
+        // const $rgnum = $('#rgnum')
+        // let $live = $('#live')
+        // let xxs = {
+        //     value: 1,
+        //     xm: 5
+        // }
+        // $range.value = xxs.value
+        // $range.onchange = function(){
+        //     xxs.value = this.value
+        // }
+        // $.live(xxs, 'value', function(v){
+        //     $rgnum.innerHTML = v
+        // })
     });
 
     var cusvali = $('#cusvali');

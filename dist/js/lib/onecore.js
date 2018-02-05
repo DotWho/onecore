@@ -15,6 +15,28 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
         return s.childNodes.length > 1 ? Array.prototype.slice.call(s.childNodes) : s.childNodes[0];
     }
 
+    function getEls(el, expr, type) {
+        var matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
+
+        while (el) {
+            if (matchesSelector.call(el, expr)) {
+                break;
+            }
+            switch (type) {
+                case 'prev':
+                    el = el.previousElementSibling;
+                    break;
+                case 'next':
+                    el = el.nextElementSibling;
+                    break;
+                case 'parent':
+                    el = el.parentNode;
+                    break;
+            }
+        }
+        return el;
+    }
+
     function overload(callback, start, end) {
         start = start === undefined ? 1 : start;
         end = end || start + 1;
@@ -586,11 +608,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 }
                 return this;
             } else {
-                var style = getComputedStyle(this)[val];
-                if (style.indexOf('px') > 0) {
-                    style = style.split('px')[0];
+                var sty = getComputedStyle(this)[val];
+                if (sty.indexOf('px') > 0) {
+                    sty = parseFloat(sty);
                 }
-                return style;
+                return sty;
             }
         },
 
@@ -741,26 +763,25 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             }
         },
 
-        prev: function prev() {
-            return this.previousElementSibling;
+        prev: function prev(expr) {
+            if (typeof expr == 'string') {
+                return getEls(this, expr, 'prev');
+            } else {
+                return this.previousElementSibling;
+            }
         },
 
-        next: function next() {
-            return this.nextElementSibling;
+        next: function next(expr) {
+            if (typeof expr == 'string') {
+                return getEls(this, expr, 'next');
+            } else {
+                return this.nextElementSibling;
+            }
         },
 
         parent: function parent(expr) {
-            if (expr) {
-                var el = this;
-                var matchesSelector = el.matches || el.webkitMatchesSelector || el.mozMatchesSelector || el.msMatchesSelector;
-
-                while (el) {
-                    if (matchesSelector.call(el, expr)) {
-                        break;
-                    }
-                    el = el.parentElement;
-                }
-                return el;
+            if (typeof expr == 'string') {
+                return getEls(this, expr, 'parent');
             } else {
                 return this.parentNode;
             }
@@ -2117,7 +2138,6 @@ var Datepicker = function ($, $$) {
                     _this._days();
                 }
 
-                // ops.btn._.off(Event.CLICK)
                 ops.btn._.bind(Event.CLICK, function (e) {
                     e.stopPropagation();
                     e.preventDefault();
@@ -3362,9 +3382,7 @@ var Slider = function ($, $$) {
     };
 
     var ClassName = {
-        ACTIVE: 'active',
-        MISS: 'dismiss',
-        OVERLAY: 'overlay-layer'
+        HOVER: 'hover'
     };
 
     var Selector = {
@@ -3425,11 +3443,11 @@ var Slider = function ($, $$) {
                 }
 
                 var oli = ops.$ol._.children('li');
-                oli._.removeClass('hover');
+                oli._.removeClass(ClassName.HOVER);
                 if (olIndex - 1 < 0) {
                     olIndex++;
                 }
-                oli[olIndex - 1]._.addClass('hover');
+                oli[olIndex - 1]._.addClass(ClassName.HOVER);
             }
         }, {
             key: '_event',
@@ -3681,9 +3699,7 @@ var Tab = function ($, $$) {
     };
 
     var ClassName = {
-        ACTIVE: 'active',
-        MISS: 'dismiss',
-        OVERLAY: 'overlay-layer'
+        ACTIVE: 'active'
     };
 
     var Selector = {
@@ -3738,7 +3754,7 @@ var Tab = function ($, $$) {
                 function ckanim() {
                     if ($now._.style('opacity') === '1') {
                         cancelAnimationFrame(requFrame);
-                        $now._.addClass('active');
+                        $now._.addClass(ClassName.ACTIVE);
                     } else {
                         requFrame = requestAnimationFrame(ckanim);
                     }
@@ -3779,7 +3795,7 @@ var Tab = function ($, $$) {
 
                     ops.lastIndex = ops.index;
                     ops.index = this._.index();
-                    _this.$nav._.children('button')._.removeClass('active')[ops.index]._.addClass('active');
+                    _this.$nav._.children('button')._.removeClass(ClassName.ACTIVE)[ops.index]._.addClass(ClassName.ACTIVE);
                     if (_this.$context[ops.index].innerHTML === '' && _this.$context[ops.index]._.data('url')) {
                         doAjax(ops.index);
                     } else {
@@ -3798,7 +3814,7 @@ var Tab = function ($, $$) {
                 var ops = _this._config;
 
                 ops.num = _this.$nav._.children('button').length;
-                _this.$nav._.children('button')[0]._.addClass('active');
+                _this.$nav._.children('button')[0]._.addClass(ClassName.ACTIVE);
                 _this.$context[0]._.addClass('oc-tab-in active');
                 _this._event();
             }
@@ -3858,7 +3874,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Validate = function ($) {
+var Validate = function ($, $$) {
     // Constants
     var NAME = 'validate';
     var VERSION = '1.0.0';
@@ -3871,7 +3887,6 @@ var Validate = function ($) {
     var Default = {
         target: '', //指定验证父级
         enter: false,
-        before: function before() {},
         success: function success() {},
         error: function error() {}
     };
@@ -3879,16 +3894,12 @@ var Validate = function ($) {
     var DefaultType = {
         target: '(element|string)',
         enter: 'bool',
-        before: 'function',
         success: 'function',
         error: 'function'
     };
 
-    var ClassName = {};
-
     var codelist = [{
-        //name: '弱 — 需包含字母及数字',
-        name: '弱',
+        name: '弱 — 需包含字母及数字',
         color: 'red'
     }, {
         name: '中',
@@ -4066,7 +4077,6 @@ var Validate = function ($) {
                                             resolve();
                                         } else {
                                             _this._error(el);
-                                            count++;
                                             reject();
                                         }
                                     } else {
@@ -4074,7 +4084,6 @@ var Validate = function ($) {
 
                                         el._.next()._.children('.cs-line')._.attr({ 'class': 'cs-line' });
                                         _this._error(el);
-                                        count++;
                                         reject();
                                     }
                                 } else {
@@ -4083,7 +4092,6 @@ var Validate = function ($) {
                                         resolve();
                                     } else {
                                         _this._error(el);
-                                        count++;
                                         reject();
                                     }
                                 }
@@ -4199,7 +4207,6 @@ var Validate = function ($) {
                         //         _this._success(el._.parent())
                         //     } else {
                         //         _this._error(el._.parent())
-                        //         count++
                         //     }
                         //     break
                         case 'radio':
@@ -4252,8 +4259,7 @@ var Validate = function ($) {
                 var ops = this._config;
                 ops.target = ops.target || this.$el._.parent('form');
 
-                var wrong = 0,
-                    ckList = [],
+                var ckList = [],
                     wlist = ops.target.querySelectorAll('*');
 
                 wlist = Array.prototype.slice.call(wlist);
@@ -4309,7 +4315,6 @@ var Validate = function ($) {
                         type = item.nodeName.toLowerCase();
                     }
                     if (!item._.data('off') && checkType(type)) {
-                        if (item._.data('keyup')) {}
                         var events = item._.data('keyup') ? 'onkeyup' : 'onchange';
                         item[events] = function () {
                             _this._check(item, type).catch(function () {});
@@ -4356,9 +4361,9 @@ var Validate = function ($) {
                             if (!ops.success) {
                                 $this._.attr({ 'disabled': true })._.parent('form').submit();
                             } else {
-                                var sucses = _this._getLsit();
+                                var checkEl = _this._getLsit();
                                 var obj = {};
-                                sucses.forEach(function (item, i) {
+                                checkEl.forEach(function (item, i) {
                                     var type = item._.data('type') || item._.attr('type');
                                     var name = item._.attr('name');
                                     if (type && name) {
@@ -4825,11 +4830,15 @@ var Imgup = function ($, $$) {
                     var $this = this,
                         files = e.target.files;
 
-                    for (var i = 0; i < files.length; i++) {
-                        doProccess(files[i], $this._.parent());
+                    try {
+                        for (var i = 0; i < files.length; i++) {
+                            doProccess(files[i], $this._.parent());
+                        }
+                    } catch (e) {
+                        doProccess(files[0], $this._.parent());
+                    } finally {
+                        $this.value = '';
                     }
-
-                    $this.value = '';
 
                     // try {
                     // 	var files = e.target.files

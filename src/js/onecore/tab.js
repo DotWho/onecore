@@ -23,9 +23,7 @@ const Tab = (($, $$) => {
     }
 
     const ClassName = {
-        ACTIVE: 'active',
-        MISS: 'dismiss',
-        OVERLAY: 'overlay-layer'
+        ACTIVE: 'active'
     }
 
     const Selector = {
@@ -73,7 +71,7 @@ const Tab = (($, $$) => {
             function ckanim() {
                 if($now._.style('opacity') === '1'){
                     cancelAnimationFrame(requFrame)
-                    $now._.addClass('active')
+                    $now._.addClass(ClassName.ACTIVE)
                 }else{
                     requFrame = requestAnimationFrame(ckanim)
                 }
@@ -113,7 +111,7 @@ const Tab = (($, $$) => {
 
                 ops.lastIndex = ops.index
                 ops.index = this._.index()
-                _this.$nav._.children('button')._.removeClass('active')[ops.index]._.addClass('active')
+                _this.$nav._.children('button')._.removeClass(ClassName.ACTIVE)[ops.index]._.addClass(ClassName.ACTIVE)
                 if(_this.$context[ops.index].innerHTML === '' && _this.$context[ops.index]._.data('url')){
                     doAjax(ops.index)
                 }else{
@@ -131,7 +129,7 @@ const Tab = (($, $$) => {
             let ops = _this._config
 
             ops.num = _this.$nav._.children('button').length
-            _this.$nav._.children('button')[0]._.addClass('active')
+            _this.$nav._.children('button')[0]._.addClass(ClassName.ACTIVE)
             _this.$context[0]._.addClass('oc-tab-in active')
             _this._event()
         }

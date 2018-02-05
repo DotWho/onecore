@@ -100,7 +100,6 @@ const Datepicker = (($, $$) => {
                 _this._days()
             }
 
-            // ops.btn._.off(Event.CLICK)
             ops.btn._.bind(Event.CLICK, function (e) {
                 e.stopPropagation()
                 e.preventDefault()

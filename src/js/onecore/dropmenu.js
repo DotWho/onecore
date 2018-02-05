@@ -66,7 +66,7 @@ const Dropmenu = (($, $$) => {
             const $this = _this.$el
             let ops = _this._config
 
-            var $div = $this._.children('div')
+            let $div = $this._.children('div')
 
             if(window.screen.width > 480){
                 switch(ops.direction){

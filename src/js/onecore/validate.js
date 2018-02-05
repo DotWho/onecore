@@ -11,7 +11,7 @@
 
 import Util from './util'
 
-const Validate = (($) => {
+const Validate = (($, $$) => {
     // Constants
     const NAME = 'validate'
     const VERSION = '1.0.0'
@@ -24,7 +24,6 @@ const Validate = (($) => {
     const Default = {
         target: '', //指定验证父级
         enter: false,
-        before: function() {},
         success: function() {},
         error: function() {}
     }
@@ -32,29 +31,25 @@ const Validate = (($) => {
     const DefaultType = {
         target: '(element|string)',
         enter: 'bool',
-        before: 'function',
         success: 'function',
         error: 'function'
     }
 
-    const ClassName = {
-
-    }
-
-    const codelist = [{
-        //name: '弱 — 需包含字母及数字',
-        name: '弱',
-        color: 'red'
-    }, {
-        name: '中',
-        color: 'yellow'
-    }, {
-        name: '强',
-        color: 'dgreen'
-    }, {
-        name: '优秀',
-        color: 'green'
-    }]
+    const codelist = [
+        {
+            name: '弱 — 需包含字母及数字',
+            color: 'red'
+        }, {
+            name: '中',
+            color: 'yellow'
+        }, {
+            name: '强',
+            color: 'dgreen'
+        }, {
+            name: '优秀',
+            color: 'green'
+        }
+    ]
 
     // Class Definition
     class Validate {
@@ -209,7 +204,6 @@ const Validate = (($) => {
                                         resolve()
                                     } else {
                                         _this._error(el)
-                                        count++
                                         reject()
                                     }
                                 } else {
@@ -218,7 +212,6 @@ const Validate = (($) => {
 
                                     el._.next()._.children('.cs-line')._.attr({'class': 'cs-line'})
                                     _this._error(el)
-                                    count++
                                     reject()
                                 }
                             } else {
@@ -227,7 +220,6 @@ const Validate = (($) => {
                                     resolve()
                                 } else {
                                     _this._error(el)
-                                    count++
                                     reject()
                                 }
                             }
@@ -344,7 +336,6 @@ const Validate = (($) => {
                     //         _this._success(el._.parent())
                     //     } else {
                     //         _this._error(el._.parent())
-                    //         count++
                     //     }
                     //     break
                     case 'radio':
@@ -396,8 +387,7 @@ const Validate = (($) => {
             const ops = this._config
             ops.target = ops.target || this.$el._.parent('form')
 
-            let wrong = 0,
-                ckList = [],
+            let ckList = [],
                 wlist = ops.target.querySelectorAll('*')
 
             wlist = Array.prototype.slice.call(wlist)
@@ -452,9 +442,6 @@ const Validate = (($) => {
                     type = item.nodeName.toLowerCase()
                 }
                 if (!item._.data('off') && checkType(type)) {
-                    if(item._.data('keyup')){
-
-                    }
                     let events = item._.data('keyup') ? 'onkeyup' : 'onchange'
                     item[events] = function () {
                         _this._check(item, type).catch(function(){})
@@ -501,9 +488,9 @@ const Validate = (($) => {
                         if (!ops.success) {
                             $this._.attr({'disabled': true})._.parent('form').submit()
                         } else {
-                            const sucses = _this._getLsit()
+                            const checkEl = _this._getLsit()
                             let obj = {}
-                            sucses.forEach(function(item, i){
+                            checkEl.forEach(function(item, i){
                                 let type = item._.data('type') || item._.attr('type')
                                 let name = item._.attr('name')
                                 if(type && name){
