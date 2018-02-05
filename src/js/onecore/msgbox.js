@@ -35,6 +35,7 @@ const Msgbox = (($, $$) => {
         textY: '\u786E\u5B9A',
         textN: '\u53D6\u6D88',
         close: true,
+        title: '\u63d0\u793a',
         num: 1
         // custom: [{
         // 	text: '你好',
@@ -155,7 +156,7 @@ const Msgbox = (($, $$) => {
                     <span class="loading-close"></span>
                     <div class="msgctx">
                         <div class="msgbar">
-                            <label></label>
+                            ${ops.title}
                             <span class="close"></span>
                         </div>
                         <div class="msgdiv"></div>
@@ -180,7 +181,6 @@ const Msgbox = (($, $$) => {
                 } else {
                     ops.w = ops.w || 280
                     ops.num = ops.num || 1
-                    ops.title = ops.title || '\u63d0\u793a'
                     $msgdiv.innerHTML = ops.text
                 }
                 $msgctx._.addClass(ClassName.SHOW)
@@ -188,19 +188,15 @@ const Msgbox = (($, $$) => {
 
             var $btnh
             if (ops.num && !ops.custom) {
-                if (ops.num === 1) {
-                    $btn1.onclick = function(event) {
-                        _this._success()
-                    }
-                    $btn._.append($btn1)
-                } else {
-                    $btn1.onclick = function(event) {
-                        _this._success()
-                    }
+                $btn1.onclick = function(event) {
+                    _this._success()
+                }
+                $btn._.append($btn1)
+                if (ops.num === 2) {
                     $btn2.onclick = function(event) {
                         _this._error()
                     }
-                    $btn._.append($btn1, $btn2)
+                    $btn._.append($btn2)
                 }
 
                 if (ops.bind) {
@@ -240,8 +236,6 @@ const Msgbox = (($, $$) => {
                 height: ops.h + 'px'
             })
 
-            $msgctx.querySelector('.msgbar > label').innerHTML = ops.title
-
             $div.querySelector('.loading-close').onclick = function() {
                 _this._hide()
             }
@@ -272,7 +266,7 @@ const Msgbox = (($, $$) => {
                     }
                 }).catch(function(error){
                     $div._.addClass('loaderror')
-                    if ($div._.find('.errorshow')) {
+                    if (!$div._.find('.errorshow')) {
                         var loadero = $(`<div class="errorshow text-center">
                             <p>\u52a0\u8f7d\u5931\u8d25</p>
                             <button type="button" class="btn">\u91cd\u8bd5</button>

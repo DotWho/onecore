@@ -45,16 +45,14 @@
         left: 0\9;
         transform: translateY(-50%)\9;
         margin: auto\9;
+        padding: 0 pxToRem(15px) pxToRem(15px);
 
         overflow: hidden;
-        padding: pxToRem(15px);
         max-height: 90%;
         background-color: $white;
         @include borderRadius;
         @include boxShadow;
         & .msgbar {
-            width: auto;
-            height: auto;
             -webkit-box-flex: 0;
             -webkit-flex-grow: 0;
             -ms-flex-positive: 0;
@@ -63,14 +61,12 @@
             -ms-flex-negative: 0;
             flex-shrink: 0;
             overflow: hidden;
-            width: 100%;
-            height: pxToRem(30px);
+            width: auto;
+            height: auto;
             line-height: pxToRem(30px);
             color: $dark;
         }
         & .msgdiv {
-            width: auto;
-            height: auto;
             -webkit-box-flex: 1;
             -webkit-flex-grow: 1;
             -ms-flex-positive: 1;
@@ -81,11 +77,11 @@
             padding: pxToRem(15px) 0;
             overflow-x: hidden;
             overflow-y: auto;
+            width: auto;
+            height: auto;
             word-break: break-all;
         }
         & .msgbtn {
-            width: auto;
-            height: auto;
             -webkit-box-flex: 0;
             -webkit-flex-grow: 0;
             -ms-flex-positive: 0;
@@ -93,6 +89,8 @@
             -webkit-flex-shrink: 0;
             -ms-flex-negative: 0;
             flex-shrink: 0;
+            width: auto;
+            height: auto;
             text-align: right;
         }
         &.msg-loading {

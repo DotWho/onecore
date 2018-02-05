@@ -100,11 +100,11 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
     var $ = self.Bliss = extend(function (expr, context) {
         if (arguments.length == 2 && !context || !expr) {
-            return null;
+            return undefined;
         }
 
         try {
-            return $.type(expr) === 'string' ? (context || document).querySelector(expr) : expr || null;
+            return $.type(expr) === 'string' ? (context || document).querySelector(expr) : expr || undefined;
         } catch (e) {
             return loadXMLString(expr);
         }
@@ -605,7 +605,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 if (this.getAttribute(o) !== null) {
                     return this.getAttribute(o) == '' ? true : this.getAttribute(o);
                 } else {
-                    return null;
+                    return undefined;
                 }
             }
         },
@@ -734,7 +734,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             if (typeof expr == 'string') {
                 var qs = this.querySelectorAll(expr);
                 if (qs.length === 0) {
-                    return null;
+                    return undefined;
                 } else {
                     return qs.length > 1 ? Array.prototype.slice.call(qs) : qs[0];
                 }
@@ -1116,6 +1116,7 @@ var Msgbox = function ($, $$) {
         textY: '\u786E\u5B9A',
         textN: '\u53D6\u6D88',
         close: true,
+        title: '\u63D0\u793A',
         num: 1
         // custom: [{
         // 	text: '你好',
@@ -1243,7 +1244,7 @@ var Msgbox = function ($, $$) {
                 var _this = this;
                 var ops = _this._config;
 
-                var $div = $('<div class="msgbox">\n                    <span class="loading-close"></span>\n                    <div class="msgctx">\n                        <div class="msgbar">\n                            <label></label>\n                            <span class="close"></span>\n                        </div>\n                        <div class="msgdiv"></div>\n                    </div>\n                </div>'),
+                var $div = $('<div class="msgbox">\n                    <span class="loading-close"></span>\n                    <div class="msgctx">\n                        <div class="msgbar">\n                            ' + ops.title + '\n                            <span class="close"></span>\n                        </div>\n                        <div class="msgdiv"></div>\n                    </div>\n                </div>'),
                     $msgctx = $div.querySelector('.msgctx'),
                     $msgdiv = $div.querySelector('.msgdiv');
 
@@ -1267,7 +1268,6 @@ var Msgbox = function ($, $$) {
                     } else {
                         ops.w = ops.w || 280;
                         ops.num = ops.num || 1;
-                        ops.title = ops.title || '\u63D0\u793A';
                         $msgdiv.innerHTML = ops.text;
                     }
                     $msgctx._.addClass(ClassName.SHOW);
@@ -1275,19 +1275,15 @@ var Msgbox = function ($, $$) {
 
                 var $btnh;
                 if (ops.num && !ops.custom) {
-                    if (ops.num === 1) {
-                        $btn1.onclick = function (event) {
-                            _this._success();
-                        };
-                        $btn._.append($btn1);
-                    } else {
-                        $btn1.onclick = function (event) {
-                            _this._success();
-                        };
+                    $btn1.onclick = function (event) {
+                        _this._success();
+                    };
+                    $btn._.append($btn1);
+                    if (ops.num === 2) {
                         $btn2.onclick = function (event) {
                             _this._error();
                         };
-                        $btn._.append($btn1, $btn2);
+                        $btn._.append($btn2);
                     }
 
                     if (ops.bind) {
@@ -1327,8 +1323,6 @@ var Msgbox = function ($, $$) {
                     height: ops.h + 'px'
                 });
 
-                $msgctx.querySelector('.msgbar > label').innerHTML = ops.title;
-
                 $div.querySelector('.loading-close').onclick = function () {
                     _this._hide();
                 };
@@ -1359,7 +1353,7 @@ var Msgbox = function ($, $$) {
                         }
                     }).catch(function (error) {
                         $div._.addClass('loaderror');
-                        if ($div._.find('.errorshow')) {
+                        if (!$div._.find('.errorshow')) {
                             var loadero = $('<div class="errorshow text-center">\n                            <p>\u52A0\u8F7D\u5931\u8D25</p>\n                            <button type="button" class="btn">\u91CD\u8BD5</button>\n                            </div>');
 
                             loadero._.find('button').onclick = function (event) {

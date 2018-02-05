@@ -97,11 +97,11 @@
 
     var $ = self.Bliss = extend(function(expr, context) {
         if (arguments.length == 2 && !context || !expr) {
-            return null
+            return undefined
         }
 
 		try {
-			return $.type(expr) === 'string' ? (context || document).querySelector(expr) : expr || null
+			return $.type(expr) === 'string' ? (context || document).querySelector(expr) : expr || undefined
 		} catch (e) {
 			return loadXMLString(expr)
 		}
@@ -607,7 +607,7 @@
                 if(this.getAttribute(o) !== null){
                     return this.getAttribute(o) == '' ? true : this.getAttribute(o)
                 } else {
-                    return null
+                    return undefined
                 }
             }
         },
@@ -736,7 +736,7 @@
             if(typeof expr == 'string'){
                 var qs = this.querySelectorAll(expr)
                 if(qs.length === 0){
-                    return null
+                    return undefined
                 } else {
                     return qs.length > 1 ? Array.prototype.slice.call(qs) : qs[0]
                 }
