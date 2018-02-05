@@ -1477,7 +1477,7 @@ var Toast = function ($, $$) {
 
     var DefaultType = {
         text: 'string',
-        type: 'undefined|string',
+        type: 'string',
         dect: 'string',
         auto: 'bool'
 

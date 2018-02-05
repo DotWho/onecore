@@ -19,7 +19,7 @@ const Toast = (($, $$) => {
 
     const DefaultType = {
         text: 'string',
-        type: 'undefined|string',
+        type: 'string',
         dect: 'string',
         auto: 'bool'
     }

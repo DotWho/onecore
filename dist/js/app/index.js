@@ -112,6 +112,10 @@
     $('body')._.on('click', '.notics', function () {
         var data = this._.data('v');
 
+        if (!data) {
+            data = '';
+        }
+
         $.fn.toast({
             text: '这是一条提示消息',
             type: data
