@@ -24,6 +24,7 @@ const Validate = (($, $$) => {
     const Default = {
         target: '', //指定验证父级
         enter: false,
+        data: {},
         success: function() {},
         error: function() {}
     }
@@ -31,6 +32,7 @@ const Validate = (($, $$) => {
     const DefaultType = {
         target: '(element|string)',
         enter: 'bool',
+        data: 'object',
         success: 'function',
         error: 'function'
     }
@@ -412,6 +414,14 @@ const Validate = (($, $$) => {
             const $this = _this.$el
             let ops = _this._config
 
+            function getType(item) {
+                let type = item._.data('type') || item._.attr('type')
+                if(!type){
+                    type = item.nodeName.toLowerCase()
+                }
+                return type
+            }
+
             function checkType(type) {
                 switch (type) {
                     case 'text':
@@ -430,16 +440,45 @@ const Validate = (($, $$) => {
                         break
                     default:
                         return false
-                        break
                 }
             }
 
             const opmap = _this._getLsit()
 
             opmap.forEach(function(item, i){
-                let type = item._.data('type') || item._.attr('type')
-                if(!type){
-                    type = item.nodeName.toLowerCase()
+                const type = getType(item)
+                const vname = ops.data[item.name]
+                if(vname){
+                    switch (type) {
+                        case 'select':
+                            item.value = vname
+                            item._.select('update')
+                            break
+                        case 'radio':
+                            $$(`input[name="${item.name}"]`).forEach(function(rck, i){
+                                if(rck.value == vname){
+                                    rck.checked = true
+                                }
+                            })
+                            break
+                        case 'checkbox':
+                            $$(`input[name="${item.name}"]`).forEach(function(rck, i){
+                                for (var cv in vname) {
+                                    if (vname.hasOwnProperty(cv)) {
+                                        if(rck.value == vname[cv]){
+                                            rck.checked = true
+                                        }
+                                    }
+                                }
+                            })
+                            break
+                        case 'imgup':
+                            item.value = vname
+                            item._.parent()._.imgup('update')
+                            break
+                        default:
+                            item.value = vname
+                    }
                 }
                 if (!item._.data('off') && checkType(type)) {
                     let events = item._.data('keyup') ? 'onkeyup' : 'onchange'
@@ -491,8 +530,8 @@ const Validate = (($, $$) => {
                             const checkEl = _this._getLsit()
                             let obj = {}
                             checkEl.forEach(function(item, i){
-                                let type = item._.data('type') || item._.attr('type')
-                                let name = item._.attr('name')
+                                const type = getType(item)
+                                let name = item.name
                                 if(type && name){
                                     switch (type) {
                                         case 'text':

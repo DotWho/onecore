@@ -68,6 +68,32 @@ const Imgup = (($, $$) => {
             this._config = null
         }
 
+        update() {
+            const ops = this._config,
+                $this = this.$el,
+                $input = $this._.find('input[type="hidden"]').value,
+                ils = Array.prototype.slice.call($this.querySelectorAll('.ils')),
+                iup = $this.querySelector('.iup')
+
+            if(ils.length > 0) {
+                ils._.remove()
+            }
+
+            if ($input.length > 0) {
+                ops.uplist = JSON.parse($input)
+                ops.num = ops.uplist.length + 1
+                for (var i = 0; i < ops.uplist.length; i++) {
+                    var data = ops.uplist[i]
+
+                    iup._.before(`<label class="btn ils active"><img src="${data.url}"><span data-id="${data.id}">删除</span></label>`)
+                }
+            }
+
+            if (ops.max == $this._.children('label').length-1) {
+                iup.style.display = 'none'
+            }
+        }
+
         // private
         _getConfig(config) {
             config = $.extends({}, Default, config)
@@ -209,7 +235,7 @@ const Imgup = (($, $$) => {
                 for (var i = 0; i < ops.uplist.length; i++) {
                     var data = ops.uplist[i]
 
-                    $this._.append(`<label class="btn active"><img src="${data.url}"><span data-id="${data.id}">删除</span></label>`)
+                    $this._.append(`<label class="btn ils active"><img src="${data.url}"><span data-id="${data.id}">删除</span></label>`)
                 }
             }
 
@@ -219,7 +245,7 @@ const Imgup = (($, $$) => {
                 }
             }
 
-            $this._.append(`<label class="btn" ${display}>
+            $this._.append(`<label class="btn iup" ${display}>
                 <input type="file" data-off="true" accept="image/gif,image/jpeg,image/png" multiple>
                 <span>删除</span>
             </label>`)
@@ -285,7 +311,7 @@ const Imgup = (($, $$) => {
                             return false
                         }
 
-                        var $spanload = $(`<label class="btn imgload"><img src="${basedata}"><span data-id="${ops.num}">删除</span></label>`)
+                        var $spanload = $(`<label class="btn ils imgload"><img src="${basedata}"><span data-id="${ops.num}">删除</span></label>`)
 
                         el._.before($spanload)
 
@@ -295,7 +321,7 @@ const Imgup = (($, $$) => {
 
                         ops.uplist.push({
                             id: ops.num,
-                            url: 'urlurk'
+                            url: './img/avater.jpg'
                         })
                         $this._.children('input[type="hidden"]').value = JSON.stringify(ops.uplist)
 
@@ -307,7 +333,7 @@ const Imgup = (($, $$) => {
                             cots++
                             if(cots > 99){
                                 clearInterval(ttmm)
-                                $spanload._.attr({'class': 'btn active'})
+                                $spanload._.attr({'class': 'btn ils active'})
                                 $this._.removeClass('error')
                             }
                         }, 10)
@@ -359,45 +385,65 @@ const Imgup = (($, $$) => {
                 }
             }
 
-            _this.$el._.on('change', 'input[type="file"]', function(e) {
-                e.stopPropagation()
-                e.preventDefault()
+            if(!window.FileReader){
+                if(!$('#imgupload')){
+                    const iframeSrc = /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank'
+                    const _form = $(`<div class="">
+                        <iframe name="ifimgup" src="${iframeSrc}"></iframe>
+                        <form id="imgupload" action="//172.19.5.11/web/newImage/upload" method="post" enctype="multipart/form-data" target="ifimgup">
+                            <input type="file" id="filePath" name="filePath">
+                        </form>
+                    </div>`);
 
-                var $this = this,
-                    files = e.target.files
+                    $('body').append(_form)
 
-                try {
+                    const $form = _form._.find('#imgupload')
+                    const $iframe = _form._.find('iframe')
+                    const $path = _form._.find('#filePath')
+
+                    $path.onchange = function(){
+                        $form.submit()
+                    }
+
+                    $iframe.onload = function() {
+                        console.log('loaded');
+                        let fam = $iframe.contentWindow
+                        console.log(fam.document.body.innerText);
+                    }
+
+                    const prevs = _this.$el._.find('input[type="file"]')._.parent()
+                    _this.$el._.find('input[type="file"]')._.remove()
+
+                    prevs.onclick = function(e) {
+                        e.stopPropagation()
+                        e.preventDefault()
+
+                        $path._.fire('click')
+                    }
+
+                    // const el = $this._.parent()
+                    //
+                    // var $spanload = $(`<label class="btn imgload"><img src=""><span data-id="${ops.num}">删除</span></label>`)
+                    //
+                    // $spanload._.attr({'style': 'filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale",src="' + $this.value + '")'})
+                    //
+                    // el._.before($spanload)
+                }
+            } else {
+                _this.$el._.on('change', 'input[type="file"]', function(e) {
+                    e.stopPropagation()
+                    e.preventDefault()
+
+                    var $this = this,
+                        files = e.target.files
+
                     for (var i = 0; i < files.length; i++) {
                         doProccess(files[i], $this._.parent())
                     }
-                } catch (e) {
-                    doProccess(files[0], $this._.parent())
-                } finally {
-                    $this.value = ''
-                }
 
-                // try {
-                // 	var files = e.target.files
-                // 	if(ops.mult){
-                // 		for (var i = 0; i < files.length; i++) {
-                // 			doProccess(files[i], $this.parent())
-                // 		}
-                // 	}else{
-                // 		doProccess(files[0], $this.parent())
-                // 	}
-                // } catch (err) {
-                // 	$this.select().blur()
-                // 	var src = document.selection.createRange().text
-                // 	$this.parent().addClass('active').attr('style', 'filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale",src="' + src + '")')
-                // 	if(_this.$el.children('label').length < ops.max){
-                // 		_this.$el.append('<label>'+
-                // 		'<input type="file" accept="image/gif,image/jpeg,image/png">'+
-                // 		'<span>删除</span></label>')
-                // 	}
-                // } finally {
-                // 	$this.val('')
-                // }
-            })
+                    $this.value = ''
+                })
+            }
 
             _this.$el._.on(Event.CLICK, 'span', function(e) {
                 e.preventDefault()

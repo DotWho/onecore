@@ -3887,6 +3887,7 @@ var Validate = function ($, $$) {
     var Default = {
         target: '', //指定验证父级
         enter: false,
+        data: {},
         success: function success() {},
         error: function error() {}
     };
@@ -3894,6 +3895,7 @@ var Validate = function ($, $$) {
     var DefaultType = {
         target: '(element|string)',
         enter: 'bool',
+        data: 'object',
         success: 'function',
         error: 'function'
     };
@@ -4285,6 +4287,14 @@ var Validate = function ($, $$) {
                 var $this = _this.$el;
                 var ops = _this._config;
 
+                function getType(item) {
+                    var type = item._.data('type') || item._.attr('type');
+                    if (!type) {
+                        type = item.nodeName.toLowerCase();
+                    }
+                    return type;
+                }
+
                 function checkType(type) {
                     switch (type) {
                         case 'text':
@@ -4303,16 +4313,45 @@ var Validate = function ($, $$) {
                             break;
                         default:
                             return false;
-                            break;
                     }
                 }
 
                 var opmap = _this._getLsit();
 
                 opmap.forEach(function (item, i) {
-                    var type = item._.data('type') || item._.attr('type');
-                    if (!type) {
-                        type = item.nodeName.toLowerCase();
+                    var type = getType(item);
+                    var vname = ops.data[item.name];
+                    if (vname) {
+                        switch (type) {
+                            case 'select':
+                                item.value = vname;
+                                item._.select('update');
+                                break;
+                            case 'radio':
+                                $$('input[name="' + item.name + '"]').forEach(function (rck, i) {
+                                    if (rck.value == vname) {
+                                        rck.checked = true;
+                                    }
+                                });
+                                break;
+                            case 'checkbox':
+                                $$('input[name="' + item.name + '"]').forEach(function (rck, i) {
+                                    for (var cv in vname) {
+                                        if (vname.hasOwnProperty(cv)) {
+                                            if (rck.value == vname[cv]) {
+                                                rck.checked = true;
+                                            }
+                                        }
+                                    }
+                                });
+                                break;
+                            case 'imgup':
+                                item.value = vname;
+                                item._.parent()._.imgup('update');
+                                break;
+                            default:
+                                item.value = vname;
+                        }
                     }
                     if (!item._.data('off') && checkType(type)) {
                         var events = item._.data('keyup') ? 'onkeyup' : 'onchange';
@@ -4364,8 +4403,8 @@ var Validate = function ($, $$) {
                                 var checkEl = _this._getLsit();
                                 var obj = {};
                                 checkEl.forEach(function (item, i) {
-                                    var type = item._.data('type') || item._.attr('type');
-                                    var name = item._.attr('name');
+                                    var type = getType(item);
+                                    var name = item.name;
                                     if (type && name) {
                                         switch (type) {
                                             case 'text':
@@ -4528,6 +4567,33 @@ var Imgup = function ($, $$) {
 
                 this._config = null;
             }
+        }, {
+            key: 'update',
+            value: function update() {
+                var ops = this._config,
+                    $this = this.$el,
+                    $input = $this._.find('input[type="hidden"]').value,
+                    ils = Array.prototype.slice.call($this.querySelectorAll('.ils')),
+                    iup = $this.querySelector('.iup');
+
+                if (ils.length > 0) {
+                    ils._.remove();
+                }
+
+                if ($input.length > 0) {
+                    ops.uplist = JSON.parse($input);
+                    ops.num = ops.uplist.length + 1;
+                    for (var i = 0; i < ops.uplist.length; i++) {
+                        var data = ops.uplist[i];
+
+                        iup._.before('<label class="btn ils active"><img src="' + data.url + '"><span data-id="' + data.id + '">\u5220\u9664</span></label>');
+                    }
+                }
+
+                if (ops.max == $this._.children('label').length - 1) {
+                    iup.style.display = 'none';
+                }
+            }
 
             // private
 
@@ -4676,7 +4742,7 @@ var Imgup = function ($, $$) {
                     for (var i = 0; i < ops.uplist.length; i++) {
                         var data = ops.uplist[i];
 
-                        $this._.append('<label class="btn active"><img src="' + data.url + '"><span data-id="' + data.id + '">\u5220\u9664</span></label>');
+                        $this._.append('<label class="btn ils active"><img src="' + data.url + '"><span data-id="' + data.id + '">\u5220\u9664</span></label>');
                     }
                 }
 
@@ -4686,7 +4752,7 @@ var Imgup = function ($, $$) {
                     }
                 }
 
-                $this._.append('<label class="btn" ' + display + '>\n                <input type="file" data-off="true" accept="image/gif,image/jpeg,image/png" multiple>\n                <span>\u5220\u9664</span>\n            </label>');
+                $this._.append('<label class="btn iup" ' + display + '>\n                <input type="file" data-off="true" accept="image/gif,image/jpeg,image/png" multiple>\n                <span>\u5220\u9664</span>\n            </label>');
 
                 function bytesToSize(bytes) {
                     //显示大小
@@ -4749,7 +4815,7 @@ var Imgup = function ($, $$) {
                                 return false;
                             }
 
-                            var $spanload = $('<label class="btn imgload"><img src="' + basedata + '"><span data-id="' + ops.num + '">\u5220\u9664</span></label>');
+                            var $spanload = $('<label class="btn ils imgload"><img src="' + basedata + '"><span data-id="' + ops.num + '">\u5220\u9664</span></label>');
 
                             el._.before($spanload);
 
@@ -4759,7 +4825,7 @@ var Imgup = function ($, $$) {
 
                             ops.uplist.push({
                                 id: ops.num,
-                                url: 'urlurk'
+                                url: './img/avater.jpg'
                             });
                             $this._.children('input[type="hidden"]').value = JSON.stringify(ops.uplist);
 
@@ -4771,7 +4837,7 @@ var Imgup = function ($, $$) {
                                 cots++;
                                 if (cots > 99) {
                                     clearInterval(ttmm);
-                                    $spanload._.attr({ 'class': 'btn active' });
+                                    $spanload._.attr({ 'class': 'btn ils active' });
                                     $this._.removeClass('error');
                                 }
                             }, 10);
@@ -4823,45 +4889,60 @@ var Imgup = function ($, $$) {
                     }
                 }
 
-                _this.$el._.on('change', 'input[type="file"]', function (e) {
-                    e.stopPropagation();
-                    e.preventDefault();
+                if (!window.FileReader) {
+                    if (!$('#imgupload')) {
+                        var iframeSrc = /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank';
+                        var _form = $('<div class="">\n                        <iframe name="ifimgup" src="' + iframeSrc + '"></iframe>\n                        <form id="imgupload" action="//172.19.5.11/web/newImage/upload" method="post" enctype="multipart/form-data" target="ifimgup">\n                            <input type="file" id="filePath" name="filePath">\n                        </form>\n                    </div>');
 
-                    var $this = this,
-                        files = e.target.files;
+                        $('body').append(_form);
 
-                    try {
+                        var $form = _form._.find('#imgupload');
+                        var $iframe = _form._.find('iframe');
+                        var $path = _form._.find('#filePath');
+
+                        $path.onchange = function () {
+                            $form.submit();
+                        };
+
+                        $iframe.onload = function () {
+                            console.log('loaded');
+                            var fam = $iframe.contentWindow;
+                            console.log(fam.document.body.innerText);
+                        };
+
+                        var prevs = _this.$el._.find('input[type="file"]')._.parent();
+                        _this.$el._.find('input[type="file"]')._.remove();
+
+                        prevs.onclick = function (e) {
+                            e.stopPropagation();
+                            e.preventDefault();
+
+                            $path._.fire('click');
+                        };
+
+                        // const el = $this._.parent()
+                        //
+                        // var $spanload = $(`<label class="btn imgload"><img src=""><span data-id="${ops.num}">删除</span></label>`)
+                        //
+                        // $spanload._.attr({'style': 'filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale",src="' + $this.value + '")'})
+                        //
+                        // el._.before($spanload)
+                    }
+                } else {
+                    _this.$el._.on('change', 'input[type="file"]', function (e) {
+                        e.stopPropagation();
+                        e.preventDefault();
+
+                        var $this = this,
+                            files = e.target.files;
+
                         for (var i = 0; i < files.length; i++) {
                             doProccess(files[i], $this._.parent());
                         }
-                    } catch (e) {
-                        doProccess(files[0], $this._.parent());
-                    } finally {
-                        $this.value = '';
-                    }
 
-                    // try {
-                    // 	var files = e.target.files
-                    // 	if(ops.mult){
-                    // 		for (var i = 0; i < files.length; i++) {
-                    // 			doProccess(files[i], $this.parent())
-                    // 		}
-                    // 	}else{
-                    // 		doProccess(files[0], $this.parent())
-                    // 	}
-                    // } catch (err) {
-                    // 	$this.select().blur()
-                    // 	var src = document.selection.createRange().text
-                    // 	$this.parent().addClass('active').attr('style', 'filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod="scale",src="' + src + '")')
-                    // 	if(_this.$el.children('label').length < ops.max){
-                    // 		_this.$el.append('<label>'+
-                    // 		'<input type="file" accept="image/gif,image/jpeg,image/png">'+
-                    // 		'<span>删除</span></label>')
-                    // 	}
-                    // } finally {
-                    // 	$this.val('')
-                    // }
-                });
+                        $this.value = '';
+                    });
+                }
 
                 _this.$el._.on(Event.CLICK, 'span', function (e) {
                     e.preventDefault();

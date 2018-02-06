@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="../fonts/style.css" />
     <link rel="stylesheet" href="../css/base.css" />
 
-        <!-- <link rel="dns-prefetch" href="//cdn.polyfill.io/"> -->
+        <link rel="dns-prefetch" href="//cdn.polyfill.io/">
         <link rel="preload" href="./js/lib/onecore.js" as="script">
         <link rel="preload" href="./js/lib/strapdown.js" as="script">
         <script src="//cdn.polyfill.io/v2/polyfill.min.js"></script>
@@ -760,20 +760,15 @@ $('.imgupx').imgup({
                 </label>
                 <span class="errorstr">不正确</span>
             </div>
-        </div>
-        <div class="col-3">
             <div>
                 <div class="imgup" data-toggle="imgup">
                     <input type="hidden" name="vimgup" data-type="imgup" value="" required>
                 </div>
                 <span class="errorstr">不正确</span>
             </div>
-            <div>
-                <div class="imgup" data-toggle="imgup">
-                    <input type="hidden" name="vimgup1" data-type="imgup" value="">
-                </div>
-                <span class="errorstr">不正确</span>
-            </div>
+        </div>
+        <div class="col-3">
+            <pre id="vali-data"></pre>
         </div>
     </div>
     <button type="button" class="btn primary" id="btn-test">测&nbsp;&nbsp;试</button>

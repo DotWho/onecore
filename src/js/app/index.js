@@ -169,11 +169,32 @@
         sle._.select('update');
     };
 
+    const vlid = {
+        "vtext": "123",
+        "vpassword": "123321dd",
+        "vmobile": "15555555555",
+        "vemail": "fs@ds.com",
+        "vnumber": "1",
+        "vinteger": "12",
+        "vselect": "1",
+        "vtextarea": "textarea1111",
+        "custom": "123",
+        "xcv": [
+            "2",
+            "3"
+        ],
+        "fb": "3",
+        "vht": [
+            "on"
+        ],
+        "vimgup": "[{\"id\":1,\"url\":\"./img/avater.jpg\"}]"
+    }
     // validate
     $('#btn-test')._.validate({
+        data: vlid,
         success: function(data) {
-            console.log(data);
             console.log('success');
+            $('#vali-data').innerHTML = JSON.stringify(data, null, 4)
         },
         error: function() {
             console.log('error');
