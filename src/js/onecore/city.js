@@ -175,10 +175,6 @@ const City = (($, $$) => {
                 const str = this.innerHTML
                 ops.ctx.province = id
                 ops.ctx.provinceStr = str
-                ops.ctx.city = ''
-                ops.ctx.cityStr = ''
-                ops.ctx.district = ''
-                ops.ctx.districtStr = ''
                 $province._.children('span')._.removeClass(ClassName.ACTIVE)
                 this._.addClass(ClassName.ACTIVE)
                 _this._setCityData(id, $city)
@@ -191,8 +187,6 @@ const City = (($, $$) => {
                 const str = this.innerHTML
                 ops.ctx.city = id
                 ops.ctx.cityStr = str
-                ops.ctx.district = ''
-                ops.ctx.districtStr = ''
                 $city._.children('span')._.removeClass(ClassName.ACTIVE)
                 this._.addClass(ClassName.ACTIVE)
                 _this._setCityData(id, $district)
