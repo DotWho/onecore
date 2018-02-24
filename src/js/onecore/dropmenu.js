@@ -34,7 +34,6 @@ const Dropmenu = (($, $$) => {
 
     // Class Definition
     class Dropmenu {
-
         constructor(element, config) {
             this.$el = element
             this._config = this._getConfig(config)
@@ -68,12 +67,12 @@ const Dropmenu = (($, $$) => {
 
             let $div = $this._.children('div')
 
-            if(window.screen.width > 480){
-                switch(ops.direction){
+            if (window.screen.width > 480) {
+                switch (ops.direction) {
                     case 'center':
                         $div._.style({
                             'margin-left': `${-$div.offsetWidth / 2}px`,
-                            'transform': 'translateX(-50%)'
+                            transform: 'translateX(-50%)'
                         })
                         break
                     case 'left':
@@ -85,7 +84,7 @@ const Dropmenu = (($, $$) => {
                     case 'top':
                         $div._.style({
                             'margin-left': `${-$div.offsetWidth / 2}px`,
-                            'transform': 'translateX(-50%)'
+                            transform: 'translateX(-50%)'
                         })
                         $div._.addClass('top')
                         break
@@ -98,37 +97,39 @@ const Dropmenu = (($, $$) => {
                 }
             }
 
-            if(ops.trigger !== 'mouseenter'){
+            if (ops.trigger !== 'mouseenter') {
                 const chd = $this._.children()[0]
-    			chd._.bind(ops.trigger, function(e){
-    	        	e.preventDefault()
-    	            e.stopPropagation()
+                chd._.bind(ops.trigger, function(e) {
+                    e.preventDefault()
+                    e.stopPropagation()
 
-                    if(!$this._.hasClass(ClassName.MISS)){
+                    if (!$this._.hasClass(ClassName.MISS)) {
                         $this._.addClass('dismiss')
                     }
 
-    	            if($this._.hasClass(ClassName.ACTIVE)){
-    	                $this._.removeClass(ClassName.ACTIVE)._.addClass(ClassName.MISS)
-    	            } else {
+                    if ($this._.hasClass(ClassName.ACTIVE)) {
+                        $this._.removeClass(ClassName.ACTIVE)._.addClass(
+                            ClassName.MISS
+                        )
+                    } else {
                         $$(ClassName.DPM)._.removeClass(ClassName.ACTIVE)
-    	                $this._.addClass(ClassName.ACTIVE)
-    	                if(window.screen.width <= 480){
-    	                	$('body')._.addClass(ClassName.OVERLAY)
-    	                }
-    	            }
-    	        })
+                        $this._.addClass(ClassName.ACTIVE)
+                        if (window.screen.width <= 480) {
+                            $('body')._.addClass(ClassName.OVERLAY)
+                        }
+                    }
+                })
 
                 $this._.children()[0]._.next().onclick = function(e) {
                     e.preventDefault()
-    	            e.stopPropagation()
+                    e.stopPropagation()
                 }
-    		}else{
-    			$this._.once(Event.ENTER, function(event) {
-    				$this._.addClass(ClassName.MISS)
-    			})
-    			$this._.addClass('dphover')
-    		}
+            } else {
+                $this._.once(Event.ENTER, function(event) {
+                    $this._.addClass(ClassName.MISS)
+                })
+                $this._.addClass('dphover')
+            }
         }
 
         // static
@@ -143,7 +144,7 @@ const Dropmenu = (($, $$) => {
             const action = typeof config === 'string' ? config : _config
 
             if (!data) {
-                if(window.screen.width <= 480){
+                if (window.screen.width <= 480) {
                     _config.trigger = 'click'
                 }
                 data = new Dropmenu(this, _config)
@@ -161,17 +162,20 @@ const Dropmenu = (($, $$) => {
 
     // Data Api implementation
     $$(Selector.DATA_TOGGLE).forEach(function(item, i) {
-        Dropmenu._interface.call(item , item._.data())
+        Dropmenu._interface.call(item, item._.data())
     })
 
-    document.addEventListener(Event.CLICK, function(){
-        $$(ClassName.DPM)._.removeClass(ClassName.ACTIVE)
-    }, false);
+    document.addEventListener(
+        Event.CLICK,
+        function() {
+            $$(ClassName.DPM)._.removeClass(ClassName.ACTIVE)
+        },
+        false
+    )
 
     $.add(NAME, Dropmenu._interface)
 
     return Dropmenu
-
 })(Bliss, Bliss.$)
 
 export default Dropmenu

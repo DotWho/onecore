@@ -48,7 +48,6 @@ const Imgup = (($, $$) => {
 
     // Class Definition
     class Imgup {
-
         constructor(element, config) {
             this.$el = element
             this._config = this._getConfig(config)
@@ -72,10 +71,12 @@ const Imgup = (($, $$) => {
             const ops = this._config,
                 $this = this.$el,
                 $input = $this._.find('input[type="hidden"]').value,
-                ils = Array.prototype.slice.call($this.querySelectorAll('.ils')),
+                ils = Array.prototype.slice.call(
+                    $this.querySelectorAll('.ils')
+                ),
                 iup = $this.querySelector('.iup')
 
-            if(ils.length > 0) {
+            if (ils.length > 0) {
                 ils._.remove()
             }
 
@@ -85,11 +86,15 @@ const Imgup = (($, $$) => {
                 for (var i = 0; i < ops.uplist.length; i++) {
                     var data = ops.uplist[i]
 
-                    iup._.before(`<label class="btn ils active"><img src="${data.url}"><span data-id="${data.id}">删除</span></label>`)
+                    iup._.before(
+                        `<label class="btn ils active"><img src="${
+                            data.url
+                        }"><span data-id="${data.id}">删除</span></label>`
+                    )
                 }
             }
 
-            if (ops.max == $this._.children('label').length-1) {
+            if (ops.max == $this._.children('label').length - 1) {
                 iup.style.display = 'none'
             }
         }
@@ -143,8 +148,10 @@ const Imgup = (($, $$) => {
                             relativeUrl: data[i].relativeUrl
                         })
                     }
-                    $this._.children('input[type="hidden"]').value = JSON.stringify(ops.uplist)
-                    spanlk._.attr({'class': 'btn active'})
+                    $this._.children(
+                        'input[type="hidden"]'
+                    ).value = JSON.stringify(ops.uplist)
+                    spanlk._.attr({ class: 'btn active' })
                     $this._.removeClass('error')
                 } else {
                     console.log('失败')
@@ -170,7 +177,10 @@ const Imgup = (($, $$) => {
 
             oData.append('filePath', convertBase64UrlToBlob(img.data), img.name)
 
-            oData.append('style', $this._.data('style') ? $this._.data('style') : '1')
+            oData.append(
+                'style',
+                $this._.data('style') ? $this._.data('style') : '1'
+            )
 
             oData.append('userId', $this._.data('userId'))
 
@@ -226,8 +236,8 @@ const Imgup = (($, $$) => {
                 display = ''
 
             ops.uplist = []
-            if(ops.max) ops.max = parseInt(ops.max);
-            if(ops.num) ops.num = parseInt(ops.num);
+            if (ops.max) ops.max = parseInt(ops.max)
+            if (ops.num) ops.num = parseInt(ops.num)
 
             if ($input.length > 0) {
                 ops.uplist = JSON.parse($input)
@@ -235,11 +245,15 @@ const Imgup = (($, $$) => {
                 for (var i = 0; i < ops.uplist.length; i++) {
                     var data = ops.uplist[i]
 
-                    $this._.append(`<label class="btn ils active"><img src="${data.url}"><span data-id="${data.id}">删除</span></label>`)
+                    $this._.append(
+                        `<label class="btn ils active"><img src="${
+                            data.url
+                        }"><span data-id="${data.id}">删除</span></label>`
+                    )
                 }
             }
 
-            if($this._.children('label')){
+            if ($this._.children('label')) {
                 if (ops.max == $this._.children('label').length) {
                     display = 'style="display:none;"'
                 }
@@ -275,7 +289,9 @@ const Imgup = (($, $$) => {
                     if (unit > sizes) {
                         isbool = true
                     } else if (unit === sizes) {
-                        if (parseFloat(sResultFileSize) <= parseFloat(ops.size)) {
+                        if (
+                            parseFloat(sResultFileSize) <= parseFloat(ops.size)
+                        ) {
                             isbool = true
                         }
                     }
@@ -288,7 +304,9 @@ const Imgup = (($, $$) => {
                 img.onload = null
 
                 if (canvas) {
-                    canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height)
+                    canvas
+                        .getContext('2d')
+                        .clearRect(0, 0, canvas.width, canvas.height)
                     canvas.width = canvas.height = 0
                     _this._canvas = null
                 }
@@ -311,7 +329,11 @@ const Imgup = (($, $$) => {
                             return false
                         }
 
-                        var $spanload = $(`<label class="btn ils imgload"><img src="${basedata}"><span data-id="${ops.num}">删除</span></label>`)
+                        var $spanload = $(
+                            `<label class="btn ils imgload"><img src="${basedata}"><span data-id="${
+                                ops.num
+                            }">删除</span></label>`
+                        )
 
                         el._.before($spanload)
 
@@ -323,17 +345,19 @@ const Imgup = (($, $$) => {
                             id: ops.num,
                             url: './img/avater.jpg'
                         })
-                        $this._.children('input[type="hidden"]').value = JSON.stringify(ops.uplist)
+                        $this._.children(
+                            'input[type="hidden"]'
+                        ).value = JSON.stringify(ops.uplist)
 
-                        let cots = 1;
-                        $spanload._.attr({'process': '10%'})
-                        let ttmm = setInterval(function(){
+                        let cots = 1
+                        $spanload._.attr({ process: '10%' })
+                        let ttmm = setInterval(function() {
                             const hb = cots + '%'
-                            $spanload._.attr({'process': hb})
+                            $spanload._.attr({ process: hb })
                             cots++
-                            if(cots > 99){
+                            if (cots > 99) {
                                 clearInterval(ttmm)
-                                $spanload._.attr({'class': 'btn ils active'})
+                                $spanload._.attr({ class: 'btn ils active' })
                                 $this._.removeClass('error')
                             }
                         }, 10)
@@ -373,27 +397,32 @@ const Imgup = (($, $$) => {
                     }
                 } else {
                     var sd
-                    $this._.attr('accept') === null ? sd = 'others' : sd = $this._.attr('accept')
+                    $this._.attr('accept') === null
+                        ? (sd = 'others')
+                        : (sd = $this._.attr('accept'))
                     if (sd.indexOf('image') === -1) {
                         $parent._.addClass('file')
                     } else {
                         $.fn.notification({
-                            text: '\u8bf7\u9009\u62e9\u6b63\u786e\u7684\u56fe\u7247\u683c\u5f0f\u3002', //请选择正确的图片格式。
+                            text:
+                                '\u8bf7\u9009\u62e9\u6b63\u786e\u7684\u56fe\u7247\u683c\u5f0f\u3002', //请选择正确的图片格式。
                             type: 'info'
                         })
                     }
                 }
             }
 
-            if(!window.FileReader){
-                if(!$('#imgupload')){
-                    const iframeSrc = /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank'
+            if (!window.FileReader) {
+                if (!$('#imgupload')) {
+                    const iframeSrc = /^https/i.test(window.location.href || '')
+                        ? 'javascript:false'
+                        : 'about:blank'
                     const _form = $(`<div class="">
                         <iframe name="ifimgup" src="${iframeSrc}"></iframe>
                         <form id="imgupload" action="//172.19.5.11/web/newImage/upload" method="post" enctype="multipart/form-data" target="ifimgup">
                             <input type="file" id="filePath" name="filePath">
                         </form>
-                    </div>`);
+                    </div>`)
 
                     $('body').append(_form)
 
@@ -401,17 +430,19 @@ const Imgup = (($, $$) => {
                     const $iframe = _form._.find('iframe')
                     const $path = _form._.find('#filePath')
 
-                    $path.onchange = function(){
+                    $path.onchange = function() {
                         $form.submit()
                     }
 
                     $iframe.onload = function() {
-                        console.log('loaded');
+                        console.log('loaded')
                         let fam = $iframe.contentWindow
-                        console.log(fam.document.body.innerText);
+                        console.log(fam.document.body.innerText)
                     }
 
-                    const prevs = _this.$el._.find('input[type="file"]')._.parent()
+                    const prevs = _this.$el._.find(
+                        'input[type="file"]'
+                    )._.parent()
                     _this.$el._.find('input[type="file"]')._.remove()
 
                     prevs.onclick = function(e) {
@@ -462,19 +493,23 @@ const Imgup = (($, $$) => {
                             }
                         }
                     }
-                    $this._.children('input[type="hidden"]').value = JSON.stringify(ops.uplist)
+                    $this._.children(
+                        'input[type="hidden"]'
+                    ).value = JSON.stringify(ops.uplist)
                 }
 
                 if (_this.$el._.children('label').length > 1) {
                     $span._.parent()._.remove()
                     let labels = _this.$el._.children('label')
-                    if(labels.length && labels.length <= ops.max) {
-                        labels[labels.length-1].style.display = 'inline-block'
-                    }else{
+                    if (labels.length && labels.length <= ops.max) {
+                        labels[labels.length - 1].style.display = 'inline-block'
+                    } else {
                         labels.style.display = 'inline-block'
                     }
                 } else {
-                    $span._.parent()._.removeAttr('style')._.removeClass('active')
+                    $span._.parent()
+                        ._.removeAttr('style')
+                        ._.removeClass('active')
                 }
             })
         }
@@ -505,14 +540,13 @@ const Imgup = (($, $$) => {
     }
 
     // Data Api implementation
-    $$(Selector.DATA_TOGGLE).forEach(function(item, i){
-        Imgup._interface.call(item , item._.data())
+    $$(Selector.DATA_TOGGLE).forEach(function(item, i) {
+        Imgup._interface.call(item, item._.data())
     })
 
     $.add(NAME, Imgup._interface)
 
     return Imgup
-
 })(Bliss, Bliss.$)
 
 export default Imgup

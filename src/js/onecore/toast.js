@@ -26,7 +26,6 @@ const Toast = (($, $$) => {
 
     // Class Definition
     class Toast {
-
         constructor(element, config) {
             this._config = this._getConfig(config)
             this._init()
@@ -64,13 +63,22 @@ const Toast = (($, $$) => {
                 }, 500)
             }
 
-            if(ops.type === 'success' || ops.type === 'warning' || ops.type === 'info' || ops.type === 'error'){
+            if (
+                ops.type === 'success' ||
+                ops.type === 'warning' ||
+                ops.type === 'info' ||
+                ops.type === 'error'
+            ) {
                 type = `<div class="notic n${ops.type}">&nbsp;</div>`
             }
 
-            const $div = $(`<div class="toast clearfix">${type}<div class="ctx">${ops.text}</div><div class="close">&nbsp;</div></div>`)
+            const $div = $(
+                `<div class="toast clearfix">${type}<div class="ctx">${
+                    ops.text
+                }</div><div class="close">&nbsp;</div></div>`
+            )
 
-            if(ops.auto){
+            if (ops.auto) {
                 setTimeout(() => {
                     closed()
                 }, 3000)
@@ -82,26 +90,30 @@ const Toast = (($, $$) => {
 
             switch (ops.dect) {
                 case 'top':
-                    if(!$('.toast-top')){
+                    if (!$('.toast-top')) {
                         $('body')._.append('<div class="toast-top"></div>')
                     }
                     $('.toast-top')._.prepend($div)
                     break
                 case 'top-right':
-                    if(!$('.toast-top-right')){
-                        $('body')._.append('<div class="toast-top-right"></div>')
+                    if (!$('.toast-top-right')) {
+                        $('body')._.append(
+                            '<div class="toast-top-right"></div>'
+                        )
                     }
                     $('.toast-top-right')._.prepend($div)
                     break
                 case 'btm':
-                    if(!$('.toast-btm')){
+                    if (!$('.toast-btm')) {
                         $('body')._.append('<div class="toast-btm"></div>')
                     }
                     $('.toast-btm')._.append($div)
                     break
                 case 'btm-right':
-                    if(!$('.toast-btm-right')){
-                        $('body')._.append('<div class="toast-btm-right"></div>')
+                    if (!$('.toast-btm-right')) {
+                        $('body')._.append(
+                            '<div class="toast-btm-right"></div>'
+                        )
                     }
                     $('.toast-btm-right')._.append($div)
                     break
@@ -123,7 +135,6 @@ const Toast = (($, $$) => {
     $.fn[NAME].Constructor = Toast
 
     return Toast
-
 })(Bliss, Bliss.$)
 
 export default Toast

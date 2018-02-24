@@ -32,11 +32,12 @@ const Tab = (($, $$) => {
 
     // Class Definition
     class Tab {
-
         constructor(element, config) {
             this.$el = element
             this.$nav = this.$el._.children('.tab-list')
-            this.$context = this.$el._.children('.tab-context')._.children('div')
+            this.$context = this.$el._.children('.tab-context')._.children(
+                'div'
+            )
             this._config = this._getConfig(config)
             this._init()
         }
@@ -69,19 +70,19 @@ const Tab = (($, $$) => {
                 requFrame
 
             function ckanim() {
-                if($now._.style('opacity') === '1'){
+                if ($now._.style('opacity') === '1') {
                     cancelAnimationFrame(requFrame)
                     $now._.addClass(ClassName.ACTIVE)
-                }else{
+                } else {
                     requFrame = requestAnimationFrame(ckanim)
                 }
             }
 
-            $last._.attr({'class': 'oc-tab-out'})
-            if(ajas){
-                $now._.attr({'class': 'oc-tab-in oc-tab-load loading'})
-            }else{
-                $now._.attr({'class': 'oc-tab-in'})
+            $last._.attr({ class: 'oc-tab-out' })
+            if (ajas) {
+                $now._.attr({ class: 'oc-tab-in oc-tab-load loading' })
+            } else {
+                $now._.attr({ class: 'oc-tab-in' })
             }
 
             requFrame = requestAnimationFrame(ckanim)
@@ -91,7 +92,7 @@ const Tab = (($, $$) => {
             const _this = this
             let ops = _this._config
 
-            function doAjax(num){
+            function doAjax(num) {
                 var el = _this.$context[num]
 
                 el._.addClass('loading')
@@ -106,20 +107,28 @@ const Tab = (($, $$) => {
                 // })
             }
 
-            _this.$nav._.on(Event.CLICK, 'button', function (e) {
+            _this.$nav._.on(Event.CLICK, 'button', function(e) {
                 e.preventDefault()
 
                 ops.lastIndex = ops.index
                 ops.index = this._.index()
-                _this.$nav._.children('button')._.removeClass(ClassName.ACTIVE)[ops.index]._.addClass(ClassName.ACTIVE)
-                if(_this.$context[ops.index].innerHTML === '' && _this.$context[ops.index]._.data('url')){
+                _this.$nav._.children('button')
+                    ._.removeClass(ClassName.ACTIVE)
+                    [ops.index]._.addClass(ClassName.ACTIVE)
+                if (
+                    _this.$context[ops.index].innerHTML === '' &&
+                    _this.$context[ops.index]._.data('url')
+                ) {
                     doAjax(ops.index)
-                }else{
+                } else {
                     _this._animate()
                 }
             })
 
-            if(_this.$context[0].innerHTML === '' && _this.$context[0]._.data('url')){
+            if (
+                _this.$context[0].innerHTML === '' &&
+                _this.$context[0]._.data('url')
+            ) {
                 doAjax(0)
             }
         }
@@ -160,14 +169,13 @@ const Tab = (($, $$) => {
     }
 
     // Data Api implementation
-    $$(Selector.DATA_TOGGLE).forEach(function(item, i){
-        Tab._interface.call(item , item._.data())
+    $$(Selector.DATA_TOGGLE).forEach(function(item, i) {
+        Tab._interface.call(item, item._.data())
     })
 
     $.add(NAME, Tab._interface)
 
     return Tab
-
 })(Bliss, Bliss.$)
 
 export default Tab

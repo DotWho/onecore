@@ -36,7 +36,6 @@ const Slider = (($, $$) => {
 
     // Class Definition
     class Slider {
-
         constructor(element, config) {
             this.$el = element
             this._config = this._getConfig(config)
@@ -71,21 +70,22 @@ const Slider = (($, $$) => {
                 olIndex = ops.index
 
             for (var key in position) {
-                if (position.hasOwnProperty(key)) cssStr += key + ':' + position[key] + ';'
+                if (position.hasOwnProperty(key))
+                    cssStr += key + ':' + position[key] + ';'
             }
 
             ops.list.setAttribute('style', cssStr)
 
-            if(olIndex > ops.num){
+            if (olIndex > ops.num) {
                 olIndex = 1
             }
 
             let oli = ops.$ol._.children('li')
             oli._.removeClass(ClassName.HOVER)
-            if(olIndex-1 < 0) {
+            if (olIndex - 1 < 0) {
                 olIndex++
             }
-            oli[olIndex-1]._.addClass(ClassName.HOVER)
+            oli[olIndex - 1]._.addClass(ClassName.HOVER)
         }
 
         _event() {
@@ -93,19 +93,19 @@ const Slider = (($, $$) => {
             let ops = _this._config,
                 timer
 
-            if(ops.arrow){
+            if (ops.arrow) {
                 var $prev = $('<span class="s-prev">&nbsp;</span>'),
                     $next = $('<span class="s-next">&nbsp;</span>')
 
-                $prev.onclick = function () {
-                    if(ops.go){
+                $prev.onclick = function() {
+                    if (ops.go) {
                         ops.go = false
                         _this._goDec(false)
                     }
                 }
 
-                $next.onclick = function () {
-                    if(ops.go){
+                $next.onclick = function() {
+                    if (ops.go) {
                         ops.go = false
                         _this._goDec(true)
                     }
@@ -114,22 +114,22 @@ const Slider = (($, $$) => {
                 _this.$el._.append($prev, $next)
             }
 
-            ops.$ol._.on(Event.CLICK, 'li', function(){
+            ops.$ol._.on(Event.CLICK, 'li', function() {
                 ops.index = this._.index()
                 _this._goDec(true)
             })
 
             function setInter() {
-                timer = setInterval(function () {
+                timer = setInterval(function() {
                     _this._goDec(true)
                 }, ops.stop)
             }
 
             if (ops.auto) {
-                _this.$el.onmouseenter = function () {
+                _this.$el.onmouseenter = function() {
                     clearInterval(timer)
                 }
-                _this.$el.onmouseleave = function () {
+                _this.$el.onmouseleave = function() {
                     clearInterval(timer)
                     setInter()
                 }
@@ -137,19 +137,20 @@ const Slider = (($, $$) => {
             }
         }
 
-        _goDec(dec) {//true next, false prev
+        _goDec(dec) {
+            //true next, false prev
             const _this = this
             let ops = _this._config,
                 nextGo = false
 
-            if(dec){
+            if (dec) {
                 ops.index++
-                if(ops.index > ops.num){
+                if (ops.index > ops.num) {
                     nextGo = true
                 }
-            }else{
+            } else {
                 ops.index--
-                if(ops.index === 0){
+                if (ops.index === 0) {
                     nextGo = true
                 }
             }
@@ -162,20 +163,20 @@ const Slider = (($, $$) => {
             _this._forStyle()
 
             setTimeout(() => {
-                if(nextGo && dec){
+                if (nextGo && dec) {
                     ops.index = 1
                     ops.position['transform'] = `translateX(-${ops.w}px)`
-                }else if(nextGo && !dec){
+                } else if (nextGo && !dec) {
                     ops.index = ops.num
-                    ops.position['transform'] = `translateX(-${ops.w * ops.num}px)`
+                    ops.position['transform'] = `translateX(-${ops.w *
+                        ops.num}px)`
                 }
-                if(nextGo){
+                if (nextGo) {
                     ops.position['transition'] = 'none'
                     _this._forStyle()
                 }
                 ops.go = true
             }, ops.speed)
-
         }
 
         _setting() {
@@ -183,9 +184,15 @@ const Slider = (($, $$) => {
             let hidden = 'hidden'
 
             function onvchange(evt) {
-                var v = 'visible', h = 'hidden',
+                var v = 'visible',
+                    h = 'hidden',
                     evtMap = {
-                        focus: v, focusin: v, pageshow: v, blur: h, focusout: h, pagehide: h
+                        focus: v,
+                        focusin: v,
+                        pageshow: v,
+                        blur: h,
+                        focusout: h,
+                        pagehide: h
                     }
 
                 evt = evt || window.event
@@ -208,7 +215,10 @@ const Slider = (($, $$) => {
                 } else if ((hidden = 'mozHidden') in document) {
                     document.addEventListener('mozvisibilitychange', onvchange)
                 } else if ((hidden = 'webkitHidden') in document) {
-                    document.addEventListener('webkitvisibilitychange', onvchange)
+                    document.addEventListener(
+                        'webkitvisibilitychange',
+                        onvchange
+                    )
                 } else if ((hidden = 'msHidden') in document) {
                     document.addEventListener('msvisibilitychange', onvchange)
                 } else if ('onfocusin' in document) {
@@ -232,7 +242,9 @@ const Slider = (($, $$) => {
 
             if (ops.num > 1) {
                 ops.list._.append(ops.list._.children('a')[0].cloneNode(true))
-                ops.list._.prepend(ops.list._.children('a')[ops.num - 1].cloneNode(true))
+                ops.list._.prepend(
+                    ops.list._.children('a')[ops.num - 1].cloneNode(true)
+                )
                 ops.w = ops.list._.children('a')[0].offsetWidth
                 ops.index = 1
                 ops.go = true
@@ -280,14 +292,13 @@ const Slider = (($, $$) => {
     }
 
     // Data Api implementation
-    $$(Selector.DATA_TOGGLE).forEach(function(item, i){
-        Slider._interface.call(item , item._.data())
+    $$(Selector.DATA_TOGGLE).forEach(function(item, i) {
+        Slider._interface.call(item, item._.data())
     })
 
     $.add(NAME, Slider._interface)
 
     return Slider
-
 })(Bliss, Bliss.$)
 
 export default Slider

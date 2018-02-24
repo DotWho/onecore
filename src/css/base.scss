@@ -1,5 +1,10 @@
 @import "../sass/_variables.scss";
 
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 .header {
     position: fixed;
     z-index: 5;

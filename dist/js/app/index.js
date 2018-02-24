@@ -1,6 +1,6 @@
 'use strict';
 
-(function ($, $$) {
+;(function ($, $$) {
     $('.hanm-menu').onclick = function () {
         this._.toggleClass('active');
         $('.container-main')._.toggleClass('active');
@@ -159,19 +159,20 @@
     };
 
     var vlid = {
-        "vtext": "123",
-        "vpassword": "123321dd",
-        "vmobile": "15555555555",
-        "vemail": "fs@ds.com",
-        "vnumber": "1",
-        "vinteger": "12",
-        "vselect": "1",
-        "vtextarea": "textarea1111",
-        "custom": "123",
-        "xcv": ["2", "3"],
-        "fb": "3",
-        "vht": ["on"],
-        "vimgup": "[{\"id\":1,\"url\":\"./img/avater.jpg\"}]"
+        vtext: '123',
+        vpassword: '123321dd',
+        vmobile: '15555555555',
+        vemail: 'fs@ds.com',
+        vnumber: '1',
+        vinteger: '12',
+        vselect: '1',
+        vtextarea: 'textarea1111',
+        custom: '123',
+        xcv: ['2', '3'],
+        fb: '3',
+        vht: ['on'],
+        vimgup: '[{"id":1,"url":"./img/avater.jpg"}]',
+        city: '{"province":650000,"provinceStr":"新疆维吾尔自治区","city":652900,"cityStr":"阿克苏地区","district":652927,"districtStr":"乌什县"}'
         // validate
     };$('#btn-test')._.validate({
         data: vlid,

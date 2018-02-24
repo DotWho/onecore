@@ -88,6 +88,7 @@ gulp.task('onecore', function() {
     return gulp.src([
             'src/js/onecore/bliss.js',
             'src/js/onecore/util.js',
+            'src/js/onecore/area.js',
             'src/js/onecore/onecore.js',
             'src/js/onecore/msgbox.js',
             'src/js/onecore/toast.js',
@@ -99,10 +100,10 @@ gulp.task('onecore', function() {
             'src/js/onecore/tab.js',
             'src/js/onecore/validate.js',
             'src/js/onecore/imgup.js',
-            'src/js/onecore/imgbox.js'
+            'src/js/onecore/imgbox.js',
+            'src/js/onecore/city.js'
 
             // 'src/js/onecore/accordion.js',
-            // 'src/js/onecore/city.js',
             // 'src/js/onecore/domark.js'
         ])
         .pipe(plumber())

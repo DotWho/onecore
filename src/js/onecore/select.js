@@ -33,7 +33,6 @@ const Select = (($, $$) => {
 
     // Class Definition
     class Select {
-
         constructor(element, config) {
             this.$el = element
             this._config = this._getConfig(config)
@@ -53,14 +52,14 @@ const Select = (($, $$) => {
             this._config = null
         }
 
-        update(){
+        update() {
             const $this = this.$el,
                 $select = $this.parentNode,
                 $button = $select._.children('button')
 
             let ops = this._config,
                 selected = $this.value,
-                oriName = $this._.find('option')[0].innerHTML || '&nbsp;';
+                oriName = $this._.find('option')[0].innerHTML || '&nbsp;'
 
             $select.value = selected
             $select._.fire('change')
@@ -78,9 +77,15 @@ const Select = (($, $$) => {
         }
 
         _factory($this, $select, $button, selected) {
-            $this._.find('option').forEach(function(item, i){
-                var $option = $('<li class="btn" data-select="'+item.value+'">'+item.innerHTML+'</li>')
-                if(selected == item.value) {
+            $this._.find('option').forEach(function(item, i) {
+                var $option = $(
+                    '<li class="btn" data-select="' +
+                        item.value +
+                        '">' +
+                        item.innerHTML +
+                        '</li>'
+                )
+                if (selected == item.value) {
                     $button.innerHTML = item.textContent
                     $option._.addClass(ClassName.HOVER)
                 }
@@ -94,12 +99,14 @@ const Select = (($, $$) => {
 
             let selected = ops.select || $this.value,
                 oriName = $this._.find('option')[0].innerHTML || '&nbsp;',
-                $select = $(`<div class="select"><button type="button" class="btn">${oriName}</button><ul></ul></div>`),
+                $select = $(
+                    `<div class="select"><button type="button" class="btn">${oriName}</button><ul></ul></div>`
+                ),
                 $button = $select._.children('button')
 
             $this.value = selected
 
-            if(ops.direction){
+            if (ops.direction) {
                 $select._.find('ul')._.addClass('seltop')
             }
 
@@ -108,30 +115,30 @@ const Select = (($, $$) => {
             $select._.addClass($this._.attr('class'))
             $select._.after($this)._.append($this)
 
-            if($this._.attr(ClassName.DISABLED) || $this._.attr('readonly')){
+            if ($this._.attr(ClassName.DISABLED) || $this._.attr('readonly')) {
                 $button._.attr(ClassName.DISABLED, true)
-            }else{
-                $button.onclick = function (e) {
+            } else {
+                $button.onclick = function(e) {
                     e.stopPropagation()
                     e.preventDefault()
 
-                    if(!$select._.hasClass(ClassName.ACTIVE)){
+                    if (!$select._.hasClass(ClassName.ACTIVE)) {
                         $select._.addClass('dismiss')
                     }
 
-                    if($select._.hasClass(ClassName.ACTIVE)){
+                    if ($select._.hasClass(ClassName.ACTIVE)) {
                         $select._.removeClass(ClassName.ACTIVE)
                     } else {
                         $$(ClassName.SELECT)._.removeClass(ClassName.ACTIVE)
                         $select._.addClass(ClassName.ACTIVE)
                     }
 
-                    if(window.screen.width <= 480){
+                    if (window.screen.width <= 480) {
                         $(ClassName.BODY)._.addClass(ClassName.OVERLAY)
                     }
                 }
 
-                $select._.on(Event.CLICK, 'li', function (e) {
+                $select._.on(Event.CLICK, 'li', function(e) {
                     e.stopPropagation()
                     e.preventDefault()
 
@@ -142,7 +149,7 @@ const Select = (($, $$) => {
                     this._.addClass(ClassName.HOVER)
                     $select._.removeClass(ClassName.ACTIVE)
 
-                    if(window.screen.width <= 480){
+                    if (window.screen.width <= 480) {
                         $(ClassName.BODY)._.removeClass(ClassName.OVERLAY)
                     }
                 })
@@ -175,18 +182,21 @@ const Select = (($, $$) => {
     }
 
     // Data Api implementation
-    $$(Selector.DATA_TOGGLE).forEach(function(item, i){
-        Select._interface.call(item , item._.data())
+    $$(Selector.DATA_TOGGLE).forEach(function(item, i) {
+        Select._interface.call(item, item._.data())
     })
 
-    document.addEventListener(Event.CLICK, function(){
-        $$(ClassName.SELECT)._.removeClass(ClassName.ACTIVE)
-    }, false);
+    document.addEventListener(
+        Event.CLICK,
+        function() {
+            $$(ClassName.SELECT)._.removeClass(ClassName.ACTIVE)
+        },
+        false
+    )
 
     $.add(NAME, Select._interface)
 
     return Select
-
 })(Bliss, Bliss.$)
 
 export default Select

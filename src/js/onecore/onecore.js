@@ -1,24 +1,29 @@
-(function($, $$) {
+;(function($, $$) {
     'use strict'
 
     var forStyle = function(position) {
         var cssStr = ''
         for (var key in position) {
-            if (position.hasOwnProperty(key)) cssStr += key + ':' + position[key] + ';'
+            if (position.hasOwnProperty(key))
+                cssStr += key + ':' + position[key] + ';'
         }
         return cssStr
     }
 
-    var isMobile = window.navigator.userAgent.match(/Mobile/) &&
-        window.navigator.userAgent.match(/Mobile/)[0] === 'Mobile',
+    var isMobile =
+            window.navigator.userAgent.match(/Mobile/) &&
+            window.navigator.userAgent.match(/Mobile/)[0] === 'Mobile',
         eventype = isMobile ? 'touchstart' : 'mousedown',
         duration = 750
 
-    $.ready().then(function(){
+    $.ready().then(function() {
         document._.on(eventype, '.btn', function(e) {
-            if(this.classList.contains('btn') && !this.classList.contains('disabled')) {
+            if (
+                this.classList.contains('btn') &&
+                !this.classList.contains('disabled')
+            ) {
                 // Prepare the dom
-                var rippleEffect = document.createElement('span');
+                var rippleEffect = document.createElement('span')
 
                 rippleEffect.className = 'ripple'
                 if (this.classList.contains('outline')) {
@@ -31,7 +36,7 @@
                         width: `${el.width * 2}px`,
                         height: `${el.width * 2}px`,
                         top: `${e.clientY - el.top - el.width}px`,
-                        left: `${e.clientX -  el.left - el.width}px`,
+                        left: `${e.clientX - el.left - el.width}px`,
                         transition: `transform ${duration}ms, opacity ${duration}ms`
                     }
                 rippleEffect.setAttribute('style', forStyle(position))
@@ -41,8 +46,8 @@
                 rippleEffect.setAttribute('style', forStyle(position))
 
                 setTimeout(function() {
-                    if(rippleEffect && rippleEffect.parentNode){
-                        rippleEffect.parentNode.removeChild(rippleEffect);
+                    if (rippleEffect && rippleEffect.parentNode) {
+                        rippleEffect.parentNode.removeChild(rippleEffect)
                     }
                 }, duration)
             }
@@ -54,17 +59,22 @@
 
         // throttled scroll/resize
         function scroller(e) {
-            timer = timer || setTimeout(function() {
-                timer = null
-                requestAnimationFrame(inView)
-            }, 300)
+            timer =
+                timer ||
+                setTimeout(function() {
+                    timer = null
+                    requestAnimationFrame(inView)
+                }, 300)
         }
 
         // image in view?
         function inView() {
             var wT = window.pageYOffset,
                 wB = wT + window.innerHeight,
-                cRect, pT, pB, p = 0
+                cRect,
+                pT,
+                pB,
+                p = 0
 
             while (p < pItem.length) {
                 cRect = pItem[p].getBoundingClientRect()
@@ -105,15 +115,19 @@
                 // }, false)
 
                 // add full image
-                item.appendChild(img).addEventListener('animationend', function(e) {
-                    // remove preview image
-                    var pImg = item.querySelector && item.querySelector('img.preview')
-                    if (pImg) {
-                        e.target.alt = pImg.alt || ''
-                        item.removeChild(pImg)
-                        e.target.classList.remove('reveal')
-                    }
-                })
+                item
+                    .appendChild(img)
+                    .addEventListener('animationend', function(e) {
+                        // remove preview image
+                        var pImg =
+                            item.querySelector &&
+                            item.querySelector('img.preview')
+                        if (pImg) {
+                            e.target.alt = pImg.alt || ''
+                            item.removeChild(pImg)
+                            e.target.classList.remove('reveal')
+                        }
+                    })
             }
         }
 
@@ -121,5 +135,5 @@
         window.addEventListener('scroll', scroller, false)
         window.addEventListener('resize', scroller, false)
         inView()
-    });
-})(Bliss, Bliss.$);
+    })
+})(Bliss, Bliss.$)

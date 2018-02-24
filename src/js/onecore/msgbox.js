@@ -70,7 +70,6 @@ const Msgbox = (($, $$) => {
 
     // Class Definition
     class Msgbox {
-
         constructor(element, config) {
             this.$el = element
             this._config = this._getConfig(config)
@@ -162,16 +161,28 @@ const Msgbox = (($, $$) => {
                         <div class="msgdiv"></div>
                     </div>
                 </div>`),
-            $msgctx = $div.querySelector('.msgctx'),
-            $msgdiv = $div.querySelector('.msgdiv')
+                $msgctx = $div.querySelector('.msgctx'),
+                $msgdiv = $div.querySelector('.msgdiv')
 
             let $btn = $('<div class="msgbtn"></div>'),
-                $btn1 = $(`<button type="button" class="btn msgbtn-y" dark>${ops.textY}</button>`),
-                $btn2 = $(`<button type="button" class="btn msgbtn-n" dark>${ops.textN}</button>`)
+                $btn1 = $(
+                    `<button type="button" class="btn msgbtn-y" dark>${
+                        ops.textY
+                    }</button>`
+                ),
+                $btn2 = $(
+                    `<button type="button" class="btn msgbtn-n" dark>${
+                        ops.textN
+                    }</button>`
+                )
 
-            if (window.screen.width <= 480) { ops.w = '80%' }
+            if (window.screen.width <= 480) {
+                ops.w = '80%'
+            }
 
-            if (window.screen.height - 127 < Number(ops.h)) { ops.h = '95%' }
+            if (window.screen.height - 127 < Number(ops.h)) {
+                ops.h = '95%'
+            }
 
             if (ops.url) {
                 doAjax()
@@ -210,7 +221,13 @@ const Msgbox = (($, $$) => {
                 var custom = ops.custom
                 for (var i = 0; i < custom.length; i++) {
                     var data = custom[i],
-                        $button = $('<button type="button" class="btn ' + data.class + '" dark>' + data.text + '</button>')
+                        $button = $(
+                            '<button type="button" class="btn ' +
+                                data.class +
+                                '" dark>' +
+                                data.text +
+                                '</button>'
+                        )
 
                     $btnh = $button
                     $btn._.append($button)
@@ -253,32 +270,34 @@ const Msgbox = (($, $$) => {
 
                 $.fetch(ops.url, {
                     data: ops.data,
-                	responseType: "html"
-                }).then(function(data){
-                    $msgdiv.innerHTML = data
-                    $msgctx.addClass(ClassName.SHOW)
-                    $div.removeClass(ClassName.LOAD)
-                    if (ops.bind) {
-                        ops.bind($btnh, $msgdiv)
-                    }
-                    if (ops.done) {
-                        ops.done($msgdiv)
-                    }
-                }).catch(function(error){
-                    $div._.addClass('loaderror')
-                    if (!$div._.find('.errorshow')) {
-                        var loadero = $(`<div class="errorshow text-center">
+                    responseType: 'html'
+                })
+                    .then(function(data) {
+                        $msgdiv.innerHTML = data
+                        $msgctx.addClass(ClassName.SHOW)
+                        $div.removeClass(ClassName.LOAD)
+                        if (ops.bind) {
+                            ops.bind($btnh, $msgdiv)
+                        }
+                        if (ops.done) {
+                            ops.done($msgdiv)
+                        }
+                    })
+                    .catch(function(error) {
+                        $div._.addClass('loaderror')
+                        if (!$div._.find('.errorshow')) {
+                            var loadero = $(`<div class="errorshow text-center">
                             <p>\u52a0\u8f7d\u5931\u8d25</p>
                             <button type="button" class="btn">\u91cd\u8bd5</button>
                             </div>`)
 
-                        loadero._.find('button').onclick = function(event) {
-                            event.preventDefault()
-                            doAjax()
+                            loadero._.find('button').onclick = function(event) {
+                                event.preventDefault()
+                                doAjax()
+                            }
+                            $div._.append(loadero)
                         }
-                        $div._.append(loadero)
-                    }
-                });
+                    })
             }
 
             $('body')._.append($div)
@@ -299,20 +318,22 @@ const Msgbox = (($, $$) => {
 
             if (typeof config === 'object') {
                 let data = new Msgbox(this, _config)
-            }else{
+            } else {
                 let str = '.'
-                if(config === 'last'){
+                if (config === 'last') {
                     str = '.msgbox:last'
                 }
                 const msgbox = $$('.msgbox')
-                if(msgbox.length > 0){
+                if (msgbox.length > 0) {
                     let i = 0
-                    if(config === 'last'){
+                    if (config === 'last') {
                         i = msgbox.length - 1
                     }
 
-                    for (;i < msgbox.length; i++) {
-                        msgbox[i]._.addClass(ClassName.MSGHD).querySelector('.msgctx')._.addClass(ClassName.HIDE)
+                    for (; i < msgbox.length; i++) {
+                        msgbox[i]._.addClass(ClassName.MSGHD)
+                            .querySelector('.msgctx')
+                            ._.addClass(ClassName.HIDE)
                         msgRemove.apply(msgbox[i])
                     }
                 }
@@ -325,7 +346,6 @@ const Msgbox = (($, $$) => {
     $.fn[NAME].Constructor = Msgbox
 
     return Msgbox
-
 })(Bliss, Bliss.$)
 
 export default Msgbox

@@ -58,7 +58,6 @@ const Datepicker = (($, $$) => {
 
     // Class Definition
     class Datepicker {
-
         constructor(element, config) {
             this.$el = element
             this.$input = this.$el._.children('input')
@@ -94,17 +93,17 @@ const Datepicker = (($, $$) => {
             let ops = _this._config,
                 ones = true
 
-            if(ops.type){
+            if (ops.type) {
                 _this._years()
-            }else{
+            } else {
                 _this._days()
             }
 
-            ops.btn._.bind(Event.CLICK, function (e) {
+            ops.btn._.bind(Event.CLICK, function(e) {
                 e.stopPropagation()
                 e.preventDefault()
 
-                if(ones){
+                if (ones) {
                     ones = false
                     // if(window.screen.width > 480){
                     // 	ops.content.css({
@@ -112,60 +111,72 @@ const Datepicker = (($, $$) => {
                     // 		top: $this[0].offsetTop + $this.outerHeight()
                     // 	})
                     // }
-                    if(window.screen.width <= 480){
+                    if (window.screen.width <= 480) {
                         $(ClassName.BODY)._.addClass(ClassName.OVERLAY)
                     }
                     $this._.append(ops.content)
                 }
 
-                if($this._.hasClass(ClassName.ACTIVE)){
-                    if(window.screen.width <= 480){
+                if ($this._.hasClass(ClassName.ACTIVE)) {
+                    if (window.screen.width <= 480) {
                         $(ClassName.BODY)._.addClass(ClassName.OVERLAY)
                     }
                     $this._.removeClass(ClassName.ACTIVE)
                     ops.content._.addClass(ClassName.HIDE)
                 } else {
-                    $$(ClassName.DTPK)._.removeClass(ClassName.ACTIVE)._.find('.oc-calendar')._.addClass(ClassName.HIDE)
+                    $$(ClassName.DTPK)
+                        ._.removeClass(ClassName.ACTIVE)
+                        ._.find('.oc-calendar')
+                        ._.addClass(ClassName.HIDE)
                     $this._.addClass(ClassName.ACTIVE)
                     ops.content._.removeClass(ClassName.HIDE)
                 }
             })
 
-            ops.content._.find('.oc-calendar-clear')._.bind(Event.CLICK, function(e){
-                e.stopPropagation()
-                e.preventDefault()
+            ops.content._.find('.oc-calendar-clear')._.bind(
+                Event.CLICK,
+                function(e) {
+                    e.stopPropagation()
+                    e.preventDefault()
 
-                ops.btn.innerHTML = '&nbsp;'
-                $input.value = ''
-            })
-
-            ops.content._.find('.oc-calendar-close')._.bind(Event.CLICK, function(e){
-                e.stopPropagation()
-                e.preventDefault()
-
-                _this.$el._.removeClass(ClassName.ACTIVE)
-                ops.content._.addClass(ClassName.HIDE)
-                if(window.screen.width <= 480){
-                    $(ClassName.BODY)._.removeClass(ClassName.OVERLAY)
+                    ops.btn.innerHTML = '&nbsp;'
+                    $input.value = ''
                 }
-            })
+            )
 
-            ops.content._.find('.oc-calendar-today')._.bind(Event.CLICK, function(e){
-                e.stopPropagation()
-                e.preventDefault()
+            ops.content._.find('.oc-calendar-close')._.bind(
+                Event.CLICK,
+                function(e) {
+                    e.stopPropagation()
+                    e.preventDefault()
 
-                const today = new Date()
-                ops.tYear = today.getFullYear()
-                ops.tMonth = today.getMonth()+1
-                ops.tDay = today.getDate()
-                // if(!ops.content.find(ClassName.MONTH)
-                // .find('div').eq(1)
-                // .find('[data-n='+ops.tDay+']').hasClass('none')){
-                // 	ops.pickTime = _this._times(today)
-                // 	$input.val(_this.timeFormat(ops.pickTime))
-                // }
-                _this._days()
-            })
+                    _this.$el._.removeClass(ClassName.ACTIVE)
+                    ops.content._.addClass(ClassName.HIDE)
+                    if (window.screen.width <= 480) {
+                        $(ClassName.BODY)._.removeClass(ClassName.OVERLAY)
+                    }
+                }
+            )
+
+            ops.content._.find('.oc-calendar-today')._.bind(
+                Event.CLICK,
+                function(e) {
+                    e.stopPropagation()
+                    e.preventDefault()
+
+                    const today = new Date()
+                    ops.tYear = today.getFullYear()
+                    ops.tMonth = today.getMonth() + 1
+                    ops.tDay = today.getDate()
+                    // if(!ops.content.find(ClassName.MONTH)
+                    // .find('div').eq(1)
+                    // .find('[data-n='+ops.tDay+']').hasClass('none')){
+                    // 	ops.pickTime = _this._times(today)
+                    // 	$input.val(_this.timeFormat(ops.pickTime))
+                    // }
+                    _this._days()
+                }
+            )
         }
 
         _timex() {
@@ -178,7 +189,7 @@ const Datepicker = (($, $$) => {
             ops.content._.find(ClassName.MONTH).style.display = 'none'
             ops.content._.find(ClassName.ACT).style.display = 'none'
 
-            if(!$time){
+            if (!$time) {
                 $time = $(`<div class="oc-calendar-time">
                     <div class="sfmdiv">
                         <div class="hour"></div>
@@ -186,11 +197,17 @@ const Datepicker = (($, $$) => {
                         <div class="seds"></div>
                     </div>
                     <div class="seltime clearfix">
-                        <input type="number" class="hourput" min="0" max="23" value="${ops.tH}">
+                        <input type="number" class="hourput" min="0" max="23" value="${
+                            ops.tH
+                        }">
                         <span>:</span>
-                        <input type="number" class="minsput" min="0" max="59" value="${ops.tM}">
+                        <input type="number" class="minsput" min="0" max="59" value="${
+                            ops.tM
+                        }">
                         <span>:</span>
-                        <input type="number" class="sedsput" min="0" max="59" value="${ops.tS}">
+                        <input type="number" class="sedsput" min="0" max="59" value="${
+                            ops.tS
+                        }">
                         <button type="button" class="btn timeck">确定</button>
                     </div>
                 </div>`)
@@ -199,180 +216,241 @@ const Datepicker = (($, $$) => {
 
                 for (var i = 0; i < 24; i++) {
                     var x = i
-                    if(x.toString().length === 1){
+                    if (x.toString().length === 1) {
                         x = '0' + i
                     }
-                    $time._.find(ClassName.HOUR)._.append(`<span data-tm="${x}">${x}时</span>`)
+                    $time._.find(ClassName.HOUR)._.append(
+                        `<span data-tm="${x}">${x}时</span>`
+                    )
                 }
 
                 for (var g = 0; g < 60; g++) {
                     var n = g
-                    if(n.toString().length === 1){
+                    if (n.toString().length === 1) {
                         n = '0' + g
                     }
-                    $time._.find(ClassName.MINS)._.append(`<span data-tm="${n}">${n}分</span>`)
-                    $time._.find(ClassName.SEDS)._.append(`<span data-tm="${n}">${n}秒</span>`)
+                    $time._.find(ClassName.MINS)._.append(
+                        `<span data-tm="${n}">${n}分</span>`
+                    )
+                    $time._.find(ClassName.SEDS)._.append(
+                        `<span data-tm="${n}">${n}秒</span>`
+                    )
                 }
 
-                if(typeof ops.time === 'number'){
+                if (typeof ops.time === 'number') {
                     ops.time = parseInt(ops.time)
-                }else{
+                } else {
                     ops.time = 3
                 }
 
                 var hourTop = 0
-                if(ops.time > 0){
-                    $time._.find(ClassName.HOUR)._.bind('mousewheel DOMMouseScroll', function(e){
-                        e.preventDefault()
-                        var value = e.wheelDelta || -e.detail
-                        var delta = Math.max(-1, Math.min(1, value))
-                        //e.originalEvent.wheelDelta => 120(up) or -120(down) 谷歌IE内核
-                        //e.originalEvent.detail => -3(up) or 3(down) 火狐内核
-                        if(delta > 0){
-                            hourTop -= 36
-                            if(hourTop < 0){
-                                hourTop = 0
+                if (ops.time > 0) {
+                    $time._.find(ClassName.HOUR)._.bind(
+                        'mousewheel DOMMouseScroll',
+                        function(e) {
+                            e.preventDefault()
+                            var value = e.wheelDelta || -e.detail
+                            var delta = Math.max(-1, Math.min(1, value))
+                            //e.originalEvent.wheelDelta => 120(up) or -120(down) 谷歌IE内核
+                            //e.originalEvent.detail => -3(up) or 3(down) 火狐内核
+                            if (delta > 0) {
+                                hourTop -= 36
+                                if (hourTop < 0) {
+                                    hourTop = 0
+                                }
+                                $time._.find(ClassName.HOUR).scrollTop = hourTop
+                            } else {
+                                var h =
+                                    ($time._.find(ClassName.HOUR)._.children(
+                                        'span'
+                                    ).length -
+                                        1) *
+                                    36
+                                hourTop += 36
+                                if (hourTop > h) {
+                                    hourTop = h
+                                }
+                                $time._.find(ClassName.HOUR).scrollTop = hourTop
                             }
-                            $time._.find(ClassName.HOUR).scrollTop = hourTop
-                        }else{
-                            var h = ($time._.find(ClassName.HOUR)._.children('span').length-1) * 36
-                            hourTop += 36
-                            if(hourTop > h){
-                                hourTop = h
-                            }
-                            $time._.find(ClassName.HOUR).scrollTop = hourTop
+                            $time._.find(ClassName.HOUR)
+                                ._.children('span')
+                                ._.removeClass(ClassName.ACTIVE)
+                            var $act = $time._.find(ClassName.HOUR)._.children(
+                                'span'
+                            )[hourTop / 36]
+                            $act._.addClass(ClassName.ACTIVE)
+                            $time._.find(ClassName.HINP).value = $act._.data(
+                                'tm'
+                            )
                         }
-                        $time._.find(ClassName.HOUR)._.children('span')._.removeClass(ClassName.ACTIVE)
-                        var $act = $time._.find(ClassName.HOUR)._.children('span')[hourTop / 36]
-                        $act._.addClass(ClassName.ACTIVE)
-                        $time._.find(ClassName.HINP).value = $act._.data('tm')
-                    })
-                }else{
-                    $time._.find(ClassName.HOUR)._.children('span').style.display = 'none'
+                    )
+                } else {
+                    $time._.find(ClassName.HOUR)._.children(
+                        'span'
+                    ).style.display =
+                        'none'
                     $time._.find(ClassName.HINP)._.attr('disabled', true)
                 }
 
-
                 var minsTop = 0
-                if(ops.time > 1){
-                    $time._.find(ClassName.MINS)._.bind('mousewheel DOMMouseScroll', function(e){
-                        e.preventDefault()
-                        var value = e.wheelDelta || -e.detail
-                        var delta = Math.max(-1, Math.min(1, value))
-                        if(delta > 0){
-                            minsTop -= 36
-                            if(minsTop < 0){
-                                minsTop = 0
+                if (ops.time > 1) {
+                    $time._.find(ClassName.MINS)._.bind(
+                        'mousewheel DOMMouseScroll',
+                        function(e) {
+                            e.preventDefault()
+                            var value = e.wheelDelta || -e.detail
+                            var delta = Math.max(-1, Math.min(1, value))
+                            if (delta > 0) {
+                                minsTop -= 36
+                                if (minsTop < 0) {
+                                    minsTop = 0
+                                }
+                                $time._.find(ClassName.MINS).scrollTop = minsTop
+                            } else {
+                                var h =
+                                    ($time._.find(ClassName.MINS)._.children(
+                                        'span'
+                                    ).length -
+                                        1) *
+                                    36
+                                minsTop += 36
+                                if (minsTop > h) {
+                                    minsTop = h
+                                }
+                                $time._.find(ClassName.MINS).scrollTop = minsTop
                             }
-                            $time._.find(ClassName.MINS).scrollTop = minsTop
-                        }else{
-                            var h = ($time._.find(ClassName.MINS)._.children('span').length-1) * 36
-                            minsTop += 36
-                            if(minsTop > h){
-                                minsTop = h
-                            }
-                            $time._.find(ClassName.MINS).scrollTop = minsTop
+                            $time._.find(ClassName.MINS)
+                                ._.children('span')
+                                ._.removeClass(ClassName.ACTIVE)
+                            var $act = $time._.find(ClassName.MINS)._.children(
+                                'span'
+                            )[minsTop / 36]
+                            $act._.addClass(ClassName.ACTIVE)
+                            $time._.find(ClassName.MINP).value = $act._.data(
+                                'tm'
+                            )
                         }
-                        $time._.find(ClassName.MINS)._.children('span')._.removeClass(ClassName.ACTIVE)
-                        var $act = $time._.find(ClassName.MINS)._.children('span')[minsTop / 36]
-                        $act._.addClass(ClassName.ACTIVE)
-                        $time._.find(ClassName.MINP).value = $act._.data('tm')
-                    })
-                }else{
-                    $time._.find(ClassName.MINS)._.children('span').style.display = 'none'
+                    )
+                } else {
+                    $time._.find(ClassName.MINS)._.children(
+                        'span'
+                    ).style.display =
+                        'none'
                     $time._.find(ClassName.MINP)._.attr('disabled', true)
                 }
 
-
                 var sedsTop = 0
-                if(ops.time > 2){
-                    $time._.find(ClassName.SEDS)._.bind('mousewheel DOMMouseScroll', function(e){
-                        e.preventDefault()
-                        var value = e.wheelDelta || -e.detail
-                        var delta = Math.max(-1, Math.min(1, value))
-                        if(delta > 0){
-                            sedsTop -= 36
-                            if(sedsTop < 0){
-                                sedsTop = 0
+                if (ops.time > 2) {
+                    $time._.find(ClassName.SEDS)._.bind(
+                        'mousewheel DOMMouseScroll',
+                        function(e) {
+                            e.preventDefault()
+                            var value = e.wheelDelta || -e.detail
+                            var delta = Math.max(-1, Math.min(1, value))
+                            if (delta > 0) {
+                                sedsTop -= 36
+                                if (sedsTop < 0) {
+                                    sedsTop = 0
+                                }
+                                $time._.find(ClassName.SEDS).scrollTop = sedsTop
+                            } else {
+                                var h =
+                                    ($time._.find(ClassName.SEDS)._.children(
+                                        'span'
+                                    ).length -
+                                        1) *
+                                    36
+                                sedsTop += 36
+                                if (sedsTop > h) {
+                                    sedsTop = h
+                                }
+                                $time._.find(ClassName.SEDS).scrollTop = sedsTop
                             }
-                            $time._.find(ClassName.SEDS).scrollTop = sedsTop
-                        }else{
-                            var h = ($time._.find(ClassName.SEDS)._.children('span').length-1) * 36
-                            sedsTop += 36
-                            if(sedsTop > h){
-                                sedsTop = h
-                            }
-                            $time._.find(ClassName.SEDS).scrollTop = sedsTop
+                            $time._.find(ClassName.SEDS)
+                                ._.children('span')
+                                ._.removeClass(ClassName.ACTIVE)
+                            var $act = $time._.find(ClassName.SEDS)._.children(
+                                'span'
+                            )[sedsTop / 36]
+                            $act._.addClass(ClassName.ACTIVE)
+                            $time._.find(ClassName.SINP).value = $act._.data(
+                                'tm'
+                            )
                         }
-                        $time._.find(ClassName.SEDS)._.children('span')._.removeClass(ClassName.ACTIVE)
-                        var $act = $time._.find(ClassName.SEDS)._.children('span')[sedsTop / 36]
-                        $act._.addClass(ClassName.ACTIVE)
-                        $time._.find(ClassName.SINP).value = $act._.data('tm')
-                    })
-                }else{
-                    $time._.find(ClassName.SEDS)._.children('span').style.display = 'none'
+                    )
+                } else {
+                    $time._.find(ClassName.SEDS)._.children(
+                        'span'
+                    ).style.display =
+                        'none'
                     $time._.find(ClassName.SINP)._.attr('disabled', true)
                 }
 
                 //-----------------------------------------
-                $time._.find(ClassName.HINP)._.bind('change', function(){
+                $time._.find(ClassName.HINP)._.bind('change', function() {
                     var v = this.value
-                    if(v.length === 0){
+                    if (v.length === 0) {
                         v = 0
                     }
                     v = parseInt(v)
-                    if(v < 0){
+                    if (v < 0) {
                         v = 0
                     }
-                    if(v > 23){
+                    if (v > 23) {
                         v = 23
                     }
                     hourTop = v * 36
                     $time._.find(ClassName.HOUR).scrollTop = hourTop
-                    $time._.find(ClassName.HOUR)._.children('span')[v]._.addClass(ClassName.ACTIVE)
-                    if(v.toString().length === 1){
+                    $time._.find(ClassName.HOUR)
+                        ._.children('span')
+                        [v]._.addClass(ClassName.ACTIVE)
+                    if (v.toString().length === 1) {
                         v = '0' + v
                     }
                     this.value = v
                 })
 
-                $time._.find(ClassName.MINP)._.bind('change', function(){
+                $time._.find(ClassName.MINP)._.bind('change', function() {
                     var v = this.value
-                    if(v.length === 0){
+                    if (v.length === 0) {
                         v = 0
                     }
                     v = parseInt(v)
-                    if(v < 0){
+                    if (v < 0) {
                         v = 0
                     }
-                    if(v > 59){
+                    if (v > 59) {
                         v = 59
                     }
                     minsTop = v * 36
                     $time._.find(ClassName.MINS).scrollTop = minsTop
-                    $time._.find(ClassName.MINS)._.children('span')[v]._.addClass(ClassName.ACTIVE)
-                    if(v.toString().length === 1){
+                    $time._.find(ClassName.MINS)
+                        ._.children('span')
+                        [v]._.addClass(ClassName.ACTIVE)
+                    if (v.toString().length === 1) {
                         v = '0' + v
                     }
                     this.value = v
                 })
 
-                $time._.find(ClassName.SINP)._.bind('change', function(){
+                $time._.find(ClassName.SINP)._.bind('change', function() {
                     var v = this.value
-                    if(v.length === 0){
+                    if (v.length === 0) {
                         v = 0
                     }
                     v = parseInt(v)
-                    if(v < 0){
+                    if (v < 0) {
                         v = 0
                     }
-                    if(v > 59){
+                    if (v > 59) {
                         v = 59
                     }
                     sedsTop = v * 36
                     $time._.find(ClassName.SEDS).scrollTop = sedsTop
-                    $time._.find(ClassName.SEDS)._.children('span')[v]._.addClass(ClassName.ACTIVE)
-                    if(v.toString().length === 1){
+                    $time._.find(ClassName.SEDS)
+                        ._.children('span')
+                        [v]._.addClass(ClassName.ACTIVE)
+                    if (v.toString().length === 1) {
                         v = '0' + v
                     }
                     this.value = v
@@ -383,21 +461,36 @@ const Datepicker = (($, $$) => {
                 $time._.find(ClassName.SINP)._.fire('change')
 
                 //----------------------------
-                $time._.find('button').onclick = function(){
+                $time._.find('button').onclick = function() {
                     var h = $time._.find(ClassName.HINP).value
                     var m = $time._.find(ClassName.MINP).value
                     var s = $time._.find(ClassName.SINP).value
-                    ops.pickTime = _this._times(new Date(ops.tYear, ops.tMonth-1, ops.tDay))
-                    var _val = new Date(ops.tYear, ops.tMonth-1, ops.tDay,h,m,s).getTime()
-                    ops.btn.textContent = _this._timeFormat(_val, ops.format + ' hh:mm:ss')
-                    _this.$input.value = _this._timeFormat(_val, ops.format + ' hh:mm:ss')
+                    ops.pickTime = _this._times(
+                        new Date(ops.tYear, ops.tMonth - 1, ops.tDay)
+                    )
+                    var _val = new Date(
+                        ops.tYear,
+                        ops.tMonth - 1,
+                        ops.tDay,
+                        h,
+                        m,
+                        s
+                    ).getTime()
+                    ops.btn.textContent = _this._timeFormat(
+                        _val,
+                        ops.format + ' hh:mm:ss'
+                    )
+                    _this.$input.value = _this._timeFormat(
+                        _val,
+                        ops.format + ' hh:mm:ss'
+                    )
                     ops.content._.addClass(ClassName.HIDE)
                     _this.$el._.removeClass(ClassName.ACTIVE)
-                    if(window.screen.width <= 480){
+                    if (window.screen.width <= 480) {
                         $(ClassName.BODY)._.removeClass(ClassName.OVERLAY)
                     }
                 }
-            }else{
+            } else {
                 $time.style.display = 'block'
             }
         }
@@ -410,23 +503,25 @@ const Datepicker = (($, $$) => {
             _this._toolbar('day')
 
             // 点击日
-            ops.content._.on(Event.CLICK, '.day', function(e){
+            ops.content._.on(Event.CLICK, '.day', function(e) {
                 e.stopPropagation()
                 e.preventDefault()
 
-                if(!this._.hasClass('none')){
+                if (!this._.hasClass('none')) {
                     ops.content._.find('.day')._.removeClass(ClassName.ACTIVE)
                     this._.addClass(ClassName.ACTIVE)
                     ops.tDay = this._.data('n')
-                    ops.pickTime = _this._times(new Date(ops.tYear, ops.tMonth-1, ops.tDay))
-                    if(ops.time){
+                    ops.pickTime = _this._times(
+                        new Date(ops.tYear, ops.tMonth - 1, ops.tDay)
+                    )
+                    if (ops.time) {
                         _this._timex()
-                    }else{
+                    } else {
                         ops.btn.textContent = _this._timeFormat(ops.pickTime)
                         _this.$input.value = _this._timeFormat(ops.pickTime)
                         _this.$el._.removeClass(ClassName.ACTIVE)
                         ops.content._.addClass(ClassName.HIDE)
-                        if(window.screen.width <= 480){
+                        if (window.screen.width <= 480) {
                             $(ClassName.BODY)._.removeClass(ClassName.OVERLAY)
                         }
                     }
@@ -441,11 +536,11 @@ const Datepicker = (($, $$) => {
             let $oldDiv
             let requFrame
 
-            function nextGo(){
-                if($oldDiv._.style('visibility') === 'hidden'){
+            function nextGo() {
+                if ($oldDiv._.style('visibility') === 'hidden') {
                     cancelAnimationFrame(requFrame)
                     $oldDiv._.remove()
-                }else{
+                } else {
                     requFrame = requestAnimationFrame(nextGo)
                 }
             }
@@ -453,31 +548,36 @@ const Datepicker = (($, $$) => {
             $monthday.style.display = 'block'
             ops.content._.find(ClassName.ACT).style.display = 'block'
 
-            var firstday = new Date(ops.tYear, ops.tMonth-1, 1, '', '', ''),
+            var firstday = new Date(ops.tYear, ops.tMonth - 1, 1, '', '', ''),
                 lastday = new Date(ops.tYear, ops.tMonth, 0).getDate(),
                 date = firstday.getDay(),
                 $row = '<div><div class="oc-calendar-monthday-row">'
 
-            for(var i = 1; i < 42; i++){
-                if(i <= date || i > lastday + date){
+            for (var i = 1; i < 42; i++) {
+                if (i <= date || i > lastday + date) {
                     $row += '<span class="oc-calendar-none">&nbsp;</span>'
-                }else{
+                } else {
                     // today
                     var now = '',
                         xDate = i - date,
-                        xTime = _this._times(new Date(ops.tYear, ops.tMonth-1, xDate))
-                    if(xTime === ops.today){
+                        xTime = _this._times(
+                            new Date(ops.tYear, ops.tMonth - 1, xDate)
+                        )
+                    if (xTime === ops.today) {
                         now += ' today'
                     }
                     if (xTime === ops.pickTime) {
                         now += ' active'
                     }
-                    if ((ops.max && xTime > ops.max) || (ops.min && xTime < ops.min)) {
+                    if (
+                        (ops.max && xTime > ops.max) ||
+                        (ops.min && xTime < ops.min)
+                    ) {
                         now += ' none'
                     }
                     $row += `<button type="button" class="btn day${now}" data-n="${xDate}">${xDate}</button>`
                 }
-                if(i % 7 === 0 && i !== 0){
+                if (i % 7 === 0 && i !== 0) {
                     $row += '</div><div class="oc-calendar-monthday-row">'
                 }
             }
@@ -486,14 +586,14 @@ const Datepicker = (($, $$) => {
 
             $monthday._.append($row)
 
-            if($monthday._.children('div').length > 0){
+            if ($monthday._.children('div').length > 0) {
                 $oldDiv = $monthday._.children('div')[0]
-                if(ops.nx){
+                if (ops.nx) {
                     $row._.addClass('oc-calendarIn-next')
-                    $oldDiv._.attr({'class': 'oc-calendarOut-next'})
-                }else{
+                    $oldDiv._.attr({ class: 'oc-calendarOut-next' })
+                } else {
                     $row._.addClass('oc-calendarIn-prev')
-                    $oldDiv._.attr({'class': 'oc-calendarOut-prev'})
+                    $oldDiv._.attr({ class: 'oc-calendarOut-prev' })
                 }
                 requFrame = requestAnimationFrame(nextGo)
             }
@@ -511,51 +611,54 @@ const Datepicker = (($, $$) => {
 
                 // maxMonth
 
-                if(ops.year === ops.tYear){
-                    el._.children()[ops.month-1]._.addClass('tonow')
-                }else{
+                if (ops.year === ops.tYear) {
+                    el._.children()[ops.month - 1]._.addClass('tonow')
+                } else {
                     el._.children()._.removeClass('tonow')
                 }
 
-                if(ops.tYear === pt.getFullYear() && ops.tMonth === pt.getMonth()+1){
-                    el._.children()[ops.sMonth-1]._.addClass(ClassName.ACTIVE)
-                }else{
+                if (
+                    ops.tYear === pt.getFullYear() &&
+                    ops.tMonth === pt.getMonth() + 1
+                ) {
+                    el._.children()[ops.sMonth - 1]._.addClass(ClassName.ACTIVE)
+                } else {
                     el._.children()._.removeClass(ClassName.ACTIVE)
                 }
 
-                if(ops.min || ops.max){
+                if (ops.min || ops.max) {
                     el._.children()._.removeClass('none')
                 }
 
-                if(ops.min){
+                if (ops.min) {
                     minYear = new Date(ops.min).getFullYear()
-                    minMonth = new Date(ops.min).getMonth()+1
-                    if(ops.tYear === minYear){
-                        for(var m = 0; m < minMonth-1; m++){
+                    minMonth = new Date(ops.min).getMonth() + 1
+                    if (ops.tYear === minYear) {
+                        for (var m = 0; m < minMonth - 1; m++) {
                             el._.children()[m]._.addClass('none')
                         }
                     }
-                    if(ops.tYear < minYear){
+                    if (ops.tYear < minYear) {
                         el._.children()._.addClass('none')
                     }
                 }
 
-                if(ops.max){
+                if (ops.max) {
                     maxYear = new Date(ops.max).getFullYear()
-                    m = new Date(ops.max).getMonth()+1
+                    m = new Date(ops.max).getMonth() + 1
 
-                    if(ops.tYear === maxYear){
-                        for(; m < 12; m++){
+                    if (ops.tYear === maxYear) {
+                        for (; m < 12; m++) {
                             el._.children()[m]._.addClass('none')
                         }
                     }
-                    if(ops.tYear > maxYear){
+                    if (ops.tYear > maxYear) {
                         el._.children()._.addClass('none')
                     }
                 }
             }
 
-            if(!ops.content._.find('.oc-calendar-month')){
+            if (!ops.content._.find('.oc-calendar-month')) {
                 var $months = $(`<div class="oc-calendar-month">
                     <button type="button" class="btn" data-month="1">一月</button>
                     <button type="button" class="btn" data-month="2">二月</button>
@@ -577,7 +680,7 @@ const Datepicker = (($, $$) => {
 
                 setMonth(_month)
 
-                _month._.on(Event.CLICK, 'button', function(e){
+                _month._.on(Event.CLICK, 'button', function(e) {
                     e.stopPropagation()
                     e.preventDefault()
 
@@ -585,27 +688,27 @@ const Datepicker = (($, $$) => {
                     this._.addClass(ClassName.ACTIVE)
                     ops.tMonth = this._.data('month')
                     ops.sMonth = ops.tMonth
-                    if(ops.type === 'month'){
+                    if (ops.type === 'month') {
                         ops.content._.addClass(ClassName.HIDE)
                         var pktime = ops.tYear + '/' + ops.sMonth + '/1'
                         ops.pickTime = _this._times(pktime)
                         var ym = _this._timeFormat(pktime, 'yyyy-MM')
                         ops.btn.textContent = ym
                         _this.$input.value = ym
-                        if(ops.func){
+                        if (ops.func) {
                             ops.func(ym)
                         }
                         _this.$el._.removeClass(ClassName.ACTIVE)
-                        if(window.screen.width <= 480){
+                        if (window.screen.width <= 480) {
                             $(ClassName.BODY)._.removeClass(ClassName.OVERLAY)
                         }
-                    }else{
+                    } else {
                         _this._toolbar('day')
                         _month.style.display = 'none'
                         _this._showDays()
                     }
                 })
-            }else{
+            } else {
                 var _month = ops.content._.find('.oc-calendar-month')
                 _month.style.display = 'block'
                 setMonth(_month)
@@ -617,14 +720,13 @@ const Datepicker = (($, $$) => {
             const _this = this
             let ops = _this._config
 
-            var minYear,
-                maxYear
+            var minYear, maxYear
 
-            if(ops.min){
+            if (ops.min) {
                 minYear = new Date(ops.min).getFullYear()
             }
 
-            if(ops.max){
+            if (ops.max) {
                 maxYear = new Date(ops.max).getFullYear()
             }
 
@@ -634,31 +736,37 @@ const Datepicker = (($, $$) => {
                 $years.innerHTML = ''
                 var y = ops.tYear - 6
 
-                for(; y < (ops.tYear + 6); y++){
-                    var $y = $('<button type="button" class="btn" data-year="'+y+'">'+y+'</button>')
-                    if(ops.year === y) {
+                for (; y < ops.tYear + 6; y++) {
+                    var $y = $(
+                        '<button type="button" class="btn" data-year="' +
+                            y +
+                            '">' +
+                            y +
+                            '</button>'
+                    )
+                    if (ops.year === y) {
                         $y._.addClass('tonow')
                     }
-                    if(ops.sYear === y) {
+                    if (ops.sYear === y) {
                         $y._.addClass(ClassName.ACTIVE)
                     }
-                    if(minYear && minYear > y){
+                    if (minYear && minYear > y) {
                         $y._.addClass('none')
                     }
-                    if(maxYear && maxYear < y){
+                    if (maxYear && maxYear < y) {
                         $y._.addClass('none')
                     }
                     $years._.append($y)
                 }
             }
 
-            if(!ops.content._.find('.oc-calendar-year')){
+            if (!ops.content._.find('.oc-calendar-year')) {
                 var $years = $('<div class="oc-calendar-year"></div>')
                 ops.content._.append($years)
                 setYear()
-                var _year= ops.content._.find('.oc-calendar-year')
+                var _year = ops.content._.find('.oc-calendar-year')
 
-                _year._.on(Event.CLICK, 'button', function(e){
+                _year._.on(Event.CLICK, 'button', function(e) {
                     e.stopPropagation()
                     e.preventDefault()
 
@@ -666,21 +774,21 @@ const Datepicker = (($, $$) => {
                     this._.addClass(ClassName.ACTIVE)
                     ops.tYear = parseInt(this._.data('year'))
                     ops.sYear = ops.tYear
-                    if(ops.type === 'year'){
+                    if (ops.type === 'year') {
                         ops.content._.addClass(ClassName.HIDE)
                         ops.btn.textContent = ops.sYear
                         _this.$input.value = ops.sYear
                         _this.$el._.removeClass(ClassName.ACTIVE)
-                        if(window.screen.width <= 480){
+                        if (window.screen.width <= 480) {
                             $(ClassName.BODY)._.removeClass(ClassName.OVERLAY)
                         }
-                    }else{
+                    } else {
                         _this._toolbar('month')
                         _year.style.display = 'none'
                         _this._months()
                     }
                 })
-            }else{
+            } else {
                 setYear()
             }
             _this._toolbar('year')
@@ -694,13 +802,13 @@ const Datepicker = (($, $$) => {
             let firstin = false
             let requFrame
 
-            function nextTitle(){
-                if($oldBtn._.style('visibility') === 'hidden'){
+            function nextTitle() {
+                if ($oldBtn._.style('visibility') === 'hidden') {
                     cancelAnimationFrame(requFrame)
                     $oldBtn._.remove()
                     ops.content._.find('.toolbar-next')._.removeClass('disme')
                     ops.content._.find('.toolbar-prev')._.removeClass('disme')
-                }else{
+                } else {
                     requFrame = requestAnimationFrame(nextTitle)
                 }
             }
@@ -728,20 +836,22 @@ const Datepicker = (($, $$) => {
                 $title._.children('button')._.data('select', type)
                 $title._.children('button').innerHTML = title
 
-                if(firstin){
+                if (firstin) {
                     ops.content._.find('.toolbar-next')._.addClass('disme')
                     ops.content._.find('.toolbar-prev')._.addClass('disme')
 
                     $oldBtn = $title._.children('button')
-                    $newBtn = $(`<button type="button" class="btn">${title}</button>`)
+                    $newBtn = $(
+                        `<button type="button" class="btn">${title}</button>`
+                    )
                     $newBtn._.data('select', type)
 
-                    if(ops.nx){
+                    if (ops.nx) {
                         $newBtn._.addClass('oc-calendarIn-next')
-                        $oldBtn._.attr({'class': 'oc-calendarOut-next'})
-                    }else{
+                        $oldBtn._.attr({ class: 'oc-calendarOut-next' })
+                    } else {
                         $newBtn._.addClass('oc-calendarIn-prev')
-                        $oldBtn._.attr({'class': 'oc-calendarOut-prev'})
+                        $oldBtn._.attr({ class: 'oc-calendarOut-prev' })
                     }
 
                     $title._.append($newBtn)
@@ -751,9 +861,9 @@ const Datepicker = (($, $$) => {
                 firstin = true
             }
 
-            if(ops.content._.find('.oc-calendar-toolbar-title')){
+            if (ops.content._.find('.oc-calendar-toolbar-title')) {
                 setTitle(type)
-            }else{
+            } else {
                 var $toolbar = $(`<button type="button" class="btn toolbar-prev"></button>
                     <div class="oc-calendar-toolbar-title">
                         <button type="button" class="btn"></button>
@@ -762,122 +872,146 @@ const Datepicker = (($, $$) => {
                 </button>`)
 
                 var ttbar = ops.content._.find('.oc-calendar-toolbar')
-                $toolbar.forEach(function (item, i) {
+                $toolbar.forEach(function(item, i) {
                     ttbar._.append(item)
                 })
                 setTitle(type)
 
                 // 下个月
-                ops.content._.on(Event.CLICK, '.toolbar-next', function(e){
+                ops.content._.on(Event.CLICK, '.toolbar-next', function(e) {
                     e.stopPropagation()
                     e.preventDefault()
 
-                    if(this._.hasClass('disme')){
+                    if (this._.hasClass('disme')) {
                         return
                     }
-                    var select = ops.content._.find('.oc-calendar-toolbar-title button')._.data('select')
+                    var select = ops.content._.find(
+                        '.oc-calendar-toolbar-title button'
+                    )._.data('select')
                     ops.nx = true
                     var next = true
 
-                    if(select === 'day'){
+                    if (select === 'day') {
                         ops.tMonth++
                         if (ops.tMonth > 12) {
                             ops.tYear++
                             ops.tMonth = 1
                         }
                         _this._showDays()
-                    }else if(select === 'month'){
+                    } else if (select === 'month') {
                         ops.tYear++
                         _this._months()
-                    }else if(select === 'year'){
+                    } else if (select === 'year') {
                         ops.tYear += 11
                         _this._years()
-                    }else{
+                    } else {
                         var tt = _this._times(ops.pickTime)
-                        tt += 24*60*60*1000
-                        if(ops.max >= tt || !ops.max){
+                        tt += 24 * 60 * 60 * 1000
+                        if (ops.max >= tt || !ops.max) {
                             var timen = new Date(tt)
                             ops.tYear = timen.getFullYear()
-                            ops.tMonth = timen.getMonth()+1
+                            ops.tMonth = timen.getMonth() + 1
                             ops.tDay = timen.getDate()
-                            ops.pickTime = _this._times(`${ops.tYear}/${ops.tMonth}/${ops.tDay}`)
-                        }else{
+                            ops.pickTime = _this._times(
+                                `${ops.tYear}/${ops.tMonth}/${ops.tDay}`
+                            )
+                        } else {
                             next = false
                         }
                     }
-                    if(next) {
+                    if (next) {
                         setTitle(select)
                     }
                 })
 
                 // 上个月
-                ops.content._.on('click', '.toolbar-prev', function(e){
+                ops.content._.on('click', '.toolbar-prev', function(e) {
                     e.stopPropagation()
                     e.preventDefault()
 
-                    if(this._.hasClass('disme')){
+                    if (this._.hasClass('disme')) {
                         return
                     }
-                    var select = ops.content._.find('.oc-calendar-toolbar-title button')._.data('select')
+                    var select = ops.content._.find(
+                        '.oc-calendar-toolbar-title button'
+                    )._.data('select')
                     ops.nx = false
                     var next = true
 
-                    if(select === 'day'){
+                    if (select === 'day') {
                         ops.tMonth--
                         if (ops.tMonth < 1) {
                             ops.tYear--
                             ops.tMonth = 12
                         }
                         _this._showDays()
-                    }else if(select === 'month'){
+                    } else if (select === 'month') {
                         ops.tYear--
                         _this._months()
-                    }else if(select === 'year'){
+                    } else if (select === 'year') {
                         ops.tYear -= 11
                         _this._years()
-                    }else{
+                    } else {
                         var tt = _this._times(ops.pickTime)
-                        tt -= 24*60*60*1000
-                        if(ops.min <= tt || !ops.min){
+                        tt -= 24 * 60 * 60 * 1000
+                        if (ops.min <= tt || !ops.min) {
                             var timen = new Date(tt)
                             ops.tYear = timen.getFullYear()
-                            ops.tMonth = timen.getMonth()+1
+                            ops.tMonth = timen.getMonth() + 1
                             ops.tDay = timen.getDate()
-                            ops.pickTime = _this._times(`${ops.tYear}/${ops.tMonth}/${ops.tDay}`)
-                        }else{
+                            ops.pickTime = _this._times(
+                                `${ops.tYear}/${ops.tMonth}/${ops.tDay}`
+                            )
+                        } else {
                             next = false
                         }
                     }
-                    if(next) setTitle(select)
+                    if (next) setTitle(select)
                 })
 
                 // 转到月
-                ops.content._.on('click', '.oc-calendar-toolbar-title button', function(e){
-                    e.stopPropagation()
-                    e.preventDefault()
+                ops.content._.on(
+                    'click',
+                    '.oc-calendar-toolbar-title button',
+                    function(e) {
+                        e.stopPropagation()
+                        e.preventDefault()
 
-                    var select = this._.data('select')
-                    if(select === 'timex'){
-                        ops.content._.find('.oc-calendar-time').style.display = 'none'
-                        _this._days()
-                    }else if(select === 'day'){
-                        ops.content._.find(ClassName.WEEK).style.display = 'none'
-                        ops.content._.find(ClassName.MONTH).style.display = 'none'
-                        ops.content._.find(ClassName.ACT).style.display = 'none'
-                        _this._months()
-                    }else if (select === 'month') {
-                        ops.content._.find(ClassName.WEEK).style.display = 'none'
-                        ops.content._.find(ClassName.MONTH).style.display = 'none'
-                        ops.content._.find(ClassName.ACT).style.display = 'none'
-                        ops.content._.find('.oc-calendar-month').style.display = 'none'
-                        _this._years()
+                        var select = this._.data('select')
+                        if (select === 'timex') {
+                            ops.content._.find(
+                                '.oc-calendar-time'
+                            ).style.display =
+                                'none'
+                            _this._days()
+                        } else if (select === 'day') {
+                            ops.content._.find(ClassName.WEEK).style.display =
+                                'none'
+                            ops.content._.find(ClassName.MONTH).style.display =
+                                'none'
+                            ops.content._.find(ClassName.ACT).style.display =
+                                'none'
+                            _this._months()
+                        } else if (select === 'month') {
+                            ops.content._.find(ClassName.WEEK).style.display =
+                                'none'
+                            ops.content._.find(ClassName.MONTH).style.display =
+                                'none'
+                            ops.content._.find(ClassName.ACT).style.display =
+                                'none'
+                            ops.content._.find(
+                                '.oc-calendar-month'
+                            ).style.display =
+                                'none'
+                            _this._years()
+                        }
                     }
-                })
+                )
             }
         }
 
         _timeFormat(time, fmt) {
-            if(!fmt){
+            if (!fmt) {
                 fmt = this._config.format
             }
             time = new Date(time)
@@ -888,15 +1022,25 @@ const Datepicker = (($, $$) => {
                 'm+': time.getMinutes(), // 分
                 's+': time.getSeconds() // 秒
             }
-            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (time.getFullYear() + '').substr(4 - RegExp.$1.length))
+            if (/(y+)/.test(fmt))
+                fmt = fmt.replace(
+                    RegExp.$1,
+                    (time.getFullYear() + '').substr(4 - RegExp.$1.length)
+                )
             for (var k in o)
-                if (new RegExp('(' + k + ')').test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+                if (new RegExp('(' + k + ')').test(fmt))
+                    fmt = fmt.replace(
+                        RegExp.$1,
+                        RegExp.$1.length == 1
+                            ? o[k]
+                            : ('00' + o[k]).substr(('' + o[k]).length)
+                    )
 
             return fmt
         }
 
         _times(time, type, sfm) {
-            function ieFactory (str) {
+            function ieFactory(str) {
                 str = str.replace(/[/.]/g, '-')
                 str = str.split('-')
                 return new Date(str[0], str[1] - 1, str[2], '', '', '')
@@ -904,54 +1048,69 @@ const Datepicker = (($, $$) => {
 
             function getTimes(time) {
                 var temp = parseInt(time)
-                if(temp.toString().length > 5){
+                if (temp.toString().length > 5) {
                     time = new Date(parseInt(temp))
-                }else{
+                } else {
                     time = new Date(time)
                 }
-                if(sfm){
-                    time = new Date(time.getFullYear(), time.getMonth(), time.getDate(), time.getHours(), time.getMinutes(), time.getSeconds()).getTime()
-                }else{
-                    time = new Date(time.getFullYear(), time.getMonth(), time.getDate(), '', '', '').getTime()
+                if (sfm) {
+                    time = new Date(
+                        time.getFullYear(),
+                        time.getMonth(),
+                        time.getDate(),
+                        time.getHours(),
+                        time.getMinutes(),
+                        time.getSeconds()
+                    ).getTime()
+                } else {
+                    time = new Date(
+                        time.getFullYear(),
+                        time.getMonth(),
+                        time.getDate(),
+                        '',
+                        '',
+                        ''
+                    ).getTime()
                 }
 
                 return time
             }
 
             function replaceTime(time) {
-                time = time.toString()
-                .replace(/([^\u0000-\u00FF])/g, '/')
-                .replace(/\./g, '/')
-                .replace(/\-/g, '/')
+                time = time
+                    .toString()
+                    .replace(/([^\u0000-\u00FF])/g, '/')
+                    .replace(/\./g, '/')
+                    .replace(/\-/g, '/')
 
                 return time
             }
 
             time = replaceTime(time)
 
-            if(time.substr(time.length-1, time.length) === '/'){
-                time = time.substr(0, time.length-1)
+            if (time.substr(time.length - 1, time.length) === '/') {
+                time = time.substr(0, time.length - 1)
             }
 
             if ('NaN' == new Date(time)) {
                 time = ieFactory(time)
-            }else{
+            } else {
                 time = getTimes(time)
             }
 
-            if(type){
+            if (type) {
                 type = type.toString()
                 if (type === 'year') {
                     time = new Date(time).getFullYear()
-                }else if (type === 'month') {
+                } else if (type === 'month') {
                     time = new Date(time)
                     time = time.getFullYear() + '/' + time.getMonth()
                 } else if (type.indexOf('+') === 0) {
                     type = Number(type.substr(1)) * 1000
-                    time = time + (type*60*60*24)
+                    time = time + type * 60 * 60 * 24
                 } else if (type.indexOf('-') === 0) {
                     type = Number(type.substr(1)) * 1000
-                    time = time - (type*60*60*24)
+                    time = time - type * 60 * 60 * 24
                 } else {
                     if (type !== 'today') {
                         type = replaceTime(type)
@@ -984,10 +1143,10 @@ const Datepicker = (($, $$) => {
 
             ops.today = _this._times(today)
             ops.year = today.getFullYear()
-            ops.month = today.getMonth()+1
+            ops.month = today.getMonth() + 1
             ops.day = today.getDate()
 
-            if(ops.time){
+            if (ops.time) {
                 ops.tH = 0
                 ops.tM = 0
                 ops.tS = 0
@@ -997,19 +1156,23 @@ const Datepicker = (($, $$) => {
             ops.sMonth = ops.month
             ops.sDay = ops.day
 
-            if($input.value.length > 0){
+            if ($input.value.length > 0) {
                 ops.btn.textContent = $input.value
                 const selday = new Date($input.value)
-                ops.pickTime = _this._times(selday, null, ops.time ? true : false)
+                ops.pickTime = _this._times(
+                    selday,
+                    null,
+                    ops.time ? true : false
+                )
                 ops.tYear = selday.getFullYear()
-                ops.tMonth = selday.getMonth()+1
+                ops.tMonth = selday.getMonth() + 1
                 ops.tDay = selday.getDate()
-                if(ops.time){
+                if (ops.time) {
                     ops.tH = selday.getHours()
                     ops.tM = selday.getMinutes()
                     ops.tS = selday.getSeconds()
                 }
-            }else{
+            } else {
                 ops.tYear = ops.year
                 ops.tMonth = ops.month
                 ops.tDay = ops.day
@@ -1018,13 +1181,13 @@ const Datepicker = (($, $$) => {
             if (ops.min) {
                 ops.min = _this._times(ops.today, ops.min)
                 ops.tYear = new Date(ops.min).getFullYear()
-                ops.tMonth = new Date(ops.min).getMonth()+1
+                ops.tMonth = new Date(ops.min).getMonth() + 1
             }
             if (ops.max) {
                 ops.max = _this._times(ops.today, ops.max)
-                if(!ops.min){
+                if (!ops.min) {
                     ops.tYear = new Date(ops.max).getFullYear()
-                    ops.tMonth = new Date(ops.max).getMonth()+1
+                    ops.tMonth = new Date(ops.max).getMonth() + 1
                 }
             }
 
@@ -1081,23 +1244,26 @@ const Datepicker = (($, $$) => {
     }
 
     // Data Api implementation
-    $$(Selector.DATA_TOGGLE).forEach(function(item, i){
-        Datepicker._interface.call(item , item._.data())
+    $$(Selector.DATA_TOGGLE).forEach(function(item, i) {
+        Datepicker._interface.call(item, item._.data())
     })
 
-    document.addEventListener(Event.CLICK, function(e){
-        let datels = $$(ClassName.DTPK)._
-        datels.removeClass(ClassName.ACTIVE)
-        datels.find('.oc-calendar')._.addClass(ClassName.HIDE)
-        if(window.screen.width <= 480){
-            $(ClassName.BODY)._.removeClass(ClassName.OVERLAY)
-        }
-    }, false);
+    document.addEventListener(
+        Event.CLICK,
+        function(e) {
+            let datels = $$(ClassName.DTPK)._
+            datels.removeClass(ClassName.ACTIVE)
+            datels.find('.oc-calendar')._.addClass(ClassName.HIDE)
+            if (window.screen.width <= 480) {
+                $(ClassName.BODY)._.removeClass(ClassName.OVERLAY)
+            }
+        },
+        false
+    )
 
     $.add(NAME, Datepicker._interface)
 
     return Datepicker
-
 })(Bliss, Bliss.$)
 
 export default Datepicker

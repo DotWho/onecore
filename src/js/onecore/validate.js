@@ -41,13 +41,16 @@ const Validate = (($, $$) => {
         {
             name: '弱 — 需包含字母及数字',
             color: 'red'
-        }, {
+        },
+        {
             name: '中',
             color: 'yellow'
-        }, {
+        },
+        {
             name: '强',
             color: 'dgreen'
-        }, {
+        },
+        {
             name: '优秀',
             color: 'green'
         }
@@ -55,7 +58,6 @@ const Validate = (($, $$) => {
 
     // Class Definition
     class Validate {
-
         constructor(element, config) {
             this.$el = element
             this._config = this._getConfig(config)
@@ -95,12 +97,20 @@ const Validate = (($, $$) => {
             let ops = _this._config
 
             function changeWidth(i) {
-                el._.next()._.children('.cs-line')._.attr({'class': 'cs-line ' + codelist[i].color})
-                el._.next()._.attr({'class': 'codestrong showtxt'})._.children('.cs-txt').textContent = codelist[i].name
+                el._.next()
+                    ._.children('.cs-line')
+                    ._.attr({ class: 'cs-line ' + codelist[i].color })
+                el._.next()
+                    ._.attr({ class: 'codestrong showtxt' })
+                    ._.children('.cs-txt').textContent =
+                    codelist[i].name
             }
 
             function lengthCheck() {
-                if (datas.val.length >= datas.minLength && (datas.val.length <= datas.maxLength || !datas.maxLength)) {
+                if (
+                    datas.val.length >= datas.minLength &&
+                    (datas.val.length <= datas.maxLength || !datas.maxLength)
+                ) {
                     return true
                 } else {
                     return false
@@ -108,7 +118,10 @@ const Validate = (($, $$) => {
             }
 
             function sizeCheck() {
-                if (Number(datas.val) >= datas.minSize && (Number(datas.val) <= datas.maxSize || !datas.maxSize)) {
+                if (
+                    Number(datas.val) >= datas.minSize &&
+                    (Number(datas.val) <= datas.maxSize || !datas.maxSize)
+                ) {
                     return true
                 } else {
                     return false
@@ -126,15 +139,16 @@ const Validate = (($, $$) => {
              * @param String maxLength 最大长度
              */
             let datas = {
-                    minSize: 1,
-                    maxSize: 0,
-                    minLength: 1,
-                    maxLength: 0,
-                    val: el.value,
-                    required: el._.attr('required')
-                }
+                minSize: 1,
+                maxSize: 0,
+                minLength: 1,
+                maxLength: 0,
+                val: el.value,
+                required: el._.attr('required')
+            }
 
-            if (el._.data('allowspace') && 1 != datas.val.split(' ').length) { //allowspace有值不允许中间有空格
+            if (el._.data('allowspace') && 1 != datas.val.split(' ').length) {
+                //allowspace有值不允许中间有空格
                 _this._error(el)
                 return false
             }
@@ -201,7 +215,8 @@ const Validate = (($, $$) => {
                                 }
 
                                 if (lengthCheck() && modes > 0) {
-                                    if (modes > 0) { //1
+                                    if (modes > 0) {
+                                        //1
                                         _this._success(el)
                                         resolve()
                                     } else {
@@ -209,10 +224,17 @@ const Validate = (($, $$) => {
                                         reject()
                                     }
                                 } else {
-                                    el._.next()._.attr({'class': 'codestrong active'})
-                                    ._.children('.cs-txt').textContent = `请输入${datas.minLength}-${datas.maxLength}位字符的密码`
+                                    el._.next()
+                                        ._.attr({ class: 'codestrong active' })
+                                        ._.children(
+                                            '.cs-txt'
+                                        ).textContent = `请输入${
+                                        datas.minLength
+                                    }-${datas.maxLength}位字符的密码`
 
-                                    el._.next()._.children('.cs-line')._.attr({'class': 'cs-line'})
+                                    el._.next()
+                                        ._.children('.cs-line')
+                                        ._.attr({ class: 'cs-line' })
                                     _this._error(el)
                                     reject()
                                 }
@@ -229,8 +251,13 @@ const Validate = (($, $$) => {
                         break
                     case 'email':
                         return new Promise(function(resolve, reject) {
-                            if (datas.val.match(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/)
-                            && datas.val.indexOf('。') < 0 && lengthCheck()) {
+                            if (
+                                datas.val.match(
+                                    /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/
+                                ) &&
+                                datas.val.indexOf('。') < 0 &&
+                                lengthCheck()
+                            ) {
                                 _this._success(el)
                                 resolve()
                             } else {
@@ -254,7 +281,10 @@ const Validate = (($, $$) => {
                                 tofix = false
                             }
 
-                            if (sizeCheck() && datas.val.match(/^\d+(\.\d+)?$/)) {
+                            if (
+                                sizeCheck() &&
+                                datas.val.match(/^\d+(\.\d+)?$/)
+                            ) {
                                 if (tofix) {
                                     if (tofix.length <= point) {
                                         _this._success(el)
@@ -297,7 +327,10 @@ const Validate = (($, $$) => {
                         break
                     case 'mtel':
                         return new Promise(function(resolve, reject) {
-                            if (datas.val.match(/^0\d{2,3}-?\d{7,8}$/) || datas.val.match(/^1[34578]\d{9}$/)) {
+                            if (
+                                datas.val.match(/^0\d{2,3}-?\d{7,8}$/) ||
+                                datas.val.match(/^1[34578]\d{9}$/)
+                            ) {
                                 _this._success(el)
                                 resolve()
                             } else {
@@ -331,36 +364,51 @@ const Validate = (($, $$) => {
                                 reject()
                             }
                         })
-                        break;
-                    // case 'citys':
-                    //     var step = el._.parent()._.data('step') || 3
-                    //     if (datas.val.split(',').length >= step) {
-                    //         _this._success(el._.parent())
-                    //     } else {
-                    //         _this._error(el._.parent())
-                    //     }
-                    //     break
+                        break
+                    case 'city':
+                        return new Promise(function(resolve, reject) {
+                            if (datas.val.length > 0) {
+                                _this._success(el._.parent())
+                                resolve()
+                            } else {
+                                _this._error(el._.parent())
+                                reject()
+                            }
+                        })
+                        break
                     case 'radio':
                     case 'checkbox':
                         return new Promise(function(resolve, reject) {
                             var name = el._.attr('name')
-                            if (name && $('[name="' + name + '"]')._.attr('required')) {
+                            if (
+                                name &&
+                                $('[name="' + name + '"]')._.attr('required')
+                            ) {
                                 var ckox = false
-                                $$('[name="' + name + '"]').forEach(function(item, i){
+                                $$('[name="' + name + '"]').forEach(function(
+                                    item,
+                                    i
+                                ) {
                                     if (item.checked) {
                                         ckox = true
                                         return
                                     }
                                 })
                                 if (ckox) {
-                                    $$('[name="' + name + '"]').forEach(function(item, i){
-                                        item._.parent()._.removeClass('error')
-                                    })
+                                    $$('[name="' + name + '"]').forEach(
+                                        function(item, i) {
+                                            item._.parent()._.removeClass(
+                                                'error'
+                                            )
+                                        }
+                                    )
                                     resolve()
                                 } else {
-                                    $$('[name="' + name + '"]').forEach(function(item, i){
-                                        item._.parent()._.addClass('error')
-                                    })
+                                    $$('[name="' + name + '"]').forEach(
+                                        function(item, i) {
+                                            item._.parent()._.addClass('error')
+                                        }
+                                    )
                                     reject()
                                 }
                             } else {
@@ -393,15 +441,15 @@ const Validate = (($, $$) => {
                 wlist = ops.target.querySelectorAll('*')
 
             wlist = Array.prototype.slice.call(wlist)
-            if(wlist.length > 0){
-                wlist.forEach(function(item, i){
+            if (wlist.length > 0) {
+                wlist.forEach(function(item, i) {
                     var nodename = item.nodeName.toLocaleLowerCase()
                     switch (nodename) {
                         case 'input':
                         case 'textarea':
                         case 'select':
                             ckList.push(item)
-                            break;
+                            break
                     }
                 })
             }
@@ -416,7 +464,7 @@ const Validate = (($, $$) => {
 
             function getType(item) {
                 let type = item._.data('type') || item._.attr('type')
-                if(!type){
+                if (!type) {
                     type = item.nodeName.toLowerCase()
                 }
                 return type
@@ -434,6 +482,7 @@ const Validate = (($, $$) => {
                     case 'mtel':
                     case 'select':
                     case 'imgup':
+                    case 'city':
                     case 'radio':
                     case 'checkbox':
                         return true
@@ -445,27 +494,33 @@ const Validate = (($, $$) => {
 
             const opmap = _this._getLsit()
 
-            opmap.forEach(function(item, i){
+            opmap.forEach(function(item, i) {
                 const type = getType(item)
                 const vname = ops.data[item.name]
-                if(vname){
+                if (vname) {
                     switch (type) {
                         case 'select':
                             item.value = vname
                             item._.select('update')
                             break
                         case 'radio':
-                            $$(`input[name="${item.name}"]`).forEach(function(rck, i){
-                                if(rck.value == vname){
+                            $$(`input[name="${item.name}"]`).forEach(function(
+                                rck,
+                                i
+                            ) {
+                                if (rck.value == vname) {
                                     rck.checked = true
                                 }
                             })
                             break
                         case 'checkbox':
-                            $$(`input[name="${item.name}"]`).forEach(function(rck, i){
+                            $$(`input[name="${item.name}"]`).forEach(function(
+                                rck,
+                                i
+                            ) {
                                 for (var cv in vname) {
                                     if (vname.hasOwnProperty(cv)) {
-                                        if(rck.value == vname[cv]){
+                                        if (rck.value == vname[cv]) {
                                             rck.checked = true
                                         }
                                     }
@@ -476,26 +531,30 @@ const Validate = (($, $$) => {
                             item.value = vname
                             item._.parent()._.imgup('update')
                             break
+                        case 'city':
+                            item.value = vname
+                            item._.parent()._.city('update')
+                            break
                         default:
                             item.value = vname
                     }
                 }
                 if (!item._.data('off') && checkType(type)) {
                     let events = item._.data('keyup') ? 'onkeyup' : 'onchange'
-                    item[events] = function () {
-                        _this._check(item, type).catch(function(){})
+                    item[events] = function() {
+                        _this._check(item, type).catch(function() {})
                     }
-                    item['validate'] = function () {
+                    item['validate'] = function() {
                         return _this._check(item, type)
                     }
                 }
             })
 
-            if(ops.enter){
+            if (ops.enter) {
                 $('body')._.off('keydown')
                 $('body').onkeydown = function(e) {
-                   13 === e.which && $this.click()
-               }
+                    13 === e.which && $this.click()
+                }
             }
 
             function PromiseForEach() {
@@ -504,7 +563,7 @@ const Validate = (($, $$) => {
                 let result = Promise.resolve()
                 opck.forEach((item, index) => {
                     result = result.then(() => {
-                        if(item['validate']){
+                        if (item['validate']) {
                             return item['validate']().catch(() => {
                                 realResult.push(item)
                             })
@@ -519,59 +578,66 @@ const Validate = (($, $$) => {
 
             $this.onclick = function() {
                 $this._.addClass('process')
-                PromiseForEach().then((data) => {
-                    $this._.removeClass('process')
-                    // console.log("成功");
-                    // console.log(data);
-                    if(data.length === 0){
-                        if (!ops.success) {
-                            $this._.attr({'disabled': true})._.parent('form').submit()
-                        } else {
-                            const checkEl = _this._getLsit()
-                            let obj = {}
-                            checkEl.forEach(function(item, i){
-                                const type = getType(item)
-                                let name = item.name
-                                if(type && name){
-                                    switch (type) {
-                                        case 'text':
-                                        case 'textarea':
-                                        case 'password':
-                                        case 'email':
-                                        case 'number':
-                                        case 'tel':
-                                        case 'mobile':
-                                        case 'mtel':
-                                        case 'select':
-                                        case 'imgup':
-                                            obj[name] = item.value
-                                        case 'radio':
-                                            if(item.checked){
+                PromiseForEach()
+                    .then(data => {
+                        $this._.removeClass('process')
+                        // console.log("成功");
+                        // console.log(data);
+                        if (data.length === 0) {
+                            if (!ops.success) {
+                                $this._.attr({ disabled: true })
+                                    ._.parent('form')
+                                    .submit()
+                            } else {
+                                const checkEl = _this._getLsit()
+                                let obj = {}
+                                checkEl.forEach(function(item, i) {
+                                    const type = getType(item)
+                                    let name = item.name
+                                    if (type && name) {
+                                        switch (type) {
+                                            case 'text':
+                                            case 'textarea':
+                                            case 'password':
+                                            case 'email':
+                                            case 'number':
+                                            case 'tel':
+                                            case 'mobile':
+                                            case 'mtel':
+                                            case 'select':
+                                            case 'city':
+                                            case 'imgup':
                                                 obj[name] = item.value
-                                            }
-                                            break
-                                        case 'checkbox':
-                                            if(item.checked){
-                                                if(obj[name]){
-                                                    obj[name].push(item.value)
-                                                } else {
-                                                    obj[name] = [item.value]
+                                            case 'radio':
+                                                if (item.checked) {
+                                                    obj[name] = item.value
                                                 }
-                                            }
-                                            break
+                                                break
+                                            case 'checkbox':
+                                                if (item.checked) {
+                                                    if (obj[name]) {
+                                                        obj[name].push(
+                                                            item.value
+                                                        )
+                                                    } else {
+                                                        obj[name] = [item.value]
+                                                    }
+                                                }
+                                                break
+                                        }
                                     }
-                                }
-                            })
-                            ops.success(obj)
+                                })
+                                ops.success(obj)
+                            }
+                        } else {
+                            ops.error(data)
                         }
-                    } else {
-                        ops.error(data)
-                    }
-                }).catch((err) => {
-                    $this._.removeClass('process')
-                    // console.log(err);
-                    // console.log("失败");
-                });
+                    })
+                    .catch(err => {
+                        $this._.removeClass('process')
+                        // console.log(err);
+                        // console.log("失败");
+                    })
             }
         }
 
@@ -603,7 +669,6 @@ const Validate = (($, $$) => {
     $.add(NAME, Validate._interface)
 
     return Validate
-
 })(Bliss, Bliss.$)
 
 export default Validate

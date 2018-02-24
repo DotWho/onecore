@@ -1,88 +1,72 @@
-.citys {
+.city {
     position: relative;
     display: inline-block;
-    min-width: pxToRem(165px);
-    & .city-drop {
-        position: absolute;
-        top: pxToRem(36px);
-        right: 0;
-        left: 0;
-        z-index: 3;
-        overflow: hidden;
-        margin: auto;
-        background-color: $white;
-        visibility: hidden;
-        @include borderRadius;
-        @include divider;
-        @include boxShadow;
-    }
-    &.dismiss .city-drop {
-        @include mainAniOut;
-    }
-    &.active .city-drop {
-        @include mainAniIn;
-    }
     & .city-title {
         @include inputStyle;
-        overflow: hidden;
+        width: pxToRem(165px);
         white-space: nowrap;
         text-overflow: ellipsis;
-        &.hastitle {
-            color: inherit;
-        }
-        &.active,
         &:hover {
             border-color: $primary;
-            background-color: transparent;
         }
         & .ripple {
             background-color: rgba($primary, .6);
         }
     }
-    & .city-tab button {
-        float: left;
-        width: 33.3%;
-        color: $primary;
-        background-color: $white;
-        border-bottom: 1px solid $light;
-        @include border-radius(0);
-        transition: none;
-        &.active {
-            color: $white;
-            background-color: $primary;
-            border-bottom-color: $primary;
-        }
-    }
-    & .city-tab.one button {
-        width: 100%;
-    }
-    & .city-tab.two button {
-        width: 50%;
-    }
     & .city-content {
-        padding: 5px;
-        height: 140px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        & a {
-            padding: 4px 7px;
-            margin: 0 5px 5px 0;
+        position: absolute;
+        margin-top: pxToRem(2px);
+        z-index: 2;
+        min-width: pxToRem(300px);
+        background-color: $white;
+        visibility: hidden;
+        @include borderRadius;
+        @include divider;
+        @include boxShadow;
+        & > div {
+            overflow-x: hidden;
+            overflow-y: auto;
+            padding: pxToRem(5px);
+            float: left;
+            display: block;
+            width: 33.3%;
+            height: pxToRem(150px);
+            border-right: 1px solid $light;
+        }
+        & > div:last-child {
+            border-right-width: 0;
+        }
+        & span {
+            display: block;
+            padding: pxToRem(6px);
             color: $secondary;
-            transition: none;
-            &:after {
-                content: none;
+            cursor: pointer;
+            @include borderRadius;
+            &:hover {
+                color: $primary;
+            }
+            &.active {
+                color: $white;
+                background-color: $primary;
             }
         }
     }
-    & .city-content a:hover,
-    & .city-content a.active {
-        color: $white;
-        background-color: $primary;
+    &.dismiss .city-content {
+        @include mainAniOut;
+    }
+    &.active .city-content {
+        @include mainAniIn;
+    }
+    &.active .city-title {
+        border-color: $primary;
+    }
+    &.error .city-title {
+        @include error;
     }
 }
 
 @media (max-width: 34em) {
-    .citys .city-drop {
+    .citys .city-content {
         position: fixed;
         top: pxToRem(30px);
         right: pxToRem(30px);

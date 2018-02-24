@@ -56,7 +56,6 @@ select::-ms-expand {
         background-color: $white;
         @include divider;
         visibility: hidden;
-        box-shadow: 0 0 5px rgba(0, 0, 0, .2);
         @include borderRadius;
         @include boxShadow;
         &.seltop {

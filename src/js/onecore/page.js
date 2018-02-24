@@ -28,7 +28,6 @@ const Page = (($, $$) => {
 
     // Class Definition
     class Page {
-
         constructor(element, config) {
             this.$el = element
             this._config = this._getConfig(config)
@@ -60,33 +59,38 @@ const Page = (($, $$) => {
             const $this = _this.$el
             let ops = _this._config
 
-            function setPage(i){
-                let $page = $(`<a href="${ops.url}${i}" class="btn page">${i}</a>`)
+            function setPage(i) {
+                let $page = $(
+                    `<a href="${ops.url}${i}" class="btn page">${i}</a>`
+                )
                 $page._.data('page', i)
 
-                if(ops.page === i){
-                    $page._.attr({'href': 'javascript:;'})._.addClass('current')
+                if (ops.page === i) {
+                    $page._.attr({ href: 'javascript:;' })._.addClass('current')
                 }
                 ops.$next._.before($page)
             }
 
-            if($this._.children('.page')){
-                $this._.children('.page').forEach(function(item, i){
+            if ($this._.children('.page')) {
+                $this._.children('.page').forEach(function(item, i) {
                     item._.remove()
                 })
             }
 
             _this._setPN()
 
-            if(ops.page > 3){
-                if(ops.page + 3 >= ops.total){
+            if (ops.page > 3) {
+                if (ops.page + 3 >= ops.total) {
                     for (var i = ops.total - 6; i <= ops.total; i++) {
                         setPage(i)
                     }
-                }else{
+                } else {
                     for (var i = 3; i > 0; i--) {
-                        let $page = $(`<a href="${ops.url}${ops.page-i}" class="btn page">${ops.page-i}</a>`)
-                        $page._.data('page', ops.page-i)
+                        let $page = $(
+                            `<a href="${ops.url}${ops.page -
+                                i}" class="btn page">${ops.page - i}</a>`
+                        )
+                        $page._.data('page', ops.page - i)
                         ops.$next._.before($page)
                     }
                     for (var i = ops.page; i < ops.page + 4; i++) {
@@ -105,17 +109,27 @@ const Page = (($, $$) => {
             const $this = _this.$el
             let ops = _this._config
 
-            if(!ops.$prev && !ops.$next){
-                let $prev = $(`<a href="${ops.url}${ops.page-1}" class="btn page-prev">&nbsp;</a>`),
-                    $next = $(`<a href="${ops.url}${ops.page+1}" class="btn page-next">&nbsp;</a>`)
+            if (!ops.$prev && !ops.$next) {
+                let $prev = $(
+                        `<a href="${ops.url}${ops.page -
+                            1}" class="btn page-prev">&nbsp;</a>`
+                    ),
+                    $next = $(
+                        `<a href="${ops.url}${ops.page +
+                            1}" class="btn page-next">&nbsp;</a>`
+                    )
 
-                $prev._.data('page', ops.page-1)
-                $next._.data('page', ops.page+1)
+                $prev._.data('page', ops.page - 1)
+                $next._.data('page', ops.page + 1)
 
-                if(ops.page === 1){
-                    $prev._.addClass('disabled')._.attr({'href': 'javascript:;'})
-                } else if (ops.page === ops.total){
-                    $next._.addClass('disabled')._.attr({'href': 'javascript:;'})
+                if (ops.page === 1) {
+                    $prev._.addClass('disabled')._.attr({
+                        href: 'javascript:;'
+                    })
+                } else if (ops.page === ops.total) {
+                    $next._.addClass('disabled')._.attr({
+                        href: 'javascript:;'
+                    })
                 }
 
                 ops.$prev = $prev
@@ -123,16 +137,24 @@ const Page = (($, $$) => {
 
                 $this._.append($prev, $next)
             } else {
-                if(ops.page === 1){
-                    ops.$prev._.addClass('disabled')._.attr({'href': 'javascript:;'})._.removeData('page')
-                }else{
-                    ops.$prev._.removeClass('disabled')._.attr({'href': `${ops.url}${ops.page-1}`})._.data('page', ops.page-1)
+                if (ops.page === 1) {
+                    ops.$prev._.addClass('disabled')
+                        ._.attr({ href: 'javascript:;' })
+                        ._.removeData('page')
+                } else {
+                    ops.$prev._.removeClass('disabled')
+                        ._.attr({ href: `${ops.url}${ops.page - 1}` })
+                        ._.data('page', ops.page - 1)
                 }
 
-                if (ops.page === ops.total){
-                    ops.$next._.addClass('disabled')._.attr({'href': 'javascript:;'})._.removeData('page')
-                }else{
-                    ops.$next._.removeClass('disabled')._.attr({'href': `${ops.url}${ops.page+1}`})._.data('page', ops.page+1)
+                if (ops.page === ops.total) {
+                    ops.$next._.addClass('disabled')
+                        ._.attr({ href: 'javascript:;' })
+                        ._.removeData('page')
+                } else {
+                    ops.$next._.removeClass('disabled')
+                        ._.attr({ href: `${ops.url}${ops.page + 1}` })
+                        ._.data('page', ops.page + 1)
                 }
             }
         }
@@ -147,7 +169,7 @@ const Page = (($, $$) => {
                 var r = window.location.search.substr(1).match(reg)
                 if (r !== null) {
                     let page = parseInt(unescape(r[2]))
-                    if(page > ops.total){
+                    if (page > ops.total) {
                         page = ops.total
                     }
                     return page
@@ -157,7 +179,8 @@ const Page = (($, $$) => {
 
             ops.page = getUrlParam() || ops.page || 1
 
-            ops.url = ops.url || `${window.location.href.split('?')[0]}?${ops.param}=` //'javascript:;'
+            ops.url =
+                ops.url || `${window.location.href.split('?')[0]}?${ops.param}=` //'javascript:;'
 
             _this.update()
 
@@ -168,7 +191,7 @@ const Page = (($, $$) => {
                 ops.page = parseInt(this._.data('page'))
                 _this.update()
                 return false
-            });
+            })
         }
 
         // static
@@ -197,14 +220,13 @@ const Page = (($, $$) => {
     }
 
     // Data Api implementation
-    $$(Selector.DATA_TOGGLE).forEach(function(item, i){
-        Page._interface.call(item , item._.data())
+    $$(Selector.DATA_TOGGLE).forEach(function(item, i) {
+        Page._interface.call(item, item._.data())
     })
 
     $.add(NAME, Page._interface)
 
     return Page
-
 })(Bliss, Bliss.$)
 
 export default Page
