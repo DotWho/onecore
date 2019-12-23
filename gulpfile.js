@@ -5,7 +5,7 @@ const gulp = require('gulp'),
     minifycss = require('gulp-minify-css'),
     uglify = require('gulp-uglify'),
     imagemin = require('gulp-imagemin'),
-    rename = require('gulp-rename'),
+    // rename = require('gulp-rename'),
     clean = require('gulp-clean'),
     concat = require('gulp-concat'),
     cache = require('gulp-cache'),
@@ -14,7 +14,7 @@ const gulp = require('gulp'),
     data = require('gulp-data'),
     browserSync = require('browser-sync').create(),
     babel = require('gulp-babel'),
-    runSequence = require('run-sequence'),
+    // runSequence = require('run-sequence'),
     md5 = require("gulp-md5-plus"),
     reload = browserSync.reload
 
@@ -30,30 +30,40 @@ function getDataForFile(file) {
 }
 
 // html
-gulp.task('html', function () {
+gulp.task('html', function (done) {
     gulp.src('src/view/**/*.html')
         // .pipe(data(getDataForFile))
         .pipe(nunjucksRender({
             path: ['src/common/', 'src/components/'] // String or Array
         }))
         .pipe(gulp.dest('dist/view'));
+    done()
 });
 
 // fonts
-gulp.task('outfonts', function () {
+gulp.task('outfonts', function (done) {
     gulp.src('src/fonts/**/*').pipe(gulp.dest('dist/fonts'))
+    done()
 });
 
-gulp.task('fonts', ['outfonts'], function () {
+gulp.task('fonts', gulp.series('outfonts', function (done) {
     gulp.src('src/css/fonts/**/*').pipe(gulp.dest('dist/css/fonts'))
-});
+    done()
+}));
 
-gulp.task('scss', function() {
+gulp.task('scss', function(done) {
     return gulp.src('src/css/**/*.scss')
         .pipe(plumber())
         .pipe(sass())
         .pipe(autoprefixer({
-            browsers: ['> 1%', 'not ie <= 8']
+            overrideBrowserslist: [
+                "Android 4.1",
+                "iOS 7.1",
+                "Chrome > 31",
+                "ff > 31",
+                "ie >= 8"
+            ],
+            grid: true   
         }))
         .pipe(minifycss())
         // .pipe(md5(10, 'dist/view/**/*.html'))
@@ -65,7 +75,14 @@ gulp.task('oc_sass', function() {
         .pipe(plumber())
         .pipe(sass())
         .pipe(autoprefixer({
-            browsers: ['> 1%', 'not ie <= 8']
+            overrideBrowserslist: [
+                "Android 4.1",
+                "iOS 7.1",
+                "Chrome > 31",
+                "ff > 31",
+                "ie >= 8"
+            ],
+            grid: true   
         }))
         .pipe(minifycss())
         // .pipe(md5(10, 'dist/view/**/*.html'))
@@ -96,7 +113,7 @@ gulp.task('onecore', function() {
             'src/js/onecore/select.js',
             'src/js/onecore/datepicker.js',
             'src/js/onecore/page.js',
-            'src/js/onecore/slider.js',
+            // 'src/js/onecore/slider.js',
             'src/js/onecore/tab.js',
             'src/js/onecore/validate.js',
             'src/js/onecore/imgup.js',
@@ -111,7 +128,7 @@ gulp.task('onecore', function() {
             presets: ['es2015']
         }))
         .pipe(concat('onecore.js'))
-        // .pipe(uglify())
+        .pipe(uglify())
         // .pipe(md5(10, 'dist/view/**/*.html'))
         .pipe(gulp.dest('dist/js/lib'))
         // .pipe(notify({
@@ -138,25 +155,25 @@ gulp.task('images', function() {
 });
 
 // 看守
-gulp.task('watch', function() {
+gulp.task('watch', function(done) {
 
-    gulp.watch('src/css/**/*.scss', ['scss']);
+    gulp.watch('src/css/**/*.scss', gulp.series('scss'));
 
-    gulp.watch('src/sass/**/*.scss', ['oc_sass']);
+    gulp.watch('src/sass/**/*.scss', gulp.series('oc_sass'));
 
-    gulp.watch('src/view/**/*.html', ['html']);
+    gulp.watch('src/view/**/*.html', gulp.series('html'));
 
-    gulp.watch('src/common/**/*.html', ['html']);
+    gulp.watch('src/common/**/*.html', gulp.series('html'));
 
-    gulp.watch('src/components/**/*.html', ['html']);
+    gulp.watch('src/components/**/*.html', gulp.series('html'));
 
-    gulp.watch('src/js/app/**/*.js', ['scripts']);
+    gulp.watch('src/js/app/**/*.js', gulp.series('scripts'));
 
-    gulp.watch('src/js/onecore/**/*.js', ['onecore']);
+    gulp.watch('src/js/onecore/**/*.js', gulp.series('onecore'));
 
-    gulp.watch('src/js/lib/**/*.js', ['libs']);
+    gulp.watch('src/js/lib/**/*.js', gulp.series('libs'));
 
-    gulp.watch('src/img/**/*', ['images']);
+    gulp.watch('src/img/**/*', gulp.series('images'));
 
     gulp.watch("dist/css/**/*.css").on('change', reload);
 
@@ -165,6 +182,8 @@ gulp.task('watch', function() {
     gulp.watch("dist/view/**/*.html").on('change', reload);
 
     gulp.watch("dist/img/**/*").on('change', reload);
+
+    done()
 });
 
 // server
@@ -179,27 +198,13 @@ gulp.task('server', function() {
 });
 
 // 预设任务1
-gulp.task('resetAll', function(done) {
+gulp.task('resetAll', gulp.series('html', 'fonts', 'scss', 'oc_sass', 'scripts', 'onecore', 'libs', function(done) {
     condition = false;
-    runSequence(
-        ['html'],
-        ['fonts'],
-        ['scss'],
-        ['oc_sass'],
-        ['scripts'],
-        ['onecore'],
-        ['libs'],
-    done);
-});
+    done()
+}));
 
 // 预设任务
-gulp.task('default', function(done) {
+gulp.task('default', gulp.series('resetAll', 'images', 'watch', 'server', function(done) {
     condition = false;
-    runSequence(
-        // ['clean'],
-        ['resetAll'],
-        ['images'],
-        ['watch'],
-        ['server'],
-    done);
-});
+    done()
+}));

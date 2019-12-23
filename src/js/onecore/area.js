@@ -3982,6 +3982,6 @@ const Area = {
     "820007": "路氹填海區",
     "820008": "聖方濟各堂區"
   }
-}
+};
 
-export default Area
+export default Area;
